@@ -1,0 +1,408 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   TOQUE ENERGÉTICO — sistema de superfícies
+   Presença · Proteção · Harmonia
+
+   A ideia central: cada seção é um BLOCO DE COR DEFINIDO. Uma seção declara
+   a sua superfície (`surface-sand`, `surface-charcoal`, …) e com isso define
+   fundo, texto, texto secundário, hairline e acento. Todo componente dentro
+   dela se adapta sozinho — inclusive os botões, que invertem.
+
+   Trocar a cor de uma seção = trocar uma palavra no JSX.
+   ========================================================================== */
+
+:root {
+  /* --- paleta (canais RGB para permitir opacidade no Tailwind) ----------- */
+  --sand-rgb: 244 238 226; /* off-white base */
+  --cream-rgb: 234 225 208; /* claro alternativo */
+  --gold-rgb: 185 146 71; /* dourado da marca */
+  --gold-soft-rgb: 220 195 138; /* dourado claro (glows, acentos no escuro) */
+  --gold-deep-rgb: 138 106 37; /* dourado escuro (rótulos sobre claro) */
+  --charcoal-rgb: 26 24 22; /* quase-preto quente */
+  --graphite-rgb: 44 42 40; /* cinza-chumbo */
+  --wood-rgb: 51 36 26; /* madeira escura */
+  --forest-rgb: 26 35 29; /* verde botânico escuro */
+  --ink-rgb: 36 33 29; /* texto sobre claro */
+
+  --sand: rgb(var(--sand-rgb));
+  --cream: rgb(var(--cream-rgb));
+  --gold: rgb(var(--gold-rgb));
+  --gold-soft: rgb(var(--gold-soft-rgb));
+  --gold-deep: rgb(var(--gold-deep-rgb));
+  --charcoal: rgb(var(--charcoal-rgb));
+  --graphite: rgb(var(--graphite-rgb));
+  --wood: rgb(var(--wood-rgb));
+  --forest: rgb(var(--forest-rgb));
+  --ink: rgb(var(--ink-rgb));
+
+  /* --- movimento --------------------------------------------------------- */
+  --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* --- textura (papel/pedra) — só em superfícies escuras ----------------- */
+  --texture-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================================
+   Superfícies
+   ========================================================================== */
+
+@layer components {
+  .surface {
+    background-color: var(--s-bg);
+    color: var(--s-fg);
+  }
+
+  /* claras ------------------------------------------------------------- */
+  .surface-sand {
+    --s-bg: var(--sand);
+    --s-fg: var(--ink);
+    --s-muted: rgb(var(--ink-rgb) / 0.64);
+    --s-faint: rgb(var(--ink-rgb) / 0.42);
+    --s-line: rgb(var(--ink-rgb) / 0.16);
+    --s-accent: var(--gold-deep);
+    --s-glow: rgb(var(--gold-rgb) / 0.14);
+    --s-fill: rgb(var(--ink-rgb) / 0.05);
+  }
+
+  .surface-cream {
+    --s-bg: var(--cream);
+    --s-fg: var(--ink);
+    --s-muted: rgb(var(--ink-rgb) / 0.66);
+    --s-faint: rgb(var(--ink-rgb) / 0.44);
+    --s-line: rgb(var(--ink-rgb) / 0.18);
+    --s-accent: var(--gold-deep);
+    --s-glow: rgb(var(--gold-rgb) / 0.16);
+    --s-fill: rgb(var(--ink-rgb) / 0.05);
+  }
+
+  /* dourada (faixas curtas — nunca blocos longos) ----------------------- */
+  .surface-gold {
+    --s-bg: var(--gold);
+    --s-fg: rgb(33 28 19);
+    --s-muted: rgb(33 28 19 / 0.72);
+    --s-faint: rgb(33 28 19 / 0.5);
+    --s-line: rgb(33 28 19 / 0.24);
+    --s-accent: rgb(33 28 19);
+    --s-glow: rgb(255 250 235 / 0.2);
+    --s-fill: rgb(33 28 19 / 0.07);
+  }
+
+  /* escuras ------------------------------------------------------------ */
+  .surface-charcoal {
+    --s-bg: var(--charcoal);
+    --s-fg: var(--sand);
+    --s-muted: rgb(var(--sand-rgb) / 0.64);
+    --s-faint: rgb(var(--sand-rgb) / 0.4);
+    --s-line: rgb(var(--gold-rgb) / 0.3);
+    --s-accent: var(--gold-soft);
+    --s-glow: rgb(var(--gold-rgb) / 0.2);
+    --s-fill: rgb(var(--sand-rgb) / 0.06);
+  }
+
+  .surface-graphite {
+    --s-bg: var(--graphite);
+    --s-fg: var(--sand);
+    --s-muted: rgb(var(--sand-rgb) / 0.64);
+    --s-faint: rgb(var(--sand-rgb) / 0.4);
+    --s-line: rgb(var(--gold-rgb) / 0.3);
+    --s-accent: var(--gold-soft);
+    --s-glow: rgb(var(--gold-rgb) / 0.2);
+    --s-fill: rgb(var(--sand-rgb) / 0.06);
+  }
+
+  .surface-wood {
+    --s-bg: var(--wood);
+    --s-fg: var(--sand);
+    --s-muted: rgb(var(--sand-rgb) / 0.66);
+    --s-faint: rgb(var(--sand-rgb) / 0.42);
+    --s-line: rgb(var(--gold-soft-rgb) / 0.28);
+    --s-accent: var(--gold-soft);
+    --s-glow: rgb(var(--gold-soft-rgb) / 0.18);
+    --s-fill: rgb(var(--sand-rgb) / 0.07);
+  }
+
+  .surface-forest {
+    --s-bg: var(--forest);
+    --s-fg: var(--sand);
+    --s-muted: rgb(var(--sand-rgb) / 0.66);
+    --s-faint: rgb(var(--sand-rgb) / 0.42);
+    --s-line: rgb(var(--gold-soft-rgb) / 0.26);
+    --s-accent: var(--gold-soft);
+    --s-glow: rgb(var(--gold-soft-rgb) / 0.16);
+    --s-fill: rgb(var(--sand-rgb) / 0.07);
+  }
+
+  /* Sobre imagem: o fundo real é a foto + overlay, mas --s-bg precisa ser uma
+     cor de verdade — é dela que sai o texto dos botões sólidos, que invertem. */
+  .surface-image {
+    --s-bg: var(--charcoal);
+    --s-fg: var(--sand);
+    --s-muted: rgb(var(--sand-rgb) / 0.74);
+    --s-faint: rgb(var(--sand-rgb) / 0.5);
+    --s-line: rgb(var(--sand-rgb) / 0.26);
+    --s-accent: var(--gold-soft);
+    --s-glow: rgb(var(--gold-rgb) / 0.22);
+    --s-fill: rgb(var(--sand-rgb) / 0.08);
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  /* fundo de segurança: as seções pintam a si mesmas */
+  background-color: var(--sand);
+  color: var(--ink);
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--gold-soft);
+  color: var(--charcoal);
+}
+
+:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* ==========================================================================
+   Componentes
+   ========================================================================== */
+
+@layer components {
+  /* Estrutura ----------------------------------------------------------- */
+  .shell {
+    @apply mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-12;
+  }
+
+  .shell-tight {
+    @apply mx-auto w-full max-w-[68rem] px-5 sm:px-8 lg:px-12;
+  }
+
+  .grid-12 {
+    @apply grid grid-cols-4 gap-x-5 sm:gap-x-6 md:grid-cols-12 md:gap-x-8;
+  }
+
+  /* Tipografia ---------------------------------------------------------- */
+  .display {
+    @apply font-display font-normal;
+    letter-spacing: -0.018em;
+    font-variation-settings: 'SOFT' 0, 'WONK' 0;
+  }
+
+  .label {
+    @apply font-sans;
+    font-size: clamp(0.6rem, 0.58rem + 0.1vw, 0.68rem);
+    line-height: 1;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--s-accent);
+  }
+
+  .label-quiet {
+    @apply font-sans;
+    font-size: clamp(0.6rem, 0.58rem + 0.1vw, 0.68rem);
+    line-height: 1;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--s-faint);
+  }
+
+  .lede {
+    @apply font-sans;
+    font-size: clamp(1.02rem, 0.96rem + 0.34vw, 1.24rem);
+    line-height: 1.68;
+    color: var(--s-muted);
+  }
+
+  .body {
+    @apply font-sans;
+    font-size: clamp(0.95rem, 0.92rem + 0.18vw, 1.05rem);
+    line-height: 1.75;
+    color: var(--s-muted);
+  }
+
+  .prose-brand p {
+    @apply body;
+  }
+  .prose-brand p + p {
+    margin-top: 1.4em;
+  }
+
+  /* Réguas -------------------------------------------------------------- */
+  .rule {
+    height: 1px;
+    width: 100%;
+    background: var(--s-line);
+  }
+
+  /* Botões — invertem conforme a superfície, contraste sempre garantido -- */
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-2 whitespace-nowrap font-sans;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 1.05rem 2rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    transition:
+      background-color 500ms var(--ease-calm),
+      color 500ms var(--ease-calm),
+      border-color 500ms var(--ease-calm),
+      opacity 400ms var(--ease-calm);
+  }
+
+  .btn-solid {
+    background: var(--s-fg);
+    color: var(--s-bg);
+    border-color: var(--s-fg);
+  }
+  .btn-solid:hover {
+    background: var(--s-accent);
+    border-color: var(--s-accent);
+    color: var(--s-bg);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--s-fg);
+    border-color: var(--s-line);
+  }
+  .btn-outline:hover {
+    border-color: var(--s-fg);
+    background: var(--s-fill);
+  }
+
+  .btn-sm {
+    padding: 0.8rem 1.4rem;
+    font-size: 0.66rem;
+  }
+
+  /* Link com sublinhado que cresce da esquerda */
+  .link-quiet {
+    position: relative;
+    display: inline-block;
+  }
+  .link-quiet::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    opacity: 0.4;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 650ms var(--ease-calm);
+  }
+  .link-quiet:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Link com seta */
+  .link-arrow {
+    @apply inline-flex items-center gap-2 font-sans;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--s-accent);
+  }
+  .link-arrow svg {
+    transition: transform 600ms var(--ease-calm);
+  }
+  .link-arrow:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Radiância — a estrela como fonte de luz, nunca como ícone */
+  .radiance {
+    position: relative;
+  }
+  .radiance::before {
+    content: '';
+    position: absolute;
+    inset: -35% -12%;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(52% 48% at 50% 50%, var(--s-glow) 0%, transparent 72%);
+  }
+  .radiance > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Textura sutil (só no escuro) */
+  .texture::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.45;
+    background-image: var(--texture-noise);
+    background-size: 180px 180px;
+    mix-blend-mode: soft-light;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .mask-line {
+    clip-path: inset(0 0 -0.22em 0);
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  /* números editoriais alinhados */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ==========================================================================
+   prefers-reduced-motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 200ms !important;
+    scroll-behavior: auto !important;
+  }
+}

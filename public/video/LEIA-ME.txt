@@ -1,0 +1,7 @@
+Coloque aqui hero.mp4 e hero.webm (cenas de escalda-pés, borrifo de spray,
+luz lateral) e depois abra lib/media.ts e mude `videoAtivo` para true.
+
+Enquanto videoAtivo for false, o hero mostra apenas /images/hero-poster.jpg —
+sem 404 e sem erro no console. O código do vídeo já está pronto: poster como
+LCP, lazy load, fade de entrada, fallback automático em conexão fraca ou
+prefers-reduced-motion.

@@ -1,0 +1,27 @@
+# dependências
+node_modules
+
+# build
+.next
+out
+build
+
+# ambiente
+.env*.local
+.env
+
+# vercel
+.vercel
+
+# typescript
+next-env.d.ts
+*.tsbuildinfo
+
+# sistema / editor
+.DS_Store
+Thumbs.db
+.idea
+*.swp
+
+# arquivos de trabalho
+files.zip

@@ -1,0 +1,8 @@
+ambient.m4a é um PLACEHOLDER SILENCIOSO de 10 segundos.
+
+Para colocar o som ambiente definitivo:
+1. salve o arquivo aqui (ex.: ambient.mp3, ambient.m4a ou ambient.ogg);
+2. aponte AUDIO_SRC para ele em components/providers/AudioProvider.tsx.
+
+O volume-alvo (AUDIO_VOLUME_ALVO = 0.25) e os tempos de fade também estão lá.
+O som nunca toca sozinho: só depois de a pessoa clicar no toggle do header.
