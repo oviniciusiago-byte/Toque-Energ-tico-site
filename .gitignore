@@ -25,3 +25,4 @@ Thumbs.db
 
 # arquivos de trabalho
 files.zip
+.env*
