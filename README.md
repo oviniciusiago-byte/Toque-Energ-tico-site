@@ -13,6 +13,30 @@ Outros comandos: `npm run build`, `npm start`, `npm run typecheck`,
 
 ---
 
+---
+
+## Publicação
+
+- **Site:** https://toque-energetico-oviniciusiago-bytes-projects.vercel.app
+- **Repositório:** https://github.com/oviniciusiago-byte/Toque-Energ-tico-site
+- **Projeto na Vercel:** `oviniciusiago-bytes-projects/toque-energetico`
+
+O framework está declarado em `vercel.json` (`"framework": "nextjs"`), então o
+deploy não depende do preset configurado no painel — sem isso a Vercel serve
+`/public` como site estático e a home dá 404.
+
+Publicar uma nova versão:
+
+```bash
+npx vercel@latest deploy --prod
+```
+
+> **Deployment Protection** precisa ficar **desativada** em
+> Settings → Deployment Protection, senão o link pede login da Vercel e a
+> cliente não consegue abrir.
+
+---
+
 ## O sistema visual: blocos de cor
 
 Cada seção do site é um **bloco de cor definido**. Uma seção declara a sua
