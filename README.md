@@ -17,7 +17,7 @@ Outros comandos: `npm run build`, `npm start`, `npm run typecheck`,
 
 ## Publicação
 
-- **Site:** https://toque-energetico-oviniciusiago-bytes-projects.vercel.app
+- **Site:** https://toque-energetico.vercel.app
 - **Repositório:** https://github.com/oviniciusiago-byte/Toque-Energ-tico-site
 - **Projeto na Vercel:** `oviniciusiago-bytes-projects/toque-energetico`
 
