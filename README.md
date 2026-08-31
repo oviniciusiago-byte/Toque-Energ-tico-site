@@ -56,13 +56,46 @@ Superfícies disponíveis (`components/Section.tsx`, cores em `app/globals.css`)
 | `cream` | #EAE1D0 | claro alternativo, separa blocos vizinhos |
 | `gold` | #B99247 | faixas curtas (a de valores na home) |
 | `charcoal` | #1A1816 | catálogo, cabeçalhos internos, footer |
-| `graphite` | #2C2A28 | escuro alternativo |
+| `concrete` | #4A4744 | **cimento queimado** — o "cinza" da marca |
 | `wood` | #33241A | fechamentos intimistas |
 | `forest` | #1A231D | splits editoriais (o verde botânico da ref. Moss) |
 | `image` | — | texto sobre foto/vídeo (hero, faixas full-bleed) |
 
+
+### Contraste é token, não gosto
+
+As opacidades de `--s-muted` e `--s-faint` de cada superfície foram calculadas
+para passar **4.5:1 (WCAG AA)** contra o próprio fundo — não são escolhas
+estéticas. Ao mexer em qualquer cor de superfície, rode:
+
+```bash
+python3 scripts/check-contrast.py
+```
+
+O script lê `app/globals.css`, recalcula todos os pares e falha (exit 1) se
+algum ficar abaixo de 4.5:1. Foi assim que descobrimos que o `faint` original
+estava em 2.5:1 em todas as superfícies.
+
+### Anatomia dos cartões
+
+`ProductCard` e `CollectionCard` compartilham a mesma anatomia, para que
+produto e coleção possam aparecer na mesma fileira sem desalinhar:
+
+```
+mídia 4:5  →  nome (máx. 2 linhas) + régua + preço  →  descrição (2 linhas,
+altura reservada)  →  metadados (ancorados na base do cartão)
+```
+
+Duas regras sustentam o alinhamento e não devem ser removidas:
+
+- `.card-desc` reserva a altura de duas linhas, então uma descrição curta não
+  sobe a régua de metadados;
+- `.card-meta` usa `mt-auto`, ancorando os metadados na base — como todos os
+  cartões de uma fileira têm a mesma altura, as réguas alinham mesmo com
+  títulos de tamanhos diferentes.
+
 O ritmo de cores da home, na ordem: vídeo → **dourado** → areia → creme →
-**verde** → areia → **carvão** → creme → areia → imagem → creme → **carvão**.
+**verde** → areia → **carvão** → creme → areia → **cimento** → creme → **carvão**.
 
 > A **animação** de transição entre as cores fica para depois, como combinado.
 > O ponto de entrada é o `<Section>`: qualquer efeito de troca de cor entra ali,

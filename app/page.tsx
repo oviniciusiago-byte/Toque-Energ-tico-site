@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
 import CategoryCard from '@/components/CategoryCard';
+import CollectionCard from '@/components/CollectionCard';
 import CircleFrame from '@/components/CircleFrame';
 import DragRow from '@/components/DragRow';
-import EditorialBand from '@/components/EditorialBand';
 import EditorialSplit from '@/components/EditorialSplit';
 import Hero from '@/components/Hero';
 import Numbers from '@/components/Numbers';
@@ -101,22 +101,17 @@ export default function HomePage() {
                     key={p.slug}
                     produto={p}
                     prioridade={i === 0}
-                    indice={String(i + 1).padStart(2, '0')}
                     linhaApoio={home.destaques.linhas[p.slug]}
                   />
                 )),
-                /* o quarto carro-chefe é uma coleção inteira, não um item */
-                <div key="banhos">
-                  <CategoryCard
-                    categoria={banhos}
-                    quantidade={contagemPorCategoria(banhos.slug)}
-                    indice="04"
-                    proporcao="aspect-[4/5]"
-                  />
-                  <p className="body mt-5 text-[0.92rem]">
-                    {home.destaques.linhas['banhos-escalda-pes']}
-                  </p>
-                </div>,
+                /* O quarto carro-chefe é uma coleção inteira, não um item —
+                   por isso usa CollectionCard, que tem a mesma anatomia. */
+                <CollectionCard
+                  key={banhos.slug}
+                  categoria={banhos}
+                  quantidade={contagemPorCategoria(banhos.slug)}
+                  descricao={home.destaques.linhas['banhos-escalda-pes']}
+                />,
               ]}
             </DragRow>
           </div>
@@ -166,13 +161,9 @@ export default function HomePage() {
             className="mt-14 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 sm:mt-20"
             stagger={0.08}
           >
-            {categoriasVisiveis.map((c, i) => (
+            {categoriasVisiveis.map((c) => (
               <RevealItem key={c.slug}>
-                <CategoryCard
-                  categoria={c}
-                  quantidade={contagemPorCategoria(c.slug)}
-                  indice={String(i + 1).padStart(2, '0')}
-                />
+                <CategoryCard categoria={c} quantidade={contagemPorCategoria(c.slug)} />
               </RevealItem>
             ))}
           </RevealGroup>
@@ -251,15 +242,24 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ── 10 · Manifesto sobre imagem ───────────────────────── imagem ─── */}
-      <EditorialBand
-        imagem="/images/editorial/preparo-mesa.jpg"
-        alt="Ervas e flores secas sobre a bancada de preparo"
-        label={home.faixaEditorial.label}
-        frase={home.faixaEditorial.frase}
-        alinhamento="center"
-        altura="min-h-[64svh]"
-      />
+      {/* ── 10 · Manifesto ──────────────────────── cimento queimado ────── */}
+      <Section surface="concrete" padding="loose" texture>
+        <div className="shell relative">
+          <div className="mx-auto max-w-[44rem] text-center">
+            <Reveal>
+              <p className="label">{home.faixaEditorial.label}</p>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="display mt-8 text-d2 text-balance">
+                {home.faixaEditorial.frase}
+              </p>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="lede mx-auto mt-8 max-w-prose-sm">{home.faixaEditorial.apoio}</p>
+            </Reveal>
+          </div>
+        </div>
+      </Section>
 
       {/* ── 11 · Fechamento ────────────────────────────────────── creme ─── */}
       <WhatsAppCTA

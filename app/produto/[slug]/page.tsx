@@ -266,7 +266,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
           <Section surface="wood" padding="loose" texture>
             <div className="shell relative">
               <Reveal>
-                <div className="radiance mx-auto flex max-w-[36rem] flex-col items-center text-center">
+                <div className="mx-auto flex max-w-[36rem] flex-col items-center text-center">
                   <Estrela size={24} className="text-[color:var(--s-accent)]" />
                   <p className="display mt-8 text-d2 italic text-balance">
                     {produto.fechamento}

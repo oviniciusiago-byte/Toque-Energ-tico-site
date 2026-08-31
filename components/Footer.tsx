@@ -13,7 +13,7 @@ export default function Footer() {
     <Section as="footer" surface="charcoal" padding="none" texture>
       {/* assinatura */}
       <div className="shell relative pb-block-sm pt-block">
-        <div className="radiance flex flex-col items-center gap-6 text-center">
+        <div className="flex flex-col items-center gap-6 text-center">
           <Estrela size={28} className="text-[color:var(--s-accent)]" />
           <p className="display text-d2 text-balance">{site.assinatura}</p>
           <p className="body max-w-prose-sm">{site.descricao}</p>

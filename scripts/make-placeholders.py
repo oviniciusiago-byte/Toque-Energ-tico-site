@@ -25,11 +25,12 @@ PUB = os.path.join(RAIZ, 'public')
 
 # paleta da marca (globals.css)
 PARES = [
-    ((244, 238, 226), (234, 225, 208)),  # off-white → cream
-    ((234, 225, 208), (220, 195, 138)),  # cream → dourado claro
-    ((44, 42, 40), (30, 28, 26)),        # grafite → carvão
-    ((58, 42, 31), (30, 28, 26)),        # madeira → carvão
-    ((244, 238, 226), (185, 146, 71)),   # off-white → dourado
+    ((244, 238, 226), (228, 218, 200)),  # off-white → cream
+    ((234, 225, 208), (206, 178, 124)),  # cream → dourado claro
+    ((90, 86, 82), (46, 44, 41)),        # cimento queimado → escuro
+    ((62, 45, 33), (28, 25, 22)),        # madeira → carvão
+    ((233, 226, 212), (168, 133, 66)),   # off-white → dourado
+    ((36, 46, 39), (22, 29, 24)),        # verde botânico
 ]
 
 FONTES = [
@@ -85,14 +86,10 @@ def gerar(caminho_rel, w, h, rotulo):
     brilho = Image.new('RGB', (w, h), (220, 195, 138) if escuro else (255, 252, 244))
     img = Image.composite(brilho, img, luz.point(lambda v: int(v * 0.65)))
 
-    # rótulo — deixa claro que é placeholder
-    d = ImageDraw.Draw(img)
-    tinta = (244, 238, 226) if escuro else (36, 33, 29)
-    f1 = fonte(max(13, w // 34))
-    f2 = fonte(max(10, w // 62))
-    d.text((w * 0.07, h * 0.82), rotulo, font=f1, fill=tinta)
-    d.text((w * 0.07, h * 0.895), 'PLACEHOLDER · substituir pela foto real', font=f2, fill=tinta)
-    d.line([(w * 0.07, h * 0.795), (w * 0.07 + w * 0.09, h * 0.795)], fill=(185, 146, 71), width=2)
+    # Sem rótulo impresso: a imagem é um gradiente tonal limpo, para o site
+    # poder ser apresentado ao cliente antes das fotos reais. O aviso de que
+    # são placeholders fica no README, não queimado no pixel.
+    _ = rotulo
 
     img.save(destino, 'JPEG', quality=82, optimize=True)
     return True

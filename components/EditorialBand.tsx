@@ -33,13 +33,12 @@ export default function EditorialBand({
         <Image src={imagem} alt={alt} fill sizes="100vw" className="object-cover" />
       </Parallax>
 
+      {/* Véu plano: o contraste do texto é o mesmo em qualquer ponto da faixa
+          (um gradiente deixava o topo ilegível). */}
       <span
         aria-hidden="true"
         className="absolute inset-0 -z-10"
-        style={{
-          background:
-            'linear-gradient(to top, rgb(var(--charcoal-rgb) / 0.86) 0%, rgb(var(--charcoal-rgb) / 0.4) 52%, rgb(var(--charcoal-rgb) / 0.14) 100%)',
-        }}
+        style={{ backgroundColor: 'rgb(var(--charcoal-rgb) / 0.66)' }}
       />
 
       <div className="shell relative w-full pb-block-sm pt-block">

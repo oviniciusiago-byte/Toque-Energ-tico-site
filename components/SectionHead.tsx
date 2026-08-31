@@ -11,6 +11,7 @@ export default function SectionHead({
   titulo,
   intro,
   acao,
+  meta,
   alinhamento = 'left',
   tamanho = 'd2',
   as: Tag = 'h2',
@@ -22,6 +23,8 @@ export default function SectionHead({
   titulo: ReactNode;
   intro?: string;
   acao?: ReactNode;
+  /** Linha de especificação (preço da linha, disponibilidade) — vai abaixo da intro. */
+  meta?: string;
   alinhamento?: 'left' | 'center';
   tamanho?: 'd1' | 'd2' | 'd3';
   as?: 'h1' | 'h2';
@@ -39,13 +42,15 @@ export default function SectionHead({
         {(indice || label) && (
           <Reveal>
             <div
-              className={`flex items-center gap-3 ${centro ? 'justify-center' : ''}`}
+              className={`flex flex-wrap items-center gap-x-3 gap-y-2 ${
+                centro ? 'justify-center' : ''
+              }`}
             >
               {indice ? <span className="label-quiet tnum">{indice}</span> : null}
               {indice && label ? (
                 <span
                   aria-hidden="true"
-                  className="h-px w-6 bg-[color:var(--s-line)]"
+                  className="h-px w-6 shrink-0 bg-[color:var(--s-line)]"
                 />
               ) : null}
               {label ? <span className="label">{label}</span> : null}
@@ -61,6 +66,17 @@ export default function SectionHead({
           <Reveal delay={0.14}>
             <p className={`lede mt-6 max-w-prose text-pretty ${centro ? 'mx-auto' : ''}`}>
               {intro}
+            </p>
+          </Reveal>
+        ) : null}
+
+        {meta ? (
+          <Reveal delay={0.2}>
+            <p
+              className={`label-quiet mt-7 border-t pt-5 ${centro ? 'mx-auto inline-block' : ''}`}
+              style={{ borderColor: 'var(--s-line)' }}
+            >
+              {meta}
             </p>
           </Reveal>
         ) : null}

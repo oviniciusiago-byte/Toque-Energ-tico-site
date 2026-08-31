@@ -5,7 +5,7 @@ export type Surface =
   | 'cream'
   | 'gold'
   | 'charcoal'
-  | 'graphite'
+  | 'concrete'
   | 'wood'
   | 'forest'
   | 'image';
@@ -47,7 +47,7 @@ export default function Section({
     cream: 'surface-cream',
     gold: 'surface-gold',
     charcoal: 'surface-charcoal',
-    graphite: 'surface-graphite',
+    concrete: 'surface-concrete',
     wood: 'surface-wood',
     forest: 'surface-forest',
     image: 'surface-image',
@@ -60,7 +60,7 @@ export default function Section({
     loose: 'py-block-lg',
   }[padding];
 
-  const escura = ['charcoal', 'graphite', 'wood', 'forest', 'image'].includes(surface);
+  const escura = ['charcoal', 'concrete', 'wood', 'forest', 'image'].includes(surface);
 
   return (
     <Tag

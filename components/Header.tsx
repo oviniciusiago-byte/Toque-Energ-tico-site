@@ -18,8 +18,13 @@ export default function Header() {
   const [rolou, setRolou] = useState(false);
   const [menuAberto, setMenuAberto] = useState(false);
 
-  /** Só a home tem hero em vídeo: lá o header nasce transparente sobre o escuro. */
-  const sobreHero = pathname === '/' && !rolou;
+  /**
+   * O header precisa saber se o PRIMEIRO bloco da página é claro ou escuro:
+   * antes de rolar ele é transparente, e tinta escura sobre bloco escuro fica
+   * invisível. Em vez de fixar por rota, lê a superfície do primeiro bloco.
+   */
+  const [topoEscuro, setTopoEscuro] = useState(true);
+  const sobreEscuro = topoEscuro && !rolou;
 
   useEffect(() => {
     const aoRolar = () => setRolou(window.scrollY > 12);
@@ -29,6 +34,14 @@ export default function Header() {
   }, []);
 
   useEffect(() => setMenuAberto(false), [pathname]);
+
+  useEffect(() => {
+    const primeiro = document.querySelector<HTMLElement>('main [data-surface]');
+    const superficie = primeiro?.dataset.surface;
+    setTopoEscuro(
+      !superficie || ['charcoal', 'concrete', 'wood', 'forest', 'image'].includes(superficie),
+    );
+  }, [pathname]);
 
   useEffect(() => {
     const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } })
@@ -81,15 +94,16 @@ export default function Header() {
         <motion.header
           initial={false}
           animate={{
-            backgroundColor: rolou
-              ? sobreHero
-                ? 'rgb(26 24 22 / 0.72)'
-                : 'rgb(244 238 226 / 0.86)'
-              : 'rgb(244 238 226 / 0)',
+            backgroundColor: rolou ? 'rgb(26 24 22 / 0.92)' : 'rgb(26 24 22 / 0)',
           }}
           transition={{ duration: reduzido ? 0.2 : 0.6, ease: EASE }}
-          className={`${rolou ? 'backdrop-blur-[8px] backdrop-saturate-150' : ''} ${
-            sobreHero ? 'surface-image' : 'surface-sand'
+          /*
+            Ao rolar, o header fica sólido escuro. Translúcido sobre seções que
+            trocam de cor é frágil: o texto some quando passa por um bloco
+            claro. Sólido é previsível e sempre legível.
+          */
+          className={`${rolou ? 'backdrop-blur-[10px]' : ''} ${
+            rolou || sobreEscuro ? 'surface-charcoal' : 'surface-sand'
           }`}
           style={{ color: 'var(--s-fg)' }}
         >
@@ -147,7 +161,7 @@ export default function Header() {
                 onClick={() => setMenuAberto(true)}
                 aria-label="Abrir menu"
                 aria-expanded={menuAberto}
-                className="inline-flex h-9 items-center gap-2 rounded-full border border-[color:var(--s-line)] px-3.5 transition-colors duration-500 hover:border-[color:var(--s-fg)] md:hidden"
+                className="control gap-2 px-4 md:hidden"
               >
                 <span className="flex flex-col gap-[4px]" aria-hidden="true">
                   <span className="block h-px w-4 bg-current" />
@@ -183,7 +197,7 @@ export default function Header() {
                   type="button"
                   onClick={() => setMenuAberto(false)}
                   aria-label="Fechar menu"
-                  className="inline-flex h-9 items-center gap-2 rounded-full border border-[color:var(--s-line)] px-3.5"
+                  className="control gap-2 px-4"
                 >
                   <span aria-hidden="true" className="relative block h-3.5 w-3.5">
                     <span className="absolute left-0 top-1/2 block h-px w-3.5 rotate-45 bg-current" />

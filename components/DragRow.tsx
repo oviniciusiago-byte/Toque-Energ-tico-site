@@ -63,19 +63,22 @@ export default function DragRow({
         onPointerMove={aoMover}
         onPointerUp={aoSoltar}
         onPointerLeave={aoSoltar}
-        className={`no-scrollbar -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:gap-8 sm:px-8 lg:-mx-12 lg:px-12 ${
+        className={`no-scrollbar -mx-5 flex snap-x snap-mandatory items-stretch gap-5 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:gap-8 sm:px-8 lg:-mx-12 lg:px-12 ${
           arrastando ? 'cursor-grabbing select-none' : temOverflow ? 'md:cursor-grab' : ''
         }`}
       >
         {children.map((filho, i) => (
-          <div key={i} className={`shrink-0 snap-start ${itemClassName}`}>
+          <div key={i} className={`h-full shrink-0 snap-start ${itemClassName}`}>
             {filho}
           </div>
         ))}
       </div>
 
       {temOverflow ? (
-        <p className="label-quiet mt-6 flex items-center gap-2" aria-hidden="true">
+        <p
+          className="label-quiet mt-7 flex items-center justify-end gap-2"
+          aria-hidden="true"
+        >
           <svg width="22" height="6" viewBox="0 0 22 6" fill="none">
             <path
               d="M0 3h20m0 0-3.2-2.6M20 3l-3.2 2.6"

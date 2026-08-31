@@ -96,7 +96,7 @@ export default function SobrePage() {
       {/* Manifesto da estrela */}
       <Section surface="wood" padding="loose" texture>
         <div className="shell relative">
-          <div className="radiance mx-auto max-w-[42rem] text-center">
+          <div className="mx-auto max-w-[42rem] text-center">
             <Reveal>
               <Estrela size={26} className="mx-auto text-[color:var(--s-accent)]" />
             </Reveal>

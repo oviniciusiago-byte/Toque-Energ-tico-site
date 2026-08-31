@@ -64,9 +64,10 @@ export default async function CategoriaPage({
             as="h1"
             tamanho="d1"
             indice={String(indice).padStart(2, '0')}
-            label={categoria.notaLinha ?? 'Linha'}
+            label="Linha"
             titulo={categoria.nome}
             intro={categoria.intro}
+            meta={categoria.notaLinha}
           />
         </div>
       </Section>
@@ -81,11 +82,7 @@ export default async function CategoriaPage({
             >
               {itens.map((p, i) => (
                 <RevealItem key={p.slug}>
-                  <ProductCard
-                    produto={p}
-                    prioridade={i < 3}
-                    indice={String(i + 1).padStart(2, '0')}
-                  />
+                  <ProductCard produto={p} prioridade={i < 3} />
                 </RevealItem>
               ))}
             </RevealGroup>

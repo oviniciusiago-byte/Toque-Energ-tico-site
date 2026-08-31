@@ -81,6 +81,7 @@ export default function Hero() {
   return (
     <section
       ref={secaoRef}
+      data-surface="image"
       aria-label={`${site.nome} — ${site.assinatura}`}
       className="surface-image relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-charcoal text-[color:var(--s-fg)]"
     >

@@ -78,9 +78,10 @@ export default function CatalogoPage() {
             <div className="shell">
               <SectionHead
                 indice={String(i + 1).padStart(2, '0')}
-                label={categoria.notaLinha ?? undefined}
+                label="Linha"
                 titulo={categoria.nome}
                 intro={categoria.intro}
+                meta={categoria.notaLinha}
                 acao={
                   <Link href={`/catalogo/${categoria.slug}`} className="btn btn-outline">
                     Ver a linha

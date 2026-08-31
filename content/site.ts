@@ -113,6 +113,8 @@ export const home = {
   faixaEditorial: {
     label: 'Presença',
     frase: 'O que é cuidado por dentro aparece por fora.',
+    apoio:
+      'A referência é a estrela: um centro que irradia para todos os lados. Presença, proteção e harmonia não são coisas que se compram — são estados que pequenos rituais ajudam a lembrar.',
   },
   feitoAMao: {
     kicker: 'Feito à mão',

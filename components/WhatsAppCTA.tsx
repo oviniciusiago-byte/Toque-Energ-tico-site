@@ -25,7 +25,7 @@ export default function WhatsAppCTA({
   return (
     <Section surface={surface} padding="loose">
       <div className="shell">
-        <div className="radiance mx-auto flex max-w-[40rem] flex-col items-center text-center">
+        <div className="mx-auto flex max-w-[40rem] flex-col items-center text-center">
           <Reveal>
             <Estrela size={26} className="text-[color:var(--s-accent)]" />
           </Reveal>

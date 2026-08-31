@@ -6,12 +6,14 @@
    TOQUE ENERGÉTICO — sistema de superfícies
    Presença · Proteção · Harmonia
 
-   A ideia central: cada seção é um BLOCO DE COR DEFINIDO. Uma seção declara
-   a sua superfície (`surface-sand`, `surface-charcoal`, …) e com isso define
-   fundo, texto, texto secundário, hairline e acento. Todo componente dentro
-   dela se adapta sozinho — inclusive os botões, que invertem.
+   Cada seção é um BLOCO DE COR DEFINIDO. Uma seção declara a sua superfície
+   (`surface-sand`, `surface-concrete`, …) e com isso define fundo, texto,
+   texto secundário, hairline e acento. Tudo dentro dela se adapta sozinho —
+   inclusive os botões, que invertem.
 
-   Trocar a cor de uma seção = trocar uma palavra no JSX.
+   As opacidades de `--s-muted` e `--s-faint` NÃO são estéticas: cada uma foi
+   calculada para passar 4.5:1 (WCAG AA) contra o próprio fundo. Ao mudar uma
+   cor de superfície, recalcule (scripts/check-contrast.py).
    ========================================================================== */
 
 :root {
@@ -19,13 +21,14 @@
   --sand-rgb: 244 238 226; /* off-white base */
   --cream-rgb: 234 225 208; /* claro alternativo */
   --gold-rgb: 185 146 71; /* dourado da marca */
-  --gold-soft-rgb: 220 195 138; /* dourado claro (glows, acentos no escuro) */
-  --gold-deep-rgb: 138 106 37; /* dourado escuro (rótulos sobre claro) */
+  --gold-soft-rgb: 220 195 138; /* dourado claro — acentos no escuro */
+  --gold-deep-rgb: 122 92 31; /* dourado escuro — rótulos sobre claro (5.3:1) */
   --charcoal-rgb: 26 24 22; /* quase-preto quente */
-  --graphite-rgb: 44 42 40; /* cinza-chumbo */
+  --concrete-rgb: 74 71 68; /* cimento queimado */
   --wood-rgb: 51 36 26; /* madeira escura */
   --forest-rgb: 26 35 29; /* verde botânico escuro */
   --ink-rgb: 36 33 29; /* texto sobre claro */
+  --ink-gold-rgb: 20 17 11; /* texto sobre dourado (7.3:1) */
 
   --sand: rgb(var(--sand-rgb));
   --cream: rgb(var(--cream-rgb));
@@ -33,7 +36,7 @@
   --gold-soft: rgb(var(--gold-soft-rgb));
   --gold-deep: rgb(var(--gold-deep-rgb));
   --charcoal: rgb(var(--charcoal-rgb));
-  --graphite: rgb(var(--graphite-rgb));
+  --concrete: rgb(var(--concrete-rgb));
   --wood: rgb(var(--wood-rgb));
   --forest: rgb(var(--forest-rgb));
   --ink: rgb(var(--ink-rgb));
@@ -41,8 +44,8 @@
   /* --- movimento --------------------------------------------------------- */
   --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* --- textura (papel/pedra) — só em superfícies escuras ----------------- */
-  --texture-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  /* --- textura de cimento: dois grãos sobrepostos, bem sutis ------------- */
+  --texture-cement: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.024' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23a)' opacity='0.55'/%3E%3Crect width='300' height='300' filter='url(%23b)' opacity='0.3'/%3E%3C/svg%3E");
 }
 
 /* ==========================================================================
@@ -59,93 +62,94 @@
   .surface-sand {
     --s-bg: var(--sand);
     --s-fg: var(--ink);
-    --s-muted: rgb(var(--ink-rgb) / 0.64);
-    --s-faint: rgb(var(--ink-rgb) / 0.42);
+    --s-muted: rgb(var(--ink-rgb) / 0.74); /* 5.7:1 */
+    --s-faint: rgb(var(--ink-rgb) / 0.66); /* 4.7:1 */
     --s-line: rgb(var(--ink-rgb) / 0.16);
+    --s-line-strong: rgb(var(--ink-rgb) / 0.3);
     --s-accent: var(--gold-deep);
-    --s-glow: rgb(var(--gold-rgb) / 0.14);
-    --s-fill: rgb(var(--ink-rgb) / 0.05);
+    --s-fill: rgb(var(--ink-rgb) / 0.055);
   }
 
   .surface-cream {
     --s-bg: var(--cream);
     --s-fg: var(--ink);
-    --s-muted: rgb(var(--ink-rgb) / 0.66);
-    --s-faint: rgb(var(--ink-rgb) / 0.44);
+    --s-muted: rgb(var(--ink-rgb) / 0.76);
+    --s-faint: rgb(var(--ink-rgb) / 0.68);
     --s-line: rgb(var(--ink-rgb) / 0.18);
+    --s-line-strong: rgb(var(--ink-rgb) / 0.32);
     --s-accent: var(--gold-deep);
-    --s-glow: rgb(var(--gold-rgb) / 0.16);
-    --s-fill: rgb(var(--ink-rgb) / 0.05);
+    --s-fill: rgb(var(--ink-rgb) / 0.055);
   }
 
   /* dourada (faixas curtas — nunca blocos longos) ----------------------- */
   .surface-gold {
     --s-bg: var(--gold);
-    --s-fg: rgb(33 28 19);
-    --s-muted: rgb(33 28 19 / 0.72);
-    --s-faint: rgb(33 28 19 / 0.5);
-    --s-line: rgb(33 28 19 / 0.24);
-    --s-accent: rgb(33 28 19);
-    --s-glow: rgb(255 250 235 / 0.2);
-    --s-fill: rgb(33 28 19 / 0.07);
+    --s-fg: rgb(var(--ink-gold-rgb));
+    --s-muted: rgb(var(--ink-gold-rgb) / 0.82); /* 4.9:1 */
+    --s-faint: rgb(var(--ink-gold-rgb) / 0.8);
+    --s-line: rgb(var(--ink-gold-rgb) / 0.26);
+    --s-line-strong: rgb(var(--ink-gold-rgb) / 0.42);
+    --s-accent: rgb(var(--ink-gold-rgb));
+    --s-fill: rgb(var(--ink-gold-rgb) / 0.08);
   }
 
   /* escuras ------------------------------------------------------------ */
   .surface-charcoal {
     --s-bg: var(--charcoal);
     --s-fg: var(--sand);
-    --s-muted: rgb(var(--sand-rgb) / 0.64);
-    --s-faint: rgb(var(--sand-rgb) / 0.4);
-    --s-line: rgb(var(--gold-rgb) / 0.3);
+    --s-muted: rgb(var(--sand-rgb) / 0.72); /* 8.3:1 */
+    --s-faint: rgb(var(--sand-rgb) / 0.6); /* 5.9:1 */
+    --s-line: rgb(var(--sand-rgb) / 0.18);
+    --s-line-strong: rgb(var(--sand-rgb) / 0.34);
     --s-accent: var(--gold-soft);
-    --s-glow: rgb(var(--gold-rgb) / 0.2);
-    --s-fill: rgb(var(--sand-rgb) / 0.06);
+    --s-fill: rgb(var(--sand-rgb) / 0.07);
   }
 
-  .surface-graphite {
-    --s-bg: var(--graphite);
+  /* cimento queimado — o "cinza" da marca */
+  .surface-concrete {
+    --s-bg: var(--concrete);
     --s-fg: var(--sand);
-    --s-muted: rgb(var(--sand-rgb) / 0.64);
-    --s-faint: rgb(var(--sand-rgb) / 0.4);
-    --s-line: rgb(var(--gold-rgb) / 0.3);
+    --s-muted: rgb(var(--sand-rgb) / 0.84); /* 5.5:1 */
+    --s-faint: rgb(var(--sand-rgb) / 0.72); /* 4.6:1 */
+    --s-line: rgb(var(--sand-rgb) / 0.24);
+    --s-line-strong: rgb(var(--sand-rgb) / 0.42);
     --s-accent: var(--gold-soft);
-    --s-glow: rgb(var(--gold-rgb) / 0.2);
-    --s-fill: rgb(var(--sand-rgb) / 0.06);
+    --s-fill: rgb(var(--sand-rgb) / 0.09);
   }
 
   .surface-wood {
     --s-bg: var(--wood);
     --s-fg: var(--sand);
-    --s-muted: rgb(var(--sand-rgb) / 0.66);
-    --s-faint: rgb(var(--sand-rgb) / 0.42);
+    --s-muted: rgb(var(--sand-rgb) / 0.74);
+    --s-faint: rgb(var(--sand-rgb) / 0.62);
     --s-line: rgb(var(--gold-soft-rgb) / 0.28);
+    --s-line-strong: rgb(var(--gold-soft-rgb) / 0.46);
     --s-accent: var(--gold-soft);
-    --s-glow: rgb(var(--gold-soft-rgb) / 0.18);
-    --s-fill: rgb(var(--sand-rgb) / 0.07);
+    --s-fill: rgb(var(--sand-rgb) / 0.08);
   }
 
   .surface-forest {
     --s-bg: var(--forest);
     --s-fg: var(--sand);
-    --s-muted: rgb(var(--sand-rgb) / 0.66);
-    --s-faint: rgb(var(--sand-rgb) / 0.42);
+    --s-muted: rgb(var(--sand-rgb) / 0.74);
+    --s-faint: rgb(var(--sand-rgb) / 0.6);
     --s-line: rgb(var(--gold-soft-rgb) / 0.26);
+    --s-line-strong: rgb(var(--gold-soft-rgb) / 0.44);
     --s-accent: var(--gold-soft);
-    --s-glow: rgb(var(--gold-soft-rgb) / 0.16);
-    --s-fill: rgb(var(--sand-rgb) / 0.07);
+    --s-fill: rgb(var(--sand-rgb) / 0.08);
   }
 
-  /* Sobre imagem: o fundo real é a foto + overlay, mas --s-bg precisa ser uma
+  /* Sobre imagem: o fundo real é a foto + véu plano. --s-bg precisa ser uma
      cor de verdade — é dela que sai o texto dos botões sólidos, que invertem. */
   .surface-image {
     --s-bg: var(--charcoal);
     --s-fg: var(--sand);
-    --s-muted: rgb(var(--sand-rgb) / 0.74);
-    --s-faint: rgb(var(--sand-rgb) / 0.5);
-    --s-line: rgb(var(--sand-rgb) / 0.26);
+    --s-muted: rgb(var(--sand-rgb) / 0.84);
+    --s-faint: rgb(var(--sand-rgb) / 0.72);
+    --s-line: rgb(var(--sand-rgb) / 0.3);
+    --s-line-strong: rgb(var(--sand-rgb) / 0.48);
     --s-accent: var(--gold-soft);
-    --s-glow: rgb(var(--gold-rgb) / 0.22);
-    --s-fill: rgb(var(--sand-rgb) / 0.08);
+    --s-fill: rgb(var(--sand-rgb) / 0.1);
   }
 }
 
@@ -158,7 +162,6 @@
 }
 
 body {
-  /* fundo de segurança: as seções pintam a si mesmas */
   background-color: var(--sand);
   color: var(--ink);
   font-feature-settings: 'kern' 1, 'liga' 1;
@@ -184,10 +187,11 @@ html.lenis body {
   color: var(--charcoal);
 }
 
+/* Foco visível e generoso — 2px, como pedem as diretrizes de acessibilidade. */
 :focus-visible {
-  outline: 1px solid currentColor;
+  outline: 2px solid currentColor;
   outline-offset: 3px;
-  border-radius: 1px;
+  border-radius: 2px;
 }
 
 /* ==========================================================================
@@ -217,18 +221,18 @@ html.lenis body {
 
   .label {
     @apply font-sans;
-    font-size: clamp(0.6rem, 0.58rem + 0.1vw, 0.68rem);
+    font-size: clamp(0.64rem, 0.62rem + 0.1vw, 0.72rem);
     line-height: 1;
-    letter-spacing: 0.26em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--s-accent);
   }
 
   .label-quiet {
     @apply font-sans;
-    font-size: clamp(0.6rem, 0.58rem + 0.1vw, 0.68rem);
+    font-size: clamp(0.64rem, 0.62rem + 0.1vw, 0.72rem);
     line-height: 1;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--s-faint);
   }
@@ -243,7 +247,7 @@ html.lenis body {
   .body {
     @apply font-sans;
     font-size: clamp(0.95rem, 0.92rem + 0.18vw, 1.05rem);
-    line-height: 1.75;
+    line-height: 1.72;
     color: var(--s-muted);
   }
 
@@ -261,20 +265,21 @@ html.lenis body {
     background: var(--s-line);
   }
 
-  /* Botões — invertem conforme a superfície, contraste sempre garantido -- */
+  /* Botões — invertem conforme a superfície, contraste sempre garantido.
+     Altura mínima de 48px atende o alvo de toque recomendado.            */
   .btn {
-    @apply relative inline-flex items-center justify-center gap-2 whitespace-nowrap font-sans;
+    @apply relative inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap font-sans;
     font-size: 0.72rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    padding: 1.05rem 2rem;
+    min-height: 48px;
+    padding: 0 2rem;
     border-radius: 999px;
     border: 1px solid transparent;
     transition:
-      background-color 500ms var(--ease-calm),
-      color 500ms var(--ease-calm),
-      border-color 500ms var(--ease-calm),
-      opacity 400ms var(--ease-calm);
+      background-color 400ms var(--ease-calm),
+      color 400ms var(--ease-calm),
+      border-color 400ms var(--ease-calm);
   }
 
   .btn-solid {
@@ -291,7 +296,7 @@ html.lenis body {
   .btn-outline {
     background: transparent;
     color: var(--s-fg);
-    border-color: var(--s-line);
+    border-color: var(--s-line-strong);
   }
   .btn-outline:hover {
     border-color: var(--s-fg);
@@ -299,8 +304,22 @@ html.lenis body {
   }
 
   .btn-sm {
-    padding: 0.8rem 1.4rem;
+    min-height: 40px;
+    padding: 0 1.3rem;
     font-size: 0.66rem;
+  }
+
+  /* Controle circular (som, fechar) — 44px, alvo de toque adequado. */
+  .control {
+    @apply inline-flex cursor-pointer items-center justify-center rounded-full border;
+    height: 44px;
+    min-width: 44px;
+    border-color: var(--s-line-strong);
+    transition: border-color 400ms var(--ease-calm), background-color 400ms var(--ease-calm);
+  }
+  .control:hover {
+    border-color: var(--s-fg);
+    background: var(--s-fill);
   }
 
   /* Link com sublinhado que cresce da esquerda */
@@ -316,10 +335,10 @@ html.lenis body {
     height: 1px;
     width: 100%;
     background: currentColor;
-    opacity: 0.4;
+    opacity: 0.45;
     transform-origin: left;
     transform: scaleX(0);
-    transition: transform 650ms var(--ease-calm);
+    transition: transform 600ms var(--ease-calm);
   }
   .link-quiet:hover::after {
     transform: scaleX(1);
@@ -327,47 +346,70 @@ html.lenis body {
 
   /* Link com seta */
   .link-arrow {
-    @apply inline-flex items-center gap-2 font-sans;
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
+    @apply inline-flex cursor-pointer items-center gap-2 font-sans;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--s-accent);
   }
   .link-arrow svg {
-    transition: transform 600ms var(--ease-calm);
+    transition: transform 500ms var(--ease-calm);
   }
   .link-arrow:hover svg {
     transform: translateX(4px);
   }
 
-  /* Radiância — a estrela como fonte de luz, nunca como ícone */
-  .radiance {
-    position: relative;
-  }
-  .radiance::before {
-    content: '';
-    position: absolute;
-    inset: -35% -12%;
-    z-index: 0;
-    pointer-events: none;
-    background: radial-gradient(52% 48% at 50% 50%, var(--s-glow) 0%, transparent 72%);
-  }
-  .radiance > * {
-    position: relative;
-    z-index: 1;
+  /* Cartões — anatomia única para produto e coleção, para as fileiras
+     ficarem alinhadas linha por linha.                                   */
+  .card-media {
+    @apply relative overflow-hidden;
+    background-color: var(--s-fill);
   }
 
-  /* Textura sutil (só no escuro) */
+  .card-title-row {
+    @apply flex items-baseline gap-3;
+  }
+
+  /* Nome com no máximo duas linhas: evita que um título longo estique o
+     cartão de forma imprevisível. */
+  .card-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Descrição com altura reservada: duas linhas sempre, então a régua de
+     metadados fica na mesma altura em todos os cartões da fileira.       */
+  .card-desc {
+    @apply body;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: calc(2 * 1.6 * 0.92rem);
+  }
+
+  /* `mt-auto` ancora os metadados na BASE do cartão. Como todos os cartões de
+     uma fileira têm a mesma altura (grid/flex estica), as réguas ficam
+     alinhadas mesmo quando um título ocupa duas linhas. */
+  .card-meta {
+    @apply mt-auto flex flex-wrap items-center gap-x-3 gap-y-2 pt-4;
+  }
+
+  /* Textura de cimento — só em superfícies escuras/concreto */
   .texture::after {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.45;
-    background-image: var(--texture-noise);
-    background-size: 180px 180px;
-    mix-blend-mode: soft-light;
+    opacity: 0.28;
+    background-image: var(--texture-cement);
+    background-size: 300px 300px;
+    mix-blend-mode: overlay;
   }
 }
 
@@ -387,7 +429,7 @@ html.lenis body {
   .no-scrollbar {
     scrollbar-width: none;
   }
-  /* números editoriais alinhados */
+  /* números editoriais alinhados (preços, contagens) */
   .tnum {
     font-variant-numeric: tabular-nums;
   }

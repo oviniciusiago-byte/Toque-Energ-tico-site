@@ -24,8 +24,7 @@ export default function SoundToggle({ className = '' }: { className?: string }) 
       aria-pressed={ligado}
       aria-label={rotulo}
       title={rotulo}
-      className={`inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors duration-500 ease-calm ${className}`}
-      style={{ borderColor: 'var(--s-line)' }}
+      className={`control ${className}`}
     >
       <span className="flex h-3.5 items-end gap-[2.5px]" aria-hidden="true">
         {[0, 1, 2].map((i) => (

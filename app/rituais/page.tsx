@@ -78,7 +78,7 @@ export default function RituaisPage() {
       {/* Fechamento */}
       <Section surface="forest" padding="loose" texture>
         <div className="shell relative">
-          <div className="radiance mx-auto flex max-w-[38rem] flex-col items-center text-center">
+          <div className="mx-auto flex max-w-[38rem] flex-col items-center text-center">
             <Reveal>
               <Estrela size={24} className="text-[color:var(--s-accent)]" />
             </Reveal>

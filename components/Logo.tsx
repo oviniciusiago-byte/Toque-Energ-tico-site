@@ -43,7 +43,7 @@ export default function Logo({ compacto = false }: { compacto?: boolean }) {
     <span className="flex items-center gap-2.5 leading-none">
       <Estrela size={compacto ? 16 : 19} className="text-[color:var(--s-accent)]" />
       <span className="flex flex-col">
-        <span className="display text-[1.02rem] tracking-[0.005em] sm:text-[1.12rem]">
+        <span className="display whitespace-nowrap text-[0.95rem] tracking-[0.005em] sm:text-[1.12rem]">
           Toque Energético
         </span>
         {!compacto && (
