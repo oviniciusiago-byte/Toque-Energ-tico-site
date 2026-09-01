@@ -37,15 +37,23 @@ URL="$(grep -oE 'https://toque-energetico-[a-z0-9]+-[a-z0-9-]+\.vercel\.app' "$L
 printf '→ deploy: %s\n' "$URL"
 
 printf '→ esperando ficar Ready…\n'
+# Comparação SEM diferenciar maiúsculas: a CLI escreve "● Ready" no `inspect` e
+# "READY" no JSON do `deploy`. Um grep sensível a caixa foi exatamente o que
+# escondeu a falha original — não repetir o erro aqui.
+ESTADO=''
 for _ in $(seq 1 60); do
-  ESTADO="$(npx vercel inspect "$URL" 2>&1 | grep -oE 'READY|ERROR|CANCELED|BUILDING|QUEUED' | head -1)"
-  case "$ESTADO" in
-    READY) break ;;
-    ERROR | CANCELED) falhar "o build terminou em $ESTADO" ;;
-  esac
+  SAIDA="$(npx vercel inspect "$URL" 2>&1)"
+  if printf '%s' "$SAIDA" | grep -qiE '●[[:space:]]*ready'; then
+    ESTADO='pronto'
+    break
+  fi
+  if printf '%s' "$SAIDA" | grep -qiE '●[[:space:]]*(error|canceled)'; then
+    printf '%s\n' "$SAIDA" | grep -iE '●[[:space:]]*(error|canceled)' >&2
+    falhar 'o build terminou em erro'
+  fi
   sleep 5
 done
-[ "${ESTADO:-}" = 'READY' ] || falhar 'tempo esgotado esperando o build'
+[ "$ESTADO" = 'pronto' ] || falhar 'tempo esgotado esperando o build ficar Ready'
 
 printf '→ conferindo o site no ar…\n'
 ROTAS='/ /catalogo /catalogo/brumas-aromas-ambientes /produto/spray-de-protecao /sobre /rituais /faq /contato /onde-encontrar /atacado'
@@ -61,7 +69,10 @@ done
 
 # O domínio curto precisa estar apontando para ESTE deploy, senão a cliente
 # continua vendo a versão anterior.
-if ! npx vercel alias ls 2>&1 | grep -q "${URL#https://}.*toque-energetico.vercel.app"; then
+# Captura antes de filtrar: `npx vercel … | grep -q` mata o node com SIGPIPE
+# quando o grep sai no primeiro casamento (dá "Abort trap: 6").
+INSPECAO="$(npx vercel inspect "$URL" 2>&1)"
+if ! printf '%s' "$INSPECAO" | grep -qi 'toque-energetico\.vercel\.app'; then
   printf '   \033[33m⚠ o domínio curto pode não ter apontado para este deploy\033[0m\n'
 fi
 
