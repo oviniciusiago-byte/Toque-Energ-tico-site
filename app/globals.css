@@ -268,7 +268,10 @@ html.lenis body {
   .prose-brand p {
     @apply body;
   }
-  .prose-brand p + p {
+  /* `> * + *` e não `p + p`: cada parágrafo vem dentro de um wrapper de
+     animação, então os <p> nunca são irmãos adjacentes e o espaçamento
+     desaparecia. */
+  .prose-brand > * + * {
     margin-top: 1.4em;
   }
 
