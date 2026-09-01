@@ -8,7 +8,7 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "placeholders": "python3 scripts/make-placeholders.py",
-    "deploy": "vercel deploy --prod"
+    "deploy": "bash scripts/deploy.sh"
   },
   "dependencies": {
     "framer-motion": "^13.1.1",
