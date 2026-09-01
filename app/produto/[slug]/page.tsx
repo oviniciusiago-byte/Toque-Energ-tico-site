@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import Accordion from '@/components/Accordion';
 import Badge from '@/components/Badge';
 import DragRow from '@/components/DragRow';
-import { Estrela } from '@/components/Logo';
+import Star from '@/components/Star';
 import ProductCard from '@/components/ProductCard';
 import ProductGallery from '@/components/ProductGallery';
 import { Reveal, RevealGroup, RevealItem } from '@/components/Reveal';
@@ -98,7 +98,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
     <>
       <article>
         {/* ── Galeria + compra ─────────────────────────────────── areia ── */}
-        <Section surface="sand" padding="none">
+        <Section surface="bone" padding="none">
           <div className="shell pb-block pt-32 sm:pt-40">
             <Reveal>
               <nav aria-label="Você está em" className="mb-10">
@@ -205,7 +205,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
         </Section>
 
         {/* ── Para que serve ──────────────────────────────────── creme ── */}
-        <Section surface="cream" padding="loose">
+        <Section surface="tan" padding="loose">
           <div className="shell">
             <div className="grid-12 gap-y-10">
               <div className="col-span-4 md:col-span-3">
@@ -225,7 +225,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
         </Section>
 
         {/* ── Ficha + detalhes ────────────────────────────────── areia ── */}
-        <Section surface="sand" padding="loose">
+        <Section surface="bone" padding="loose">
           <div className="shell">
             <div className="grid-12 gap-y-14">
               <div className="col-span-4 md:col-span-4">
@@ -263,11 +263,11 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
 
         {/* ── Frase de fechamento ──────────────────────────── madeira ── */}
         {produto.fechamento ? (
-          <Section surface="wood" padding="loose" texture>
+          <Section surface="noir" padding="loose" texture>
             <div className="shell relative">
               <Reveal>
                 <div className="mx-auto flex max-w-[36rem] flex-col items-center text-center">
-                  <Estrela size={24} className="text-[color:var(--s-accent)]" />
+                  <Star size={24} className="text-[color:var(--s-accent)]" />
                   <p className="display mt-8 text-d2 italic text-balance">
                     {produto.fechamento}
                   </p>
@@ -280,7 +280,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
 
       {/* ── Relacionados ────────────────────────────────────── creme ── */}
       {relacionados.length ? (
-        <Section surface="cream" padding="loose">
+        <Section surface="tan" padding="loose">
           <div className="shell">
             <SectionHead
               titulo="Talvez combine"

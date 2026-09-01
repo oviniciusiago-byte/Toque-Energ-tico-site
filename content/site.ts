@@ -103,18 +103,19 @@ export const home = {
     /** Tipografia-manifesto: revelada palavra a palavra. */
     frase: 'Um gesto pequeno que reorganiza o resto.',
   },
-  editorial: {
-    label: 'Feito à mão',
-    frase: 'Cada preparo passa por duas mãos antes de chegar às suas.',
-    apoio:
-      'Produção artesanal em pequenos lotes. É por isso que uma cor pode variar de um preparo para o outro — e é por isso que cada um chega inteiro.',
+  historia: {
+    label: 'História e processo',
+    titulo: 'Criado com intenção e cuidado aos detalhes.',
+    texto:
+      'Durante quase sete anos, cada fórmula foi preparada, usada, observada e ajustada na experiência de quem a criou. Só depois desse caminho esses cuidados começaram a chegar a outras pessoas. Tudo em pequenos lotes.',
     assinatura: 'Maria Fernanda Pavan · Belo Horizonte / MG',
+    cta: { label: 'A nossa história', href: '/sobre' },
   },
-  faixaEditorial: {
-    label: 'Presença',
-    frase: 'O que é cuidado por dentro aparece por fora.',
-    apoio:
-      'A referência é a estrela: um centro que irradia para todos os lados. Presença, proteção e harmonia não são coisas que se compram — são estados que pequenos rituais ajudam a lembrar.',
+  manifestoCurto: {
+    label: 'O que acreditamos',
+    frase: 'O cuidado começa por dentro e se expressa por fora.',
+    texto:
+      'Nada aqui promete resolver a sua vida. Presença, proteção e harmonia não são coisas que se compram — são estados que pequenos rituais ajudam a lembrar. Um aroma, um banho, um toque, uma pausa.',
   },
   feitoAMao: {
     kicker: 'Feito à mão',
@@ -156,12 +157,15 @@ export const paginas = {
   sobre: {
     h1: 'A Toque Energético',
     kicker: 'Nossa história',
+    /* Primeira pessoa: aqui é importante que apareça quem criou a marca.
+       Nas outras páginas a voz é a da própria Toque Energético. */
     corpo: [
-      'A Toque Energético começou como um cuidado privado antes de virar produto. Há quase sete anos, cada fórmula nasce da mesma forma: uma intenção, um preparo à mão, um teste na própria vida de quem a criou. Só depois de passar por aí é que chega até você.',
-      'A marca reúne ervas, flores, aromas, óleos essenciais e conhecimento terapêutico numa ideia simples de cuidado energético — o cuidado com aquilo que a gente sente, mas nem sempre nomeia. A referência é a estrela: um centro que irradia para todos os lados. O que existe dentro, quando é cuidado, aparece fora. Presença, proteção e harmonia não são coisas que se compram; são estados que pequenos rituais ajudam a lembrar.',
-      'Por isso a gente evita duas coisas com o mesmo cuidado: as promessas mágicas e o discurso do medo. Nada aqui resolve a sua vida por você. O que oferecemos são experiências sensoriais — um aroma, um banho, um gesto — que apoiam movimentos reais, de dentro para fora, no seu tempo.',
+      'A Toque Energético nasceu antes de ser uma marca. Nasceu de um movimento de retorno à minha própria essência e da busca por cuidados que me ajudassem a atravessar a vida com mais presença, proteção e harmonia.',
+      'Durante quase sete anos, cada fórmula foi preparada, usada, observada e ajustada na minha própria experiência. Só depois desse caminho esses cuidados começaram a chegar a outras pessoas.',
+      'Não criamos promessas. Criamos pequenos rituais: um aroma, um banho, um toque. Gestos simples que ajudam a abrir espaço, respirar e voltar para si.',
+      'Tudo é preparado em pequenos lotes, com intenção e cuidado aos detalhes. O movimento não acontece de fora para dentro. O produto oferece apoio, mas o retorno começa na própria pessoa.',
     ],
-    manifesto: 'Um centro que irradia para todos os lados.',
+    manifesto: 'Há cuidados que não pedem pressa.',
   },
   rituais: {
     h1: 'Rituais',
@@ -174,6 +178,7 @@ export const paginas = {
         texto:
           'Borrife, feche os olhos por um instante e respire fundo uma vez. Deixe o aroma chegar antes de seguir. Use ao mudar de ambiente, ao começar ou ao encerrar algo.',
         imagem: '/images/editorial/ritual-brumas.jpg',
+        alt: 'Bruma sendo borrifada no ar, com luz lateral atravessando a névoa',
         categoria: 'brumas-aromas-ambientes',
       },
       {
@@ -181,6 +186,7 @@ export const paginas = {
         texto:
           'Reserve o fim do dia. Faça a infusão, escolha entre o banho completo ou só os pés, e não faça mais nada além de estar ali enquanto a água morna faz o resto.',
         imagem: '/images/editorial/ritual-banhos.jpg',
+        alt: 'Flores e ervas secas em infusão, prontas para o banho',
         categoria: 'banhos-escalda-pes',
       },
       {
@@ -188,6 +194,7 @@ export const paginas = {
         texto:
           'Aqueça poucas gotas entre as mãos e aplique com toques lentos, de preferência com a pele ainda morna do banho. O ritmo do gesto é parte do óleo.',
         imagem: '/images/editorial/ritual-oleos.jpg',
+        alt: 'Óleo de ritual sendo aquecido entre as mãos',
         categoria: 'oleos-de-ritual',
       },
       {
@@ -195,6 +202,7 @@ export const paginas = {
         texto:
           'Aplique nos pulsos ou nas têmporas e respire o aroma de perto. Reaplique sempre que quiser voltar à intenção que escolheu.',
         imagem: '/images/editorial/ritual-rollons.jpg',
+        alt: 'Roll-on de óleos essenciais aplicado no pulso',
         categoria: 'roll-ons-oleos-essenciais',
       },
       {
@@ -202,6 +210,7 @@ export const paginas = {
         texto:
           'Acenda em local ventilado, sobre suporte, e deixe a fumaça marcar a transição do espaço.',
         imagem: '/images/editorial/ritual-incensos.jpg',
+        alt: 'Incenso natural aceso sobre suporte, com a fumaça subindo',
         categoria: 'incensos-naturais',
       },
     ],

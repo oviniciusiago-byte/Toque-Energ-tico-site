@@ -39,7 +39,7 @@ export default function Header() {
     const primeiro = document.querySelector<HTMLElement>('main [data-surface]');
     const superficie = primeiro?.dataset.surface;
     setTopoEscuro(
-      !superficie || ['charcoal', 'concrete', 'wood', 'forest', 'image'].includes(superficie),
+      !superficie || ['olive', 'moss', 'noir', 'concrete', 'image'].includes(superficie),
     );
   }, [pathname]);
 
@@ -69,7 +69,7 @@ export default function Header() {
     <>
       <a
         href="#conteudo"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-full focus:bg-charcoal focus:px-4 focus:py-2 focus:text-xs focus:uppercase focus:tracking-[0.16em] focus:text-sand"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-full focus:bg-olive focus:px-4 focus:py-2 focus:text-xs focus:uppercase focus:tracking-[0.16em] focus:text-bone"
       >
         Ir para o conteúdo
       </a>
@@ -82,7 +82,7 @@ export default function Header() {
           initial={false}
           animate={{ height: rolou ? 0 : 'auto', opacity: rolou ? 0 : 1 }}
           transition={{ duration: reduzido ? 0.2 : 0.6, ease: EASE }}
-          className="surface surface-charcoal overflow-hidden"
+          className="surface surface-olive overflow-hidden"
         >
           <div className="shell py-2.5">
             <p className="text-center font-sans text-[0.68rem] leading-relaxed tracking-[0.06em] text-[color:var(--s-muted)]">
@@ -94,7 +94,7 @@ export default function Header() {
         <motion.header
           initial={false}
           animate={{
-            backgroundColor: rolou ? 'rgb(26 24 22 / 0.92)' : 'rgb(26 24 22 / 0)',
+            backgroundColor: rolou ? 'rgb(var(--olive-rgb) / 0.94)' : 'rgb(var(--olive-rgb) / 0)',
           }}
           transition={{ duration: reduzido ? 0.2 : 0.6, ease: EASE }}
           /*
@@ -103,7 +103,7 @@ export default function Header() {
             claro. Sólido é previsível e sempre legível.
           */
           className={`${rolou ? 'backdrop-blur-[10px]' : ''} ${
-            rolou || sobreEscuro ? 'surface-charcoal' : 'surface-sand'
+            rolou || sobreEscuro ? 'surface-olive' : 'surface-bone'
           }`}
           style={{ color: 'var(--s-fg)' }}
         >
@@ -184,7 +184,7 @@ export default function Header() {
             role="dialog"
             aria-modal="true"
             aria-label="Menu"
-            className="surface surface-charcoal texture fixed inset-0 z-[70] overflow-y-auto md:hidden"
+            className="surface surface-olive texture fixed inset-0 z-[70] overflow-y-auto md:hidden"
             initial={reduzido ? { opacity: 0 } : { opacity: 0, y: '-3%' }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduzido ? { opacity: 0 } : { opacity: 0, y: '-3%' }}

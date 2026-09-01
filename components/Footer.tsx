@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { Estrela } from '@/components/Logo';
-import Newsletter from '@/components/Newsletter';
+import Star from '@/components/Star';
 import Section from '@/components/Section';
 import { nav, navSecundaria, site } from '@/content/site';
 import { categoriasVisiveis } from '@/content/categorias';
@@ -10,18 +9,18 @@ export default function Footer() {
   const ano = new Date().getFullYear();
 
   return (
-    <Section as="footer" surface="charcoal" padding="none" texture>
+    <Section as="footer" surface="olive" padding="none" texture>
       {/* assinatura */}
       <div className="shell relative pb-block-sm pt-block">
         <div className="flex flex-col items-center gap-6 text-center">
-          <Estrela size={28} className="text-[color:var(--s-accent)]" />
+          <Star size={28} className="text-[color:var(--s-accent)]" />
           <p className="display text-d2 text-balance">{site.assinatura}</p>
           <p className="body max-w-prose-sm">{site.descricao}</p>
         </div>
 
         <div className="rule my-block-sm" />
 
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 sm:grid-cols-3">
           <div>
             <h2 className="label">Navegar</h2>
             <ul className="mt-6 flex flex-col gap-3">
@@ -81,7 +80,11 @@ export default function Footer() {
             </ul>
           </div>
 
-          <Newsletter />
+          {/*
+            Cadastro de e-mail oculto até existir backend — a marca pediu para
+            não expor um formulário que não funciona. Para reativar: recolocar
+            <Newsletter /> aqui e conectar o serviço de e-mail.
+          */}
         </div>
 
         <div className="rule my-block-sm" />

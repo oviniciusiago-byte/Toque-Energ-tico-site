@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 import EditorialBand from '@/components/EditorialBand';
 import EditorialSplit from '@/components/EditorialSplit';
-import { Estrela } from '@/components/Logo';
+import Star from '@/components/Star';
 import Manifesto from '@/components/Manifesto';
 import Numbers from '@/components/Numbers';
 import { Reveal } from '@/components/Reveal';
@@ -33,7 +33,7 @@ export default function SobrePage() {
   return (
     <>
       {/* Cabeçalho escuro */}
-      <Section surface="charcoal" padding="none" texture>
+      <Section surface="olive" padding="none" texture>
         <div className="shell relative pb-block-sm pt-40 sm:pt-48">
           <SectionHead
             as="h1"
@@ -45,7 +45,7 @@ export default function SobrePage() {
       </Section>
 
       {/* Corpo */}
-      <Section surface="sand" padding="loose">
+      <Section surface="bone" padding="loose">
         <div className="shell">
           <div className="grid-12 gap-y-12">
             <div className="col-span-4 md:col-span-3">
@@ -65,7 +65,7 @@ export default function SobrePage() {
 
               <Reveal delay={0.3}>
                 <div className="mt-12 flex items-center gap-4">
-                  <Estrela size={20} className="text-[color:var(--s-accent)]" />
+                  <Star size={20} className="text-[color:var(--s-accent)]" />
                   <p className="display text-d4 italic">{site.assinatura}</p>
                 </div>
               </Reveal>
@@ -76,29 +76,29 @@ export default function SobrePage() {
 
       {/* Split da fundadora */}
       <EditorialSplit
-        surface="forest"
-        imagem="/images/editorial/fundadora.jpg"
-        alt="Preparo artesanal — Toque Energético"
+        surface="moss"
+        imagem="/images/editorial/maos-preparo.jpg"
+        alt="Mãos preparando um lote de ervas e flores sob luz lateral"
         label="Quem faz"
-        titulo="Cada fórmula nasce, é testada e ajustada pelas mesmas mãos."
-        texto="Produção artesanal em pequenos lotes. Só depois de passar pela própria vida de quem criou é que o produto chega até você."
+        titulo="Há cuidados que não pedem pressa."
+        texto="Tudo é preparado em pequenos lotes, com intenção e cuidado aos detalhes. O movimento não acontece de fora para dentro: o produto oferece apoio, mas o retorno começa na própria pessoa."
         assinatura={`Maria Fernanda Pavan · ${site.cidade}`}
         ladoImagem="right"
       />
 
       {/* Números */}
-      <Section surface="sand" padding="loose">
+      <Section surface="bone" padding="loose">
         <div className="shell">
           <Numbers itens={numerosResolvidos} />
         </div>
       </Section>
 
       {/* Manifesto da estrela */}
-      <Section surface="wood" padding="loose" texture>
+      <Section surface="noir" padding="loose" texture>
         <div className="shell relative">
           <div className="mx-auto max-w-[42rem] text-center">
             <Reveal>
-              <Estrela size={26} className="mx-auto text-[color:var(--s-accent)]" />
+              <Star size={26} className="mx-auto text-[color:var(--s-accent)]" />
             </Reveal>
             <Manifesto frase={paginas.sobre.manifesto} className="mt-9" italico={[1]} />
           </div>
@@ -106,15 +106,15 @@ export default function SobrePage() {
       </Section>
 
       <EditorialBand
-        imagem="/images/editorial/preparo-mesa.jpg"
-        alt="Ervas e flores secas sobre a bancada de preparo"
-        label="Pequenos lotes"
-        frase="Sete anos de preparo à mão, uma fórmula por vez."
+        imagem="/images/texture/fluid-green-alt.jpg"
+        alt=""
+        label="Presença"
+        frase="Presença que começa no toque."
         altura="min-h-[56svh]"
       />
 
       <WhatsAppCTA
-        surface="cream"
+        surface="tan"
         titulo="Converse com a gente"
         texto="Dúvidas sobre um produto, uma intenção ou um presente: o WhatsApp é o caminho mais direto."
         cta="Falar no WhatsApp"

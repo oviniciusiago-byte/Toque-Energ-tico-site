@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useReducedMotion } from 'framer-motion';
 import Badge from '@/components/Badge';
-import SaveButton from '@/components/SaveButton';
 import type { Produto } from '@/lib/types';
 
 /**
@@ -35,8 +34,6 @@ export default function ProductCard({
 
   return (
     <article className={`group relative flex h-full flex-col ${className}`}>
-      <SaveButton slug={produto.slug} nome={nome} />
-
       <Link href={`/produto/${produto.slug}`} className="flex h-full flex-col">
         <div className="card-media aspect-[4/5]">
           <Image

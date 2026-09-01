@@ -3,7 +3,7 @@ import type { Config } from 'tailwindcss';
 /**
  * As cores vivem em `app/globals.css`.
  * Aqui elas são expostas ao Tailwind em canais RGB, para que os modificadores
- * de opacidade funcionem (`bg-charcoal/60`, `text-sand/70`).
+ * de opacidade funcionem (`bg-olive/60`, `text-bone/70`).
  *
  * Cores de SUPERFÍCIE (`surface-*`) não são classes de cor: são as classes que
  * uma seção usa para definir fundo + texto + hairline + acento de uma vez.
@@ -13,17 +13,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        sand: 'rgb(var(--sand-rgb) / <alpha-value>)',
-        cream: 'rgb(var(--cream-rgb) / <alpha-value>)',
+        bone: 'rgb(var(--bone-rgb) / <alpha-value>)',
+        tan: 'rgb(var(--tan-rgb) / <alpha-value>)',
+        'sage-pale': 'rgb(var(--sage-pale-rgb) / <alpha-value>)',
+        sage: 'rgb(var(--sage-rgb) / <alpha-value>)',
+        moss: 'rgb(var(--moss-rgb) / <alpha-value>)',
+        olive: 'rgb(var(--olive-rgb) / <alpha-value>)',
+        noir: 'rgb(var(--noir-rgb) / <alpha-value>)',
+        concrete: 'rgb(var(--concrete-rgb) / <alpha-value>)',
+        tiffany: 'rgb(var(--tiffany-rgb) / <alpha-value>)',
         gold: 'rgb(var(--gold-rgb) / <alpha-value>)',
         'gold-soft': 'rgb(var(--gold-soft-rgb) / <alpha-value>)',
         'gold-deep': 'rgb(var(--gold-deep-rgb) / <alpha-value>)',
-        'ink-gold': 'rgb(var(--ink-gold-rgb) / <alpha-value>)',
-        charcoal: 'rgb(var(--charcoal-rgb) / <alpha-value>)',
-        concrete: 'rgb(var(--concrete-rgb) / <alpha-value>)',
-        wood: 'rgb(var(--wood-rgb) / <alpha-value>)',
-        forest: 'rgb(var(--forest-rgb) / <alpha-value>)',
-        ink: 'rgb(var(--ink-rgb) / <alpha-value>)',
         // tokens da superfície ativa — para uso pontual em arbitrary values
         s: {
           bg: 'var(--s-bg)',

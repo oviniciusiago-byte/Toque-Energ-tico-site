@@ -47,8 +47,8 @@ export default function CategoryNav({
   return (
     <nav
       aria-label="Categorias do catálogo"
-      className="surface surface-charcoal sticky top-0 z-30 border-b backdrop-blur-[6px]"
-      style={{ borderColor: 'var(--s-line)', backgroundColor: 'rgb(var(--charcoal-rgb) / 0.9)' }}
+      className="surface surface-olive sticky top-0 z-30 border-b backdrop-blur-[6px]"
+      style={{ borderColor: 'var(--s-line)', backgroundColor: 'rgb(var(--olive-rgb) / 0.9)' }}
     >
       <div className="shell">
         <ul className="no-scrollbar -mx-5 flex gap-1 overflow-x-auto px-5 py-3 sm:mx-0 sm:justify-center sm:px-0">

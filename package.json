@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "placeholders": "python3 scripts/make-placeholders.py"
+    "placeholders": "python3 scripts/make-placeholders.py",
+    "deploy": "vercel deploy --prod"
   },
   "dependencies": {
     "framer-motion": "^13.1.1",
@@ -24,6 +25,7 @@
     "autoprefixer": "^10.5.4",
     "postcss": "^8.5.26",
     "tailwindcss": "^3.4.19",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vercel": "^59.10.0"
   }
 }

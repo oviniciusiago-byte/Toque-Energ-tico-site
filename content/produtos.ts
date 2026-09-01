@@ -55,6 +55,7 @@ const brumas: Produto[] = [
       'Uma bruma leve para vestir depois do banho ou renovar no meio do dia. Não é um perfume que anuncia; é um que acompanha — discreto o bastante para ser só seu. Para começar a manhã ou para dar um respiro à tarde.',
     aroma: '[confirmar: notas — sugestão de perfil fresco/floral leve]',
     composicao: '[confirmar: base e óleos essenciais]',
+    // TODO [confirmar]: a cliente pediu para verificar este volume (feedback, item 16)
     volume: '120 ml',
     preco: 'R$ 58',
     precoBase: 58,
@@ -78,6 +79,7 @@ const brumas: Produto[] = [
       'Para os espaços onde você vive. Borrife ao chegar em casa, antes de dormir, no início de um trabalho que pede concentração ou depois de um dia agitado. Não perfuma só o ambiente: marca uma transição — do lado de fora para o lado de dentro.',
     aroma: '[confirmar: notas]',
     composicao: '[confirmar: base e óleos essenciais]',
+    // TODO [confirmar]: a cliente pediu para verificar este volume (feedback, item 16)
     volume: '120 ml',
     preco: 'R$ 58',
     precoBase: 58,

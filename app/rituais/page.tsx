@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import CircleFrame from '@/components/CircleFrame';
-import { Estrela } from '@/components/Logo';
+import Star from '@/components/Star';
 import { Reveal } from '@/components/Reveal';
 import Section from '@/components/Section';
 import SectionHead from '@/components/SectionHead';
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function RituaisPage() {
   return (
     <>
-      <Section surface="charcoal" padding="none" texture>
+      <Section surface="olive" padding="none" texture>
         <div className="shell relative pb-block-sm pt-40 sm:pt-48">
           <SectionHead
             as="h1"
@@ -32,7 +32,7 @@ export default function RituaisPage() {
 
       {/* Um bloco por linha, alternando areia e creme */}
       {paginas.rituais.blocos.map((bloco, i) => (
-        <Section key={bloco.titulo} surface={i % 2 === 0 ? 'sand' : 'cream'} padding="normal">
+        <Section key={bloco.titulo} surface={i % 2 === 0 ? 'bone' : 'sage'} padding="normal">
           <div className="shell">
             <div className="grid-12 items-center gap-y-10">
               <div
@@ -40,7 +40,7 @@ export default function RituaisPage() {
               >
                 <CircleFrame
                   src={bloco.imagem}
-                  alt={bloco.titulo}
+                  alt={bloco.alt}
                   className="mx-auto w-[64%] text-[color:var(--s-accent)] md:w-full"
                   sizes="(max-width: 768px) 62vw, 320px"
                   priority={i === 0}
@@ -76,11 +76,11 @@ export default function RituaisPage() {
       ))}
 
       {/* Fechamento */}
-      <Section surface="forest" padding="loose" texture>
+      <Section surface="moss" padding="loose" texture>
         <div className="shell relative">
           <div className="mx-auto flex max-w-[38rem] flex-col items-center text-center">
             <Reveal>
-              <Estrela size={24} className="text-[color:var(--s-accent)]" />
+              <Star size={24} className="text-[color:var(--s-accent)]" />
             </Reveal>
             <Reveal delay={0.1}>
               <p className="display mt-8 text-d2 text-balance">{paginas.rituais.fechamento}</p>
@@ -90,7 +90,7 @@ export default function RituaisPage() {
       </Section>
 
       <WhatsAppCTA
-        surface="cream"
+        surface="tan"
         titulo="Qual ritual combina com você?"
         texto="Conte como é o seu dia e a gente sugere por onde começar."
         cta="Falar no WhatsApp"

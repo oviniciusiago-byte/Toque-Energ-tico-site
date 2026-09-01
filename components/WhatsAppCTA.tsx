@@ -1,7 +1,7 @@
 import MagneticButton from '@/components/MagneticButton';
 import Section, { type Surface } from '@/components/Section';
 import { Reveal } from '@/components/Reveal';
-import { Estrela } from '@/components/Logo';
+import Star from '@/components/Star';
 import { wppLink } from '@/lib/whatsapp';
 
 /** Fechamento: a jornada do site termina no WhatsApp. Nunca há carrinho. */
@@ -11,7 +11,7 @@ export default function WhatsAppCTA({
   texto,
   cta,
   mensagem,
-  surface = 'cream',
+  surface = 'bone',
   nota,
 }: {
   label?: string;
@@ -27,7 +27,7 @@ export default function WhatsAppCTA({
       <div className="shell">
         <div className="mx-auto flex max-w-[40rem] flex-col items-center text-center">
           <Reveal>
-            <Estrela size={26} className="text-[color:var(--s-accent)]" />
+            <Star size={26} className="text-[color:var(--s-accent)]" />
           </Reveal>
 
           {label ? (

@@ -48,19 +48,57 @@ para nunca perder contraste:
 <Section surface="forest">…</Section>   // trocar a cor = trocar a palavra
 ```
 
-Superfícies disponíveis (`components/Section.tsx`, cores em `app/globals.css`):
+Superfícies disponíveis (`components/Section.tsx`, cores em `app/globals.css`),
+derivadas da identidade — verde-sálvia dos rótulos + dourado envelhecido da
+estrela:
 
 | Superfície | Cor | Uso |
 | --- | --- | --- |
-| `sand` | off-white #F4EEE2 | base clara |
-| `cream` | #EAE1D0 | claro alternativo, separa blocos vizinhos |
-| `gold` | #B99247 | faixas curtas (a de valores na home) |
-| `charcoal` | #1A1816 | catálogo, cabeçalhos internos, footer |
-| `concrete` | #4A4744 | **cimento queimado** — o "cinza" da marca |
-| `wood` | #33241A | fechamentos intimistas |
-| `forest` | #1A231D | splits editoriais (o verde botânico da ref. Moss) |
-| `image` | — | texto sobre foto/vídeo (hero, faixas full-bleed) |
+| `bone` | #E5D7C4 | creme/Bone — **fundo claro principal e área de respiro** |
+| `tan` | #CFBB99 | neutro de transição |
+| `sage` | #D2D7BC | sálvia pálido — a identidade presente na luz |
+| `olive` | #354024 | Kombu — **a sombra principal** |
+| `moss` | #4A5136 | musgo profundo — identidade na sombra |
+| `noir` | #4C3D19 | Café Noir — sombra quente |
+| `concrete` | #4A4B47 | cimento queimado — **cenário de produto, não identidade** |
+| `image` | — | sobre foto ou textura fluida |
 
+Acentos, nunca preenchimento: `--gold` #A2854B (linhas, estrela, ícones),
+`--gold-deep` #5E4614 (rótulos pequenos sobre claro), `--sage` #889063
+(linhas de identidade), `--tiffany` #8FC6C0 (**só** na linha de Brumas).
+
+> **O sálvia puro (#889063) não serve de fundo para texto.** Nenhum texto passa
+> 4.5:1 nele (2,4:1 com creme, 3,1:1 com Café Noir). A identidade sálvia entra
+> como `sage` pálido na luz e `moss` na sombra — e como cor de linha.
+>
+> **Dourado também não serve para texto pequeno sobre claro:** o melhor caso dá
+> 2,5:1. Por isso ele fica em linhas, estrela e ícones, e os rótulos usam
+> `--gold-deep`.
+
+### A textura fluida verde
+
+`scripts/make-fluid-texture.py` gera a "assinatura emocional" da marca —
+mármore/pintura fluida em sálvia, musgo, oliva e petróleo acinzentado. É
+procedural e autoral: nada de imagem licenciada de terceiros.
+
+```bash
+python3 scripts/make-fluid-texture.py
+```
+
+Saem três arquivos em `public/images/texture/`:
+
+- `fluid-green-dark.jpg` — **fundo da abertura**. Paleta na faixa de sombra, de
+  propósito: assim o texto creme já passa 4,5:1 com véu quase nulo e a textura
+  aparece. Com a variante luminosa, o véu necessário apagava a textura.
+- `fluid-green.jpg` / `fluid-green-alt.jpg` — variantes luminosas, para faixas
+  onde há véu (a faixa da página "Sobre").
+
+### A estrela
+
+`components/Star.tsx` é o único lugar onde a estrela é desenhada — header,
+divisores, fechamento e depoimentos usam esse componente. **É um placeholder:**
+o briefing pede a estrela oficial da marca. Ao receber o vetor, troque o
+`polygon` ali e o `public/logo.svg`.
 
 ### Contraste é token, não gosto
 

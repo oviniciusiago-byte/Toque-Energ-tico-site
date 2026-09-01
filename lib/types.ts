@@ -40,6 +40,12 @@ export interface Categoria {
   capa: string;
   /** Categoria criada, mas fora do lançamento (ex.: Velas). */
   oculta?: boolean;
+  /**
+   * Acento próprio da linha. Só as Brumas usam o verde Tiffany, como pede o
+   * briefing: "apenas como acento de frescor, especialmente na linha de
+   * brumas". As demais herdam o dourado da superfície.
+   */
+  acento?: 'tiffany';
 }
 
 export interface DisponibilidadeInfo {

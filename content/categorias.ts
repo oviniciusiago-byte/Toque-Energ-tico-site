@@ -26,6 +26,7 @@ export const categorias: Categoria[] = [
     intro:
       'O que muda o ar muda o estado. Brumas para o corpo, para o ambiente e para os cantos que te acompanham — inclusive o carro. Três sprays e um buquê aromático, do centramento ao frescor.',
     capa: '/images/categories/brumas-aromas-ambientes.jpg',
+    acento: 'tiffany',
   },
   {
     slug: 'oleos-de-ritual',

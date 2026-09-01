@@ -17,29 +17,37 @@
    ========================================================================== */
 
 :root {
-  /* --- paleta (canais RGB para permitir opacidade no Tailwind) ----------- */
-  --sand-rgb: 244 238 226; /* off-white base */
-  --cream-rgb: 234 225 208; /* claro alternativo */
-  --gold-rgb: 185 146 71; /* dourado da marca */
-  --gold-soft-rgb: 220 195 138; /* dourado claro — acentos no escuro */
-  --gold-deep-rgb: 122 92 31; /* dourado escuro — rótulos sobre claro (5.3:1) */
-  --charcoal-rgb: 26 24 22; /* quase-preto quente */
-  --concrete-rgb: 74 71 68; /* cimento queimado */
-  --wood-rgb: 51 36 26; /* madeira escura */
-  --forest-rgb: 26 35 29; /* verde botânico escuro */
-  --ink-rgb: 36 33 29; /* texto sobre claro */
-  --ink-gold-rgb: 20 17 11; /* texto sobre dourado (7.3:1) */
+  /* --- paleta (canais RGB para permitir opacidade no Tailwind) -----------
+     Vinda da identidade: verde-sálvia dos rótulos + dourado envelhecido da
+     estrela. O creme/Bone é o fundo principal e a área de respiro.        */
+  --bone-rgb: 229 215 196; /* creme/Bone — fundo claro principal */
+  --tan-rgb: 207 187 153; /* Tan — neutro de transição */
+  --sage-pale-rgb: 210 215 188; /* sálvia pálido — luz com identidade */
+  --sage-rgb: 136 144 99; /* verde-sálvia dos rótulos — linhas e acentos */
+  --moss-rgb: 74 81 54; /* musgo profundo — sombra com identidade */
+  --olive-rgb: 53 64 36; /* Kombu — oliva profundo, a sombra principal */
+  --noir-rgb: 76 61 25; /* Café Noir — texto e contraste quente */
+  --concrete-rgb: 74 75 71; /* cimento queimado grafite — cenário de produto */
+  --petrol-rgb: 98 116 112; /* azul-petróleo acinzentado — meio-tom */
+  --tiffany-rgb: 143 198 192; /* verde Tiffany — acento de frescor (brumas) */
 
-  --sand: rgb(var(--sand-rgb));
-  --cream: rgb(var(--cream-rgb));
+  /* dourado envelhecido, sem brilho amarelo excessivo */
+  --gold-rgb: 162 133 75; /* linhas, estrela, ícones */
+  --gold-soft-rgb: 220 195 138; /* dourado claro sobre sombra */
+  --gold-deep-rgb: 94 70 20; /* rótulos pequenos sobre claro (6.3:1) */
+
+  --bone: rgb(var(--bone-rgb));
+  --tan: rgb(var(--tan-rgb));
+  --sage-pale: rgb(var(--sage-pale-rgb));
+  --sage: rgb(var(--sage-rgb));
+  --moss: rgb(var(--moss-rgb));
+  --olive: rgb(var(--olive-rgb));
+  --noir: rgb(var(--noir-rgb));
+  --concrete: rgb(var(--concrete-rgb));
+  --tiffany: rgb(var(--tiffany-rgb));
   --gold: rgb(var(--gold-rgb));
   --gold-soft: rgb(var(--gold-soft-rgb));
   --gold-deep: rgb(var(--gold-deep-rgb));
-  --charcoal: rgb(var(--charcoal-rgb));
-  --concrete: rgb(var(--concrete-rgb));
-  --wood: rgb(var(--wood-rgb));
-  --forest: rgb(var(--forest-rgb));
-  --ink: rgb(var(--ink-rgb));
 
   /* --- movimento --------------------------------------------------------- */
   --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
@@ -50,6 +58,10 @@
 
 /* ==========================================================================
    Superfícies
+
+   O verde-sálvia puro (#889063) NÃO aparece como fundo de texto: nenhum texto
+   passa 4.5:1 nele (2.4:1 com creme, 3.1:1 com Café Noir). A identidade sálvia
+   entra como `sage` pálido na luz, `moss` na sombra, e como cor de linha.
    ========================================================================== */
 
 @layer components {
@@ -58,98 +70,100 @@
     color: var(--s-fg);
   }
 
-  /* claras ------------------------------------------------------------- */
-  .surface-sand {
-    --s-bg: var(--sand);
-    --s-fg: var(--ink);
-    --s-muted: rgb(var(--ink-rgb) / 0.74); /* 5.7:1 */
-    --s-faint: rgb(var(--ink-rgb) / 0.66); /* 4.7:1 */
-    --s-line: rgb(var(--ink-rgb) / 0.16);
-    --s-line-strong: rgb(var(--ink-rgb) / 0.3);
+  /* --- luz ------------------------------------------------------------- */
+  .surface-bone {
+    --s-bg: var(--bone);
+    --s-fg: var(--noir);
+    --s-muted: rgb(var(--noir-rgb) / 0.84);
+    --s-faint: rgb(var(--olive-rgb) / 0.86);
+    --s-line: rgb(var(--noir-rgb) / 0.18);
+    --s-line-strong: rgb(var(--noir-rgb) / 0.32);
     --s-accent: var(--gold-deep);
-    --s-fill: rgb(var(--ink-rgb) / 0.055);
+    --s-fill: rgb(var(--noir-rgb) / 0.06);
   }
 
-  .surface-cream {
-    --s-bg: var(--cream);
-    --s-fg: var(--ink);
-    --s-muted: rgb(var(--ink-rgb) / 0.76);
-    --s-faint: rgb(var(--ink-rgb) / 0.68);
-    --s-line: rgb(var(--ink-rgb) / 0.18);
-    --s-line-strong: rgb(var(--ink-rgb) / 0.32);
+  .surface-tan {
+    --s-bg: var(--tan);
+    --s-fg: var(--noir);
+    --s-muted: rgb(var(--noir-rgb) / 0.94);
+    --s-faint: rgb(var(--olive-rgb) / 0.96);
+    --s-line: rgb(var(--noir-rgb) / 0.22);
+    --s-line-strong: rgb(var(--noir-rgb) / 0.36);
     --s-accent: var(--gold-deep);
-    --s-fill: rgb(var(--ink-rgb) / 0.055);
+    --s-fill: rgb(var(--noir-rgb) / 0.07);
   }
 
-  /* dourada (faixas curtas — nunca blocos longos) ----------------------- */
-  .surface-gold {
-    --s-bg: var(--gold);
-    --s-fg: rgb(var(--ink-gold-rgb));
-    --s-muted: rgb(var(--ink-gold-rgb) / 0.82); /* 4.9:1 */
-    --s-faint: rgb(var(--ink-gold-rgb) / 0.8);
-    --s-line: rgb(var(--ink-gold-rgb) / 0.26);
-    --s-line-strong: rgb(var(--ink-gold-rgb) / 0.42);
-    --s-accent: rgb(var(--ink-gold-rgb));
-    --s-fill: rgb(var(--ink-gold-rgb) / 0.08);
+  /* sálvia pálido — a identidade presente nas áreas de luz */
+  .surface-sage {
+    --s-bg: var(--sage-pale);
+    --s-fg: var(--noir);
+    --s-muted: rgb(var(--noir-rgb) / 0.86);
+    --s-faint: rgb(var(--olive-rgb) / 0.88);
+    --s-line: rgb(var(--noir-rgb) / 0.2);
+    --s-line-strong: rgb(var(--noir-rgb) / 0.34);
+    --s-accent: var(--gold-deep);
+    --s-fill: rgb(var(--noir-rgb) / 0.06);
   }
 
-  /* escuras ------------------------------------------------------------ */
-  .surface-charcoal {
-    --s-bg: var(--charcoal);
-    --s-fg: var(--sand);
-    --s-muted: rgb(var(--sand-rgb) / 0.72); /* 8.3:1 */
-    --s-faint: rgb(var(--sand-rgb) / 0.6); /* 5.9:1 */
-    --s-line: rgb(var(--sand-rgb) / 0.18);
-    --s-line-strong: rgb(var(--sand-rgb) / 0.34);
+  /* --- sombra ---------------------------------------------------------- */
+  .surface-olive {
+    --s-bg: var(--olive);
+    --s-fg: var(--bone);
+    --s-muted: rgb(var(--bone-rgb) / 0.8);
+    --s-faint: rgb(var(--bone-rgb) / 0.68);
+    --s-line: rgb(var(--sage-rgb) / 0.42);
+    --s-line-strong: rgb(var(--sage-rgb) / 0.7);
     --s-accent: var(--gold-soft);
-    --s-fill: rgb(var(--sand-rgb) / 0.07);
+    --s-fill: rgb(var(--bone-rgb) / 0.08);
   }
 
-  /* cimento queimado — o "cinza" da marca */
+  /* musgo profundo — sombra com identidade sálvia */
+  .surface-moss {
+    --s-bg: var(--moss);
+    --s-fg: var(--bone);
+    --s-muted: rgb(var(--bone-rgb) / 0.88);
+    --s-faint: rgb(var(--bone-rgb) / 0.88);
+    --s-line: rgb(var(--sage-rgb) / 0.5);
+    --s-line-strong: rgb(var(--sage-rgb) / 0.8);
+    --s-accent: var(--gold-soft);
+    --s-fill: rgb(var(--bone-rgb) / 0.09);
+  }
+
+  /* Café Noir — sombra quente */
+  .surface-noir {
+    --s-bg: var(--noir);
+    --s-fg: var(--bone);
+    --s-muted: rgb(var(--bone-rgb) / 0.82);
+    --s-faint: rgb(var(--bone-rgb) / 0.7);
+    --s-line: rgb(var(--gold-soft-rgb) / 0.34);
+    --s-line-strong: rgb(var(--gold-soft-rgb) / 0.56);
+    --s-accent: var(--gold-soft);
+    --s-fill: rgb(var(--bone-rgb) / 0.08);
+  }
+
+  /* cimento queimado — CENÁRIO DE PRODUTO, não identidade do site */
   .surface-concrete {
     --s-bg: var(--concrete);
-    --s-fg: var(--sand);
-    --s-muted: rgb(var(--sand-rgb) / 0.84); /* 5.5:1 */
-    --s-faint: rgb(var(--sand-rgb) / 0.72); /* 4.6:1 */
-    --s-line: rgb(var(--sand-rgb) / 0.24);
-    --s-line-strong: rgb(var(--sand-rgb) / 0.42);
+    --s-fg: var(--bone);
+    --s-muted: rgb(var(--bone-rgb) / 0.86);
+    --s-faint: rgb(var(--bone-rgb) / 0.86);
+    --s-line: rgb(var(--bone-rgb) / 0.26);
+    --s-line-strong: rgb(var(--bone-rgb) / 0.44);
     --s-accent: var(--gold-soft);
-    --s-fill: rgb(var(--sand-rgb) / 0.09);
+    --s-fill: rgb(var(--bone-rgb) / 0.1);
   }
 
-  .surface-wood {
-    --s-bg: var(--wood);
-    --s-fg: var(--sand);
-    --s-muted: rgb(var(--sand-rgb) / 0.74);
-    --s-faint: rgb(var(--sand-rgb) / 0.62);
-    --s-line: rgb(var(--gold-soft-rgb) / 0.28);
-    --s-line-strong: rgb(var(--gold-soft-rgb) / 0.46);
-    --s-accent: var(--gold-soft);
-    --s-fill: rgb(var(--sand-rgb) / 0.08);
-  }
-
-  .surface-forest {
-    --s-bg: var(--forest);
-    --s-fg: var(--sand);
-    --s-muted: rgb(var(--sand-rgb) / 0.74);
-    --s-faint: rgb(var(--sand-rgb) / 0.6);
-    --s-line: rgb(var(--gold-soft-rgb) / 0.26);
-    --s-line-strong: rgb(var(--gold-soft-rgb) / 0.44);
-    --s-accent: var(--gold-soft);
-    --s-fill: rgb(var(--sand-rgb) / 0.08);
-  }
-
-  /* Sobre imagem: o fundo real é a foto + véu plano. --s-bg precisa ser uma
-     cor de verdade — é dela que sai o texto dos botões sólidos, que invertem. */
+  /* Sobre imagem ou textura: o fundo real é a foto + véu plano. --s-bg
+     precisa ser cor de verdade — é dela que sai o texto dos botões sólidos. */
   .surface-image {
-    --s-bg: var(--charcoal);
-    --s-fg: var(--sand);
-    --s-muted: rgb(var(--sand-rgb) / 0.84);
-    --s-faint: rgb(var(--sand-rgb) / 0.72);
-    --s-line: rgb(var(--sand-rgb) / 0.3);
-    --s-line-strong: rgb(var(--sand-rgb) / 0.48);
+    --s-bg: var(--olive);
+    --s-fg: var(--bone);
+    --s-muted: rgb(var(--bone-rgb) / 0.88);
+    --s-faint: rgb(var(--bone-rgb) / 0.78);
+    --s-line: rgb(var(--bone-rgb) / 0.32);
+    --s-line-strong: rgb(var(--bone-rgb) / 0.5);
     --s-accent: var(--gold-soft);
-    --s-fill: rgb(var(--sand-rgb) / 0.1);
+    --s-fill: rgb(var(--bone-rgb) / 0.1);
   }
 }
 
@@ -162,8 +176,8 @@
 }
 
 body {
-  background-color: var(--sand);
-  color: var(--ink);
+  background-color: var(--bone);
+  color: var(--noir);
   font-feature-settings: 'kern' 1, 'liga' 1;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -183,8 +197,8 @@ html.lenis body {
 }
 
 ::selection {
-  background: var(--gold-soft);
-  color: var(--charcoal);
+  background: var(--sage-pale);
+  color: var(--olive);
 }
 
 /* Foco visível e generoso — 2px, como pedem as diretrizes de acessibilidade. */

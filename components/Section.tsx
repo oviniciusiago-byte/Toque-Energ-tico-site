@@ -1,25 +1,27 @@
 import type { ReactNode } from 'react';
 
 export type Surface =
-  | 'sand'
-  | 'cream'
-  | 'gold'
-  | 'charcoal'
-  | 'concrete'
-  | 'wood'
-  | 'forest'
-  | 'image';
+  /* luz */
+  | 'bone' /* creme/Bone — fundo claro principal */
+  | 'tan' /* neutro de transição */
+  | 'sage' /* sálvia pálido — identidade na luz */
+  /* sombra */
+  | 'olive' /* Kombu — a sombra principal */
+  | 'moss' /* musgo profundo — identidade na sombra */
+  | 'noir' /* Café Noir — sombra quente */
+  | 'concrete' /* cimento queimado — cenário de produto */
+  | 'image'; /* sobre foto ou textura fluida */
 
 /**
  * Bloco de cor. Cada seção do site declara a sua superfície e, com isso,
  * define fundo, cor de texto, texto secundário, hairline e acento para tudo
  * que está dentro dela — botões inclusive, que invertem automaticamente.
  *
- * Trocar a cor de uma seção = trocar uma palavra (`surface="forest"`).
+ * Trocar a cor de uma seção = trocar uma palavra (`surface="moss"`).
  */
 export default function Section({
   children,
-  surface = 'sand',
+  surface = 'bone',
   id,
   className = '',
   padding = 'normal',
@@ -43,13 +45,13 @@ export default function Section({
    * é invisível para o scanner — a cor sairia purgada do CSS final.
    */
   const cor: Record<Surface, string> = {
-    sand: 'surface-sand',
-    cream: 'surface-cream',
-    gold: 'surface-gold',
-    charcoal: 'surface-charcoal',
+    bone: 'surface-bone',
+    tan: 'surface-tan',
+    sage: 'surface-sage',
+    olive: 'surface-olive',
+    moss: 'surface-moss',
+    noir: 'surface-noir',
     concrete: 'surface-concrete',
-    wood: 'surface-wood',
-    forest: 'surface-forest',
     image: 'surface-image',
   };
 
@@ -60,7 +62,7 @@ export default function Section({
     loose: 'py-block-lg',
   }[padding];
 
-  const escura = ['charcoal', 'concrete', 'wood', 'forest', 'image'].includes(surface);
+  const escura = ['olive', 'moss', 'noir', 'concrete', 'image'].includes(surface);
 
   return (
     <Tag

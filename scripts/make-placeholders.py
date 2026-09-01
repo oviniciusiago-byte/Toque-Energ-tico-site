@@ -123,6 +123,7 @@ def imagens_de_categorias():
 
 
 EDITORIAIS = [
+    'maos-preparo',
     'maos-buque',
     'preparo-mesa',
     'fundadora',

@@ -26,7 +26,7 @@ export default function CatalogoPage() {
   return (
     <>
       {/* Cabeçalho — bloco escuro */}
-      <Section surface="charcoal" padding="none" texture>
+      <Section surface="olive" padding="none" texture>
         <div className="shell relative pb-block-sm pt-40 sm:pt-48">
           <SectionHead
             as="h1"
@@ -71,7 +71,7 @@ export default function CatalogoPage() {
           <Section
             key={categoria.slug}
             id={categoria.slug}
-            surface={i % 2 === 0 ? 'sand' : 'cream'}
+            surface={i % 2 === 0 ? 'bone' : 'sage'}
             padding="loose"
             className="scroll-mt-24"
           >
@@ -105,7 +105,7 @@ export default function CatalogoPage() {
       })}
 
       <WhatsAppCTA
-        surface="wood"
+        surface="noir"
         label="Ajuda para escolher"
         titulo="Não sabe por onde começar?"
         texto="Conte o que você está procurando — um aroma, um momento do dia, um presente — e a gente sugere o caminho."

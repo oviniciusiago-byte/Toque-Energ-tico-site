@@ -3,7 +3,13 @@
  * abrir componente nenhum.
  */
 export const HERO = {
-  poster: '/images/hero-poster.jpg',
+  /**
+   * Fundo da abertura enquanto não há vídeo: a TEXTURA FLUIDA VERDE, a
+   * "assinatura emocional" da marca (sálvia, musgo, oliva e petróleo
+   * acinzentado). Gerada por `scripts/make-fluid-texture.py` — autoral, sem
+   * imagem licenciada de terceiros. Substituível por uma versão produzida.
+   */
+  poster: '/images/texture/fluid-green-dark.jpg',
   video: {
     webm: '/video/hero.webm',
     mp4: '/video/hero.mp4',

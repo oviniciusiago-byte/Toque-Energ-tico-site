@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import Star from '@/components/Star';
 import { home, site } from '@/content/site';
 import { HERO } from '@/lib/media';
 import { wppLink, wppMsg } from '@/lib/whatsapp';
@@ -83,7 +84,7 @@ export default function Hero() {
       ref={secaoRef}
       data-surface="image"
       aria-label={`${site.nome} — ${site.assinatura}`}
-      className="surface-image relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-charcoal text-[color:var(--s-fg)]"
+      className="surface-image relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-olive text-[color:var(--s-fg)]"
     >
       {/* fundo: poster + vídeo */}
       <div ref={fundoRef} className="absolute inset-0 -z-10 will-change-transform">
@@ -119,7 +120,12 @@ export default function Hero() {
         aria-hidden="true"
         className="absolute inset-0 -z-10"
         style={{
-          background: `linear-gradient(to top, rgb(var(--charcoal-rgb) / 0.88) 0%, rgb(var(--charcoal-rgb) / 0.55) 38%, rgb(var(--charcoal-rgb) / 0.24) 70%, rgb(var(--charcoal-rgb) / 0.52) 100%)`,
+          /*
+            Véu leve: a textura de sombra já garante 5.9:1 para o texto creme
+            sem véu nenhum (medido), então aqui ele só unifica e dá
+            profundidade — a textura continua visível, como a marca pediu.
+          */
+          background: `linear-gradient(to top, rgb(var(--olive-rgb) / 0.7) 0%, rgb(var(--olive-rgb) / 0.28) 46%, rgb(var(--olive-rgb) / 0.06) 100%)`,
         }}
       />
 
@@ -189,9 +195,9 @@ export default function Hero() {
               </li>
             ))}
           </ul>
-          <span className="label-quiet hidden sm:block" aria-hidden="true">
-            Role
-          </span>
+          {/* A estrela fecha a linha das três palavras — sem indicador "role",
+              que a marca pediu para retirar. */}
+          <Star size={14} className="shrink-0 text-[color:var(--s-accent)]" />
         </div>
       </div>
     </section>
