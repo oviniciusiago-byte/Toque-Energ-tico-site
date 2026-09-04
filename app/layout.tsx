@@ -6,6 +6,8 @@ import { AudioProvider } from '@/components/providers/AudioProvider';
 import CustomCursor from '@/components/CustomCursor';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import Intro from '@/components/Intro';
+import SideRail from '@/components/SideRail';
 import PageTransition from '@/components/PageTransition';
 import SmoothScroll from '@/components/SmoothScroll';
 import WhatsAppFab from '@/components/WhatsAppFab';
@@ -45,7 +47,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#1A1816',
+  themeColor: '#354024',
   colorScheme: 'light',
 };
 
@@ -61,6 +63,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AudioProvider>
           <SmoothScroll />
           <CustomCursor />
+          <Intro />
+          <SideRail />
 
           <Header />
           <PageTransition>{children}</PageTransition>

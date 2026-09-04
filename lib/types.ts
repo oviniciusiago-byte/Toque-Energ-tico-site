@@ -1,8 +1,16 @@
 export type Disponibilidade = 'pronta-entrega' | 'sob-consulta' | 'sazonal';
 
+/** Uma erva do preparo e a intenção que a cliente atribui a ela no rótulo. */
+export interface Erva {
+  nome: string;
+  intencao?: string;
+}
+
 export interface Produto {
   slug: string;
   nome: string;
+  /** Subtítulo do rótulo real: "Banho de Prosperidade", "Banho de Luz e Acolhimento". */
+  subtitulo?: string;
   /** Nome em itálico serifado nas listagens (opcional — default = nome). */
   nomeCurto?: string;
   categoria: string; // slug da categoria
@@ -20,6 +28,27 @@ export interface Produto {
   fechamento?: string;
   /** Como adquirir — itens sob consulta. */
   comoAdquirir?: string;
+  /**
+   * Cor do rótulo real do produto (hex). Vira o acento da página daquele
+   * produto — é o que faz cada banho parecer ele mesmo, e não um template.
+   * O briefing autoriza: "as cores específicas dos produtos podem aparecer
+   * em pequenos detalhes das respectivas categorias".
+   */
+  cor?: string;
+  /**
+   * Parente legível da cor do rótulo, para usar como acento de TEXTO sobre
+   * superfície escura. Cinco das oito cores reais reprovam 4.5:1 no escuro
+   * (o vinho do Encantamento fica em 1.23:1), então `cor` fica só na amostra
+   * decorativa e `corAcento` carrega o texto. Valores calculados, não
+   * escolhidos a olho.
+   */
+  corAcento?: string;
+  /** Ervas do preparo, com a intenção que o rótulo atribui a cada uma. */
+  ervas?: Erva[];
+  /** Benefícios em lista, quando o rótulo os traz assim. */
+  beneficios?: string[];
+  /** Decreto que acompanha o produto ("EU SOU LUZ"). */
+  decreto?: { titulo: string; descricao: string };
   imagens: string[]; // /images/products/{slug}-N.jpg
   destaque?: boolean; // carro-chefe
   relacionados?: string[]; // slugs

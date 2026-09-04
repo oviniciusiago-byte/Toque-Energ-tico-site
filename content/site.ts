@@ -68,6 +68,17 @@ export const numeros = [
   { valor: 'AUTO_PRODUTOS', unidade: 'produtos', legenda: 'no catálogo, cada um com uma intenção' },
 ] as const;
 
+/**
+ * Os três capítulos — a narrativa que a marca pediu:
+ * "sombra e recolhimento → presença e descoberta → luz e expressão".
+ * A sombra aqui não é negatividade: é recolhimento, silêncio, profundidade.
+ */
+export const capitulos = {
+  sombra: 'Capítulo I · Sombra',
+  presenca: 'Capítulo II · Presença',
+  luz: 'Capítulo III · Luz',
+} as const;
+
 /** Copy da Home — cada bloco corresponde a uma seção da página. */
 export const home = {
   hero: {

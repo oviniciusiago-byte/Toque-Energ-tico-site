@@ -15,7 +15,7 @@ import WhatsAppCTA from '@/components/WhatsAppCTA';
 
 import { categoriasVisiveis, getCategoria } from '@/content/categorias';
 import { contagemPorCategoria, produtosDestaque } from '@/content/produtos';
-import { home, paginas, valores } from '@/content/site';
+import { capitulos, home, paginas, valores } from '@/content/site';
 import { wppMsg } from '@/lib/whatsapp';
 
 /**
@@ -38,11 +38,14 @@ export default function HomePage() {
       <Hero />
 
       {/* ── 2 · Manifesto curto ────────────────────────────────── creme ── */}
-      <Section surface="bone" padding="loose">
+      <Section surface="bone" padding="loose" secao="Manifesto">
         <div className="shell">
           <div className="grid-12 items-start gap-y-10">
             <div className="col-span-4 md:col-span-3">
               <Reveal>
+                <p className="label-quiet mb-5" style={{ letterSpacing: '0.3em' }}>
+                  {capitulos.sombra}
+                </p>
                 <div className="flex items-center gap-3">
                   <span className="label-quiet tnum">01</span>
                   <span aria-hidden="true" className="h-px w-6 bg-[color:var(--s-line)]" />
@@ -66,7 +69,7 @@ export default function HomePage() {
       </Section>
 
       {/* ── 3 · Produtos em destaque ────────────────────────────── Tan ──── */}
-      <Section surface="tan" padding="loose">
+      <Section surface="tan" padding="loose" secao="Destaques">
         <div className="shell">
           <SectionHead
             indice="02"
@@ -104,9 +107,10 @@ export default function HomePage() {
       </Section>
 
       {/* ── 4 · Catálogo ────────── cimento queimado (cenário de produto) ── */}
-      <Section surface="concrete" padding="loose" texture id="catalogo">
+      <Section surface="concrete" padding="loose" texture id="catalogo" secao="Catálogo">
         <div className="shell relative">
           <SectionHead
+            capitulo={capitulos.presenca}
             indice="03"
             label={home.categorias.kicker}
             titulo={home.categorias.titulo}
@@ -148,7 +152,7 @@ export default function HomePage() {
       />
 
       {/* Como é feito — os quatro princípios, discretos, sem faixa própria */}
-      <Section surface="sage" padding="tight">
+      <Section surface="sage" padding="tight" secao="Processo">
         <div className="shell">
           <div className="rule mb-10" />
           <RevealGroup
@@ -175,9 +179,10 @@ export default function HomePage() {
       </Section>
 
       {/* ── 6 · Rituais de uso ─────────────────────────────────── creme ── */}
-      <Section surface="bone" padding="loose">
+      <Section surface="bone" padding="loose" secao="Rituais">
         <div className="shell">
           <SectionHead
+            capitulo={capitulos.luz}
             indice="04"
             label={home.comoUsar.kicker}
             titulo={home.comoUsar.titulo}
@@ -212,7 +217,7 @@ export default function HomePage() {
       </Section>
 
       {/* ── 7 · Depoimentos ──────────────────── musgo (sombra acolhedora) ─ */}
-      <Section surface="moss" padding="loose" texture>
+      <Section surface="moss" padding="loose" texture secao="Depoimentos">
         <div className="shell relative">
           <SectionHead
             indice="05"

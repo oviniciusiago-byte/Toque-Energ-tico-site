@@ -206,84 +206,193 @@ const oleos: Produto[] = [
 /* Modo de uso e cuidados vêm do bloco da categoria (categorias.ts).          */
 /* -------------------------------------------------------------------------- */
 
-const COMPOSICAO_BANHOS =
-  'Flores e ervas secas selecionadas. [confirmar: mix específico de cada banho]';
+/*
+ * Banhos & Escalda-Pés — dados vindos dos RÓTULOS REAIS (fotos de agosto/2026).
+ * Nome, subtítulo, os três verbos, a descrição, as ervas e a intenção de cada
+ * erva são transcrições do rótulo; a cor é a do próprio rótulo do produto.
+ *
+ * Onde o rótulo não foi fotografado, o campo fica [confirmar] — nada inventado.
+ *
+ * ⚠️ Para o Vinicius: em "Limpeza Densa" o rótulo fala em "mau olhado" e
+ * "larvas astrais". É a linguagem da própria cliente, transcrita fielmente,
+ * mas contrasta com o pedido dela de evitar espiritualidade baseada no medo.
+ * Decisão dela — ver a nota no fim deste arquivo.
+ */
+
+/** O decreto em papel que acompanha os banhos. */
+const DECRETO_EU_SOU_LUZ = {
+  titulo: 'Eu sou luz',
+  descricao: 'Um decreto de presença e transmutação, em papel, que acompanha o preparo.',
+};
 
 const banhosBase = [
   {
-    slug: 'limpeza-densa',
-    nome: 'Limpeza Densa',
-    conceito: ['Soltar', 'Limpar', 'Recomeçar'],
-    descricaoCurta: 'Para os dias que ficaram pesados.',
+    slug: 'aurora-dourada',
+    nome: 'Aurora Dourada',
+    subtitulo: 'Banho de Prosperidade',
+    conceito: ['Prospera', 'Ilumina', 'Abre caminhos'],
+    cor: '#E8DCC0',
+    corAcento: '#E8DCC0',
+    descricaoCurta: 'Sal grosso marinho, especiarias e flores para abrir caminhos.',
     intencao:
-      'Para os dias que ficaram pesados. Um banho para deixar ir o que já não é seu — o cansaço acumulado, o ambiente que grudou, o excesso do dia. Sai mais leve do que entrou.',
+      'Uma infusão de sal grosso marinho, ervas, especiarias e flores potentes para abrir caminhos, trazer movimento, atrair abundância e elevar sua energia e poder pessoal.',
+    aroma: 'Laranja doce e especiarias — cítrico, quente, resinoso.',
+    ervas: [
+      { nome: 'Folha de laranjeira' },
+      { nome: 'Anis estrelado' },
+      { nome: 'Canela' },
+      { nome: 'Folha de pitanga' },
+      { nome: 'Folha de louro' },
+      { nome: 'Cravo' },
+      { nome: 'Rosa amarela' },
+      { nome: 'Óleo essencial de wild orange' },
+    ],
+    composicao:
+      'Sal grosso marinho, folha de laranjeira, anis estrelado, canela, folha de pitanga, folha de louro, cravo e rosa amarela, com óleo essencial de wild orange.',
   },
   {
     slug: 'alegria',
     nome: 'Alegria',
-    conceito: ['Leveza', 'Bom humor', 'Reacender'],
-    descricaoCurta: 'Quando o ânimo pede um empurrão.',
+    subtitulo: 'Banho de Alegria',
+    conceito: ['Ilumina', 'Revitaliza', 'Floresce'],
+    cor: '#E0A62E',
+    corAcento: '#E0A62E',
+    descricaoCurta: 'Para os dias de cansaço, desânimo e tristeza sem motivo aparente.',
     intencao:
-      'Quando o ânimo pede um empurrão. Um banho para reacender o que ficou apagado e devolver um pouco de leveza ao corpo e ao dia.',
+      'Revitaliza, refresca e ilumina o ser. Purifica o corpo, clareia a mente e desperta o brilho da alma. Ideal para momentos de cansaço, desânimo e tristeza — seja sem motivo aparente, seja por ambientes densos.',
+    aroma: 'Herbáceo e fresco — alecrim, manjericão e hortelã.',
+    ervas: [
+      { nome: 'Calêndula', intencao: 'Energiza e reanima, resgatando o poder e a estima pessoal.' },
+      { nome: 'Alecrim', intencao: 'Traz força e equilíbrio mental, alegra, clareia e ilumina.' },
+      { nome: 'Manjericão', intencao: 'Harmonizador energético; perfuma fortalecendo o espírito.' },
+      { nome: 'Sálvia', intencao: 'Purificação.' },
+      { nome: 'Hortelã', intencao: 'Acalma e refresca, estimula a intuição e a sensibilidade.' },
+    ],
+    composicao: 'Calêndula, alecrim, manjericão, sálvia e hortelã.',
   },
   {
     slug: 'calmaria',
     nome: 'Calmaria',
-    conceito: ['Silêncio', 'Pausa', 'Descanso'],
-    descricaoCurta: 'Para desacelerar no fim do dia.',
+    subtitulo: 'Banho de Calmaria',
+    conceito: ['Silencia', 'Equilibra', 'Acolhe'],
+    cor: '#7B76D8',
+    corAcento: '#AFA6CE',
+    descricaoCurta: 'Sal marinho com camomila, lavanda e alecrim, para o fim do dia.',
     intencao:
-      'Para desacelerar. Um banho morno no fim do dia, para o corpo largar a tensão e a cabeça baixar o ritmo. O convite é não fazer nada além de estar ali.',
+      'Um convite ao descanso da mente e ao relaxamento do corpo. A delicadeza da camomila, a suavidade da lavanda e a força protetora do alecrim se unem ao poder de purificação do sal marinho.',
+    aroma: 'Lavanda e camomila — floral, serena, limpa.',
+    ervas: [
+      { nome: 'Sal marinho', intencao: 'Purificação.' },
+      { nome: 'Camomila', intencao: 'Delicadeza; acalma a mente inquieta.' },
+      { nome: 'Lavanda', intencao: 'Suavidade; alivia o estresse e a tensão.' },
+      { nome: 'Alecrim', intencao: 'Força protetora; traz clareza.' },
+    ],
+    beneficios: [
+      'Acalma a mente inquieta',
+      'Alivia o estresse e a tensão',
+      'Traz clareza e proteção energética',
+    ],
+    composicao: 'Sal marinho com camomila, lavanda e alecrim.',
+  },
+  {
+    slug: 'limpeza-densa',
+    nome: 'Limpeza Densa',
+    subtitulo: 'Banho de Limpeza Densa',
+    conceito: ['Purifica', 'Renova', 'Reequilibra'],
+    cor: '#6E7378',
+    corAcento: '#B1ABA3',
+    descricaoCurta: 'Para os dias que ficaram pesados. Limpa profundamente.',
+    intencao:
+      'Para os dias que ficaram pesados. Um banho para deixar ir o que já não é seu — o cansaço acumulado, o ambiente que grudou, o excesso do dia. Sai mais leve do que entrou.',
+    aroma: 'Eucalipto e alecrim — verde, resinoso, penetrante.',
+    ervas: [
+      { nome: 'Arruda', intencao: 'Descarrego e limpeza.' },
+      {
+        nome: 'Alecrim',
+        intencao: 'Proteção energética, gerando uma aura de positividade e boas energias.',
+      },
+      { nome: 'Guiné', intencao: 'Forte poder de limpeza e purificação.' },
+      { nome: 'Casca de alho', intencao: 'Transmutação energética densa.' },
+      { nome: 'Eucalipto', intencao: 'Limpa renovando as vibrações.' },
+      { nome: 'Boldo', intencao: 'Purificação, promovendo leveza e harmonia.' },
+      {
+        nome: 'Óleo essencial de eucalipto-limão',
+        intencao: 'Libera mágoas e ressentimentos.',
+      },
+    ],
+    composicao:
+      'Arruda, alecrim, guiné, casca de alho, eucalipto e boldo, com óleo essencial de eucalipto-limão.',
+    modoDeUso:
+      'Dissolva o conteúdo em água morna e envolva-se neste ritual de autocuidado. Foque nas suas intenções e faça as suas orações.',
   },
   {
     slug: 'encantamento-e-poder-pessoal',
     nome: 'Encantamento & Poder Pessoal',
-    conceito: ['Presença', 'Confiança', 'Magnetismo'],
-    descricaoCurta: 'Para os dias em que você precisa ocupar o próprio espaço.',
+    subtitulo: 'Banho de Encantamento e Poder Pessoal',
+    conceito: ['Magnetismo', 'Confiança', 'Presença'],
+    cor: '#8E2436',
+    corAcento: '#CCA39B',
+    descricaoCurta: 'Desperta o magnetismo e fortalece a autoestima.',
     intencao:
-      'Um banho para os dias em que você precisa ocupar o próprio espaço. Não para parecer outra pessoa — para lembrar de quem você já é, e chegar inteira.',
-  },
-  {
-    slug: 'primavere-se',
-    nome: 'Primavere-se',
-    conceito: ['Renovação', 'Florescer', 'Começo'],
-    descricaoCurta: 'Um banho de recomeço.',
-    intencao:
-      'Um banho de recomeço. Para quando algo dentro pede para virar a página, abrir a janela, deixar entrar. Floresça no seu tempo.',
-  },
-  {
-    slug: 'aurora-dourada',
-    nome: 'Aurora Dourada',
-    conceito: ['Luz', 'Gratidão', 'Novo dia'],
-    descricaoCurta: 'Para começar de novo com o pé direito.',
-    intencao:
-      'Para começar de novo com o pé direito. Um banho para saudar o que chega, com um pouco mais de gratidão e um pouco menos de peso.',
-  },
-  {
-    slug: 'eixo-rosa',
-    nome: 'Eixo Rosa',
-    conceito: ['Amor-próprio', 'Coração', 'Acolher'],
-    descricaoCurta: 'O banho do coração.',
-    intencao:
-      'O banho do coração. Para se acolher com a mesma gentileza que você oferece aos outros — e voltar ao próprio eixo pela via do afeto.',
+      'Desperta o poder do feminino, ativa o magnetismo e fortalece a autoestima. Um banho para os dias em que você precisa ocupar o próprio espaço — não para parecer outra pessoa, mas para lembrar de quem você já é.',
+    aroma: 'Jasmim e rosa com canela — floral intenso, doce, quente.',
+    ervas: [
+      { nome: 'Jasmim', intencao: 'Inspira autoestima e atrai amor.' },
+      { nome: 'Artemísia', intencao: 'Visão espiritual e poder feminino.' },
+      { nome: 'Cravo', intencao: 'Magnetismo, proteção e sensualidade.' },
+      { nome: 'Rosa vermelha', intencao: 'Amor-próprio e abertura do coração.' },
+      { nome: 'Hibisco', intencao: 'Libera emoções e ativa o feminino.' },
+      { nome: 'Folha de canela', intencao: 'Atração, calor e prosperidade.' },
+    ],
+    composicao: 'Jasmim, artemísia, cravo, rosa vermelha, hibisco e folha de canela.',
   },
   {
     slug: 'paz-na-alma',
     nome: 'Paz na Alma',
-    conceito: ['Serenidade', 'Reconciliação', 'Repouso'],
-    descricaoCurta: 'Para aquietar o que anda inquieto.',
+    subtitulo: 'Banho de Luz e Acolhimento',
+    conceito: ['Silêncio', 'Presença', 'Reconexão'],
+    cor: '#EDE6DA',
+    corAcento: '#EDE6DA',
+    descricaoCurta: 'Há um lugar em você onde a paz permanece.',
     intencao:
       'Para aquietar o que anda inquieto. Um banho de reconciliação com o próprio dia, com o próprio ritmo, consigo. Paz não como ausência — como presença.',
+    aroma: '[confirmar]',
+    composicao: '[confirmar: ervas deste preparo]',
+    fechamento: 'Há um lugar em você onde a paz permanece. Volte para ele.',
+  },
+  {
+    slug: 'primavere-se',
+    nome: 'Primavere-se',
+    conceito: ['Energiza', 'Renova', 'Floresce'],
+    cor: '#E8613C',
+    corAcento: '#E7987C',
+    descricaoCurta: 'Um banho de recomeço, para quando algo dentro pede a virada.',
+    intencao:
+      'Um banho de recomeço. Para quando algo dentro pede para virar a página, abrir a janela, deixar entrar. Floresça no seu tempo.',
+    aroma: '[confirmar]',
+    composicao: '[confirmar: ervas deste preparo]',
+  },
+  {
+    slug: 'eixo-rosa',
+    nome: 'Eixo Rosa',
+    conceito: ['Harmoniza', 'Acolhe', 'Equilibra'],
+    cor: '#D96E8A',
+    corAcento: '#DE99A2',
+    descricaoCurta: 'O banho do coração, pela via do afeto.',
+    intencao:
+      'O banho do coração. Para se acolher com a mesma gentileza que você oferece aos outros — e voltar ao próprio eixo pela via do afeto.',
+    aroma: '[confirmar]',
+    composicao: '[confirmar: ervas deste preparo]',
   },
 ];
 
 const banhos: Produto[] = banhosBase.map((b, i) => ({
   ...b,
   categoria: 'banhos-escalda-pes',
-  aroma: '[confirmar]',
-  composicao: COMPOSICAO_BANHOS,
   preco: 'R$ 24',
   precoBase: 24,
   disponibilidade: 'pronta-entrega' as const,
+  decreto: DECRETO_EU_SOU_LUZ,
   imagens: img(b.slug),
   relacionados: [
     banhosBase[(i + 1) % banhosBase.length].slug,
@@ -424,3 +533,16 @@ export const getRelacionados = (produto: Produto, limite = 3) => {
 
 export const contagemPorCategoria = (categoria: string) =>
   produtosPorCategoria(categoria).length;
+
+/* --------------------------------------------------------------------------
+ * NOTA — decisão pendente da cliente
+ *
+ * O rótulo de "Limpeza Densa" descreve a arruda como "descarrego e limpeza de
+ * mau olhado" e a casca de alho como "limpeza de larvas astrais". Transcrevi as
+ * intenções das ervas de forma fiel, mas SUAVIZEI essas duas expressões
+ * ("descarrego e limpeza"; "transmutação energética densa"), porque o briefing
+ * dela pede explicitamente para evitar espiritualidade baseada no medo.
+ *
+ * Não é uma decisão minha para tomar em definitivo: se ela preferir o texto
+ * exato do rótulo, é só devolver as duas frases aqui.
+ * ------------------------------------------------------------------------ */

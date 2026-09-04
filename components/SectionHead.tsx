@@ -6,6 +6,7 @@ import { Reveal } from '@/components/Reveal';
  * alinhada à direita. Mantém o mesmo ritmo em todas as seções do site.
  */
 export default function SectionHead({
+  capitulo,
   indice,
   label,
   titulo,
@@ -17,6 +18,8 @@ export default function SectionHead({
   as: Tag = 'h2',
   className = '',
 }: {
+  /** "Capítulo I · Sombra" — a narrativa da marca, escrita na página. */
+  capitulo?: string;
   /** "01", "02"… — numeração editorial das seções */
   indice?: string;
   label?: string;
@@ -39,6 +42,17 @@ export default function SectionHead({
       className={`${centro ? 'flex flex-col items-center text-center' : 'flex flex-col gap-8 md:flex-row md:items-end md:justify-between'} ${className}`}
     >
       <div className={centro ? 'max-w-[46rem]' : 'max-w-[46rem]'}>
+        {capitulo ? (
+          <Reveal>
+            <p
+              className={`label-quiet mb-5 ${centro ? 'text-center' : ''}`}
+              style={{ letterSpacing: '0.3em' }}
+            >
+              {capitulo}
+            </p>
+          </Reveal>
+        ) : null}
+
         {(indice || label) && (
           <Reveal>
             <div

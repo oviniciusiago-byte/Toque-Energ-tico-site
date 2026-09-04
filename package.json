@@ -8,7 +8,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "placeholders": "python3 scripts/make-placeholders.py",
-    "deploy": "bash scripts/deploy.sh"
+    "deploy": "bash scripts/deploy.sh",
+    "textura": "python3 scripts/make-fluid-texture.py"
   },
   "dependencies": {
     "framer-motion": "^13.1.1",

@@ -28,6 +28,7 @@ export default function Section({
   texture = false,
   as: Tag = 'section',
   ariaLabel,
+  secao,
 }: {
   children: ReactNode;
   surface?: Surface;
@@ -38,6 +39,8 @@ export default function Section({
   texture?: boolean;
   as?: 'section' | 'div' | 'footer' | 'header';
   ariaLabel?: string;
+  /** Nome curto para a trilha lateral (SideRail). */
+  secao?: string;
 }) {
   /**
    * Classes LITERAIS de propósito: o Tailwind faz tree-shaking do que está em
@@ -69,6 +72,7 @@ export default function Section({
       id={id}
       aria-label={ariaLabel}
       data-surface={surface}
+      data-secao={secao}
       className={`surface ${cor[surface]} relative isolate ${texture && escura ? 'texture' : ''} ${pad} ${className}`}
     >
       {children}

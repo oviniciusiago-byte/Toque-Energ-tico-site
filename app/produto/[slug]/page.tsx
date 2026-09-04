@@ -58,6 +58,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
 
   /** Ficha técnica em linhas rótulo/valor. */
   const ficha = [
+    produto.subtitulo ? { rotulo: 'Banho', valor: produto.subtitulo } : null,
     produto.volume ? { rotulo: 'Volume', valor: produto.volume } : null,
     produto.aroma ? { rotulo: 'Notas de aroma', valor: produto.aroma } : null,
     categoria ? { rotulo: 'Linha', valor: categoria.nome } : null,
@@ -96,7 +97,18 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
-      <article>
+      {/*
+        A cor do RÓTULO REAL do produto vira o acento desta página: rótulos,
+        estrela e detalhes assumem o tom do banho. É o que faz a página de
+        cada preparo parecer ela mesma, e não um molde repetido.
+      */}
+      <article
+        style={
+          produto.corAcento
+            ? ({ '--s-accent-produto': produto.corAcento } as React.CSSProperties)
+            : undefined
+        }
+      >
         {/* ── Galeria + compra ─────────────────────────────────── areia ── */}
         <Section surface="bone" padding="none">
           <div className="shell pb-block pt-32 sm:pt-40">
@@ -140,6 +152,9 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
 
                   <Reveal delay={0.06}>
                     <h1 className="display mt-6 text-d2 text-balance">{produto.nome}</h1>
+                    {produto.subtitulo ? (
+                      <p className="label mt-4">{produto.subtitulo}</p>
+                    ) : null}
                   </Reveal>
 
                   <Reveal delay={0.12}>
@@ -223,6 +238,75 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
             </div>
           </div>
         </Section>
+
+        {/* ── As ervas e o que cada uma traz ──────── cor do próprio banho ── */}
+        {produto.ervas?.length ? (
+          <Section surface="noir" padding="loose" texture>
+            <div
+              className="shell relative"
+              style={
+                produto.corAcento
+                  ? ({ '--s-accent': produto.corAcento } as React.CSSProperties)
+                  : undefined
+              }
+            >
+              <SectionHead
+                label="O preparo"
+                titulo="As ervas e o que cada uma traz"
+                tamanho="d3"
+              />
+
+              <RevealGroup
+                className="mt-14 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3"
+                stagger={0.06}
+              >
+                {produto.ervas.map((erva) => (
+                  <RevealItem
+                    key={erva.nome}
+                    className="border-t border-[color:var(--s-line)] pt-5"
+                  >
+                    <h3 className="display text-d5">{erva.nome}</h3>
+                    {erva.intencao ? (
+                      <p className="body mt-2 text-[0.9rem]">{erva.intencao}</p>
+                    ) : null}
+                  </RevealItem>
+                ))}
+              </RevealGroup>
+
+              {produto.beneficios?.length ? (
+                <Reveal delay={0.16}>
+                  <div className="mt-16 border-t border-[color:var(--s-line)] pt-10">
+                    <p className="label">Benefícios principais</p>
+                    <ul className="mt-6 flex flex-col gap-3">
+                      {produto.beneficios.map((b) => (
+                        <li key={b} className="flex items-baseline gap-3">
+                          <Star
+                            size={11}
+                            orbita={false}
+                            className="shrink-0 translate-y-[0.2em] text-[color:var(--s-accent)]"
+                          />
+                          <span className="body">{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              ) : null}
+
+              {produto.decreto ? (
+                <Reveal delay={0.22}>
+                  <div className="mt-16 flex flex-col items-center text-center">
+                    <Star size={20} className="text-[color:var(--s-accent)]" />
+                    <p className="display mt-6 text-d4 italic">{produto.decreto.titulo}</p>
+                    <p className="body mt-3 max-w-prose-sm text-[0.9rem]">
+                      {produto.decreto.descricao}
+                    </p>
+                  </div>
+                </Reveal>
+              ) : null}
+            </div>
+          </Section>
+        ) : null}
 
         {/* ── Ficha + detalhes ────────────────────────────────── areia ── */}
         <Section surface="bone" padding="loose">

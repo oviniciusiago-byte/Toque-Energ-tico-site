@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import Parallax from '@/components/Parallax';
+import RevealImage from '@/components/RevealImage';
 import { Reveal } from '@/components/Reveal';
 import Section, { type Surface } from '@/components/Section';
 
@@ -39,7 +39,14 @@ export default function EditorialSplit({
           }`}
         >
           <Parallax intensidade={0.1} className="absolute inset-0">
-            <Image src={imagem} alt={alt} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+            <RevealImage
+              src={imagem}
+              alt={alt}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="h-full w-full"
+              duracao={1.6}
+              direcao={imagemPrimeiro ? 'up' : 'left'}
+            />
           </Parallax>
         </div>
 
