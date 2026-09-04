@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function RituaisPage() {
   return (
     <>
-      <Section surface="olive" padding="none" texture>
+      <Section surface="ink" padding="none" texture>
         <div className="shell relative pb-block-sm pt-40 sm:pt-48">
           <SectionHead
             as="h1"
@@ -32,7 +32,7 @@ export default function RituaisPage() {
 
       {/* Um bloco por linha, alternando areia e creme */}
       {paginas.rituais.blocos.map((bloco, i) => (
-        <Section key={bloco.titulo} surface={i % 2 === 0 ? 'bone' : 'sage'} padding="normal">
+        <Section key={bloco.titulo} surface={i % 2 === 0 ? 'paper' : 'smoke'} padding="normal">
           <div className="shell">
             <div className="grid-12 items-center gap-y-10">
               <div
@@ -76,7 +76,7 @@ export default function RituaisPage() {
       ))}
 
       {/* Fechamento */}
-      <Section surface="moss" padding="loose" texture>
+      <Section surface="smoke" padding="loose" texture>
         <div className="shell relative">
           <div className="mx-auto flex max-w-[38rem] flex-col items-center text-center">
             <Reveal>
@@ -90,7 +90,7 @@ export default function RituaisPage() {
       </Section>
 
       <WhatsAppCTA
-        surface="tan"
+        surface="paper"
         titulo="Qual ritual combina com você?"
         texto="Conte como é o seu dia e a gente sugere por onde começar."
         cta="Falar no WhatsApp"

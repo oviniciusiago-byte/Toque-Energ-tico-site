@@ -46,7 +46,7 @@ export default async function CategoriaPage({
       {/* Cabeçalho — bloco escuro, nome grande.
           Linhas com acento próprio (Brumas → verde Tiffany) sobrescrevem só o
           token de acento; o resto da superfície continua igual. */}
-      <Section surface="olive" padding="none" texture>
+      <Section surface="ink" padding="none" texture>
         <div
           className="shell relative pb-block-sm pt-40 sm:pt-48"
           style={
@@ -82,7 +82,7 @@ export default async function CategoriaPage({
       </Section>
 
       {/* Grid da linha */}
-      <Section surface="bone" padding="loose">
+      <Section surface="paper" padding="loose">
         <div className="shell">
           {itens.length ? (
             <RevealGroup
@@ -106,7 +106,7 @@ export default async function CategoriaPage({
       {/* Modo de uso da linha — split editorial */}
       {categoria.modoDeUsoLinha ? (
         <EditorialSplit
-          surface="moss"
+          surface="smoke"
           imagem={`/images/editorial/${categoria.slug}.jpg`}
           alt={categoria.nome}
           label="Toda a linha"
@@ -118,7 +118,7 @@ export default async function CategoriaPage({
 
       {/* Cuidados da linha */}
       {categoria.cuidadosLinha ? (
-        <Section surface="tan" padding="normal">
+        <Section surface="paper" padding="normal">
           <div className="shell">
             <div className="grid-12 gap-y-8">
               <div className="col-span-4 md:col-span-3">
@@ -137,7 +137,7 @@ export default async function CategoriaPage({
       ) : null}
 
       {/* Outras linhas */}
-      <Section surface="bone" padding="loose">
+      <Section surface="paper" padding="loose">
         <div className="shell">
           <SectionHead titulo="Outras linhas" tamanho="d3" />
           <RevealGroup
@@ -160,7 +160,7 @@ export default async function CategoriaPage({
       </Section>
 
       <WhatsAppCTA
-        surface="noir"
+        surface="smoke"
         label="Pedidos e dúvidas"
         titulo="Fale com a gente"
         texto={`Combinamos disponibilidade, envio e pagamento da linha ${categoria.nomeCurto ?? categoria.nome} pelo WhatsApp.`}

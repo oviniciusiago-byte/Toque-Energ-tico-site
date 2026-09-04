@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function FaqPage() {
   return (
     <>
-      <Section surface="olive" padding="none" texture>
+      <Section surface="ink" padding="none" texture>
         <div className="shell relative pb-block-sm pt-40 sm:pt-48">
           <SectionHead
             as="h1"
@@ -27,7 +27,7 @@ export default function FaqPage() {
         </div>
       </Section>
 
-      <Section surface="bone" padding="loose">
+      <Section surface="paper" padding="loose">
         <div className="shell">
           <div className="mx-auto max-w-[58rem]">
             <Reveal>
@@ -45,7 +45,7 @@ export default function FaqPage() {
       </Section>
 
       <WhatsAppCTA
-        surface="tan"
+        surface="paper"
         titulo="Ficou alguma dúvida?"
         texto="Pergunte no WhatsApp — respondemos com o mesmo cuidado que colocamos nos produtos."
         cta="Falar no WhatsApp"

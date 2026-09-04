@@ -27,7 +27,7 @@ export default function EditorialBand({
 
   return (
     <section
-      className={`surface-image relative isolate flex items-end overflow-hidden bg-olive text-[color:var(--s-fg)] ${altura}`}
+      className={`surface-image relative isolate flex items-end overflow-hidden bg-ink text-[color:var(--s-fg)] ${altura}`}
     >
       <Parallax intensidade={0.12} className="absolute inset-0 -z-10">
         <Image src={imagem} alt={alt} fill sizes="100vw" className="object-cover" />
@@ -38,7 +38,7 @@ export default function EditorialBand({
       <span
         aria-hidden="true"
         className="absolute inset-0 -z-10"
-        style={{ backgroundColor: 'rgb(var(--olive-rgb) / 0.76)' }}
+        style={{ backgroundColor: 'rgb(var(--ink-rgb) / 0.76)' }}
       />
 
       <div className="shell relative w-full pb-block-sm pt-block">

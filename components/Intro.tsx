@@ -71,7 +71,7 @@ export default function Intro() {
   return (
     <div
       aria-hidden="true"
-      className={`surface surface-olive texture fixed inset-0 z-[90] flex flex-col items-center justify-center transition-transform duration-[1100ms] ease-calm ${
+      className={`surface surface-ink texture fixed inset-0 z-[90] flex flex-col items-center justify-center transition-transform duration-[1100ms] ease-calm ${
         fase === 'saindo' ? '-translate-y-full' : 'translate-y-0'
       }`}
     >

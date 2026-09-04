@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function AtacadoPage() {
   return (
     <>
-      <Section surface="olive" padding="none" texture>
+      <Section surface="ink" padding="none" texture>
         <div className="shell relative pb-block-sm pt-40 sm:pt-48">
           <SectionHead
             as="h1"
@@ -26,7 +26,7 @@ export default function AtacadoPage() {
         </div>
       </Section>
 
-      <Section surface="bone" padding="loose">
+      <Section surface="paper" padding="loose">
         <div className="shell">
           <div className="grid-12 gap-y-10">
             <div className="col-span-4 md:col-span-3">
@@ -48,7 +48,7 @@ export default function AtacadoPage() {
       </Section>
 
       <WhatsAppCTA
-        surface="noir"
+        surface="smoke"
         titulo="Vamos conversar"
         texto="Conte sobre o seu negócio e montamos as condições de acordo com o volume e o mix de produtos."
         cta={paginas.atacado.cta.label}

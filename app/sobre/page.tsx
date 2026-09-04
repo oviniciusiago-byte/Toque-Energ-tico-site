@@ -33,7 +33,7 @@ export default function SobrePage() {
   return (
     <>
       {/* Cabeçalho escuro */}
-      <Section surface="olive" padding="none" texture>
+      <Section surface="ink" padding="none" texture>
         <div className="shell relative pb-block-sm pt-40 sm:pt-48">
           <SectionHead
             as="h1"
@@ -45,7 +45,7 @@ export default function SobrePage() {
       </Section>
 
       {/* Corpo */}
-      <Section surface="bone" padding="loose">
+      <Section surface="paper" padding="loose">
         <div className="shell">
           <div className="grid-12 gap-y-12">
             <div className="col-span-4 md:col-span-3">
@@ -76,7 +76,7 @@ export default function SobrePage() {
 
       {/* Split da fundadora */}
       <EditorialSplit
-        surface="moss"
+        surface="smoke"
         imagem="/images/editorial/maos-preparo.jpg"
         alt="Mãos preparando um lote de ervas e flores sob luz lateral"
         label="Quem faz"
@@ -87,14 +87,14 @@ export default function SobrePage() {
       />
 
       {/* Números */}
-      <Section surface="bone" padding="loose">
+      <Section surface="paper" padding="loose">
         <div className="shell">
           <Numbers itens={numerosResolvidos} />
         </div>
       </Section>
 
       {/* Manifesto da estrela */}
-      <Section surface="noir" padding="loose" texture>
+      <Section surface="smoke" padding="loose" texture>
         <div className="shell relative">
           <div className="mx-auto max-w-[42rem] text-center">
             <Reveal>
@@ -114,7 +114,7 @@ export default function SobrePage() {
       />
 
       <WhatsAppCTA
-        surface="tan"
+        surface="paper"
         titulo="Converse com a gente"
         texto="Dúvidas sobre um produto, uma intenção ou um presente: o WhatsApp é o caminho mais direto."
         cta="Falar no WhatsApp"

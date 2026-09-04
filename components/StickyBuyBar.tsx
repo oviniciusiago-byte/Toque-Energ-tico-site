@@ -39,7 +39,7 @@ export default function StickyBuyBar({
           animate={reduzido ? { opacity: 1 } : { y: 0 }}
           exit={reduzido ? { opacity: 0 } : { y: '110%' }}
           transition={{ duration: reduzido ? 0.2 : 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="surface surface-olive fixed inset-x-0 bottom-0 z-40 border-t md:hidden"
+          className="surface surface-ink fixed inset-x-0 bottom-0 z-40 border-t md:hidden"
           style={{ borderColor: 'var(--s-line)' }}
         >
           <div className="flex items-center gap-4 px-5 py-3.5">

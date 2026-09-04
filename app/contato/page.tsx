@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function ContatoPage() {
   return (
     <>
-      <Section surface="olive" padding="none" texture>
+      <Section surface="ink" padding="none" texture>
         <div className="shell relative pb-block-sm pt-40 sm:pt-48">
           <SectionHead
             as="h1"
@@ -26,7 +26,7 @@ export default function ContatoPage() {
         </div>
       </Section>
 
-      <Section surface="bone" padding="loose">
+      <Section surface="paper" padding="loose">
         <div className="shell">
           <dl className="grid gap-x-8 gap-y-10 sm:grid-cols-3">
             <Reveal className="border-t border-[color:var(--s-line)] pt-7">

@@ -11,7 +11,7 @@ export default function WhatsAppCTA({
   texto,
   cta,
   mensagem,
-  surface = 'bone',
+  surface = 'paper',
   nota,
 }: {
   label?: string;

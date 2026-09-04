@@ -55,10 +55,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={`${display.variable} ${sans.variable}`}>
       {/*
-        `surface-bone` no body garante que os tokens de superfície existam
+        `surface-paper` no body garante que os tokens de superfície existam
         mesmo fora de uma <Section> (header, drawer, elementos fixos).
       */}
-      <body className="surface surface-bone font-sans antialiased">
+      <body className="surface surface-paper font-sans antialiased">
         {/* O AudioProvider fica acima da transição de rota: o som não corta ao navegar. */}
         <AudioProvider>
           <SmoothScroll />

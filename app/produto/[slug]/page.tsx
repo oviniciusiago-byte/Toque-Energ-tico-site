@@ -110,7 +110,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
         }
       >
         {/* ── Galeria + compra ─────────────────────────────────── areia ── */}
-        <Section surface="bone" padding="none">
+        <Section surface="paper" padding="none">
           <div className="shell pb-block pt-32 sm:pt-40">
             <Reveal>
               <nav aria-label="Você está em" className="mb-10">
@@ -220,7 +220,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
         </Section>
 
         {/* ── Para que serve ──────────────────────────────────── creme ── */}
-        <Section surface="tan" padding="loose">
+        <Section surface="paper" padding="loose">
           <div className="shell">
             <div className="grid-12 gap-y-10">
               <div className="col-span-4 md:col-span-3">
@@ -241,7 +241,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
 
         {/* ── As ervas e o que cada uma traz ──────── cor do próprio banho ── */}
         {produto.ervas?.length ? (
-          <Section surface="noir" padding="loose" texture>
+          <Section surface="smoke" padding="loose" texture>
             <div
               className="shell relative"
               style={
@@ -309,7 +309,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
         ) : null}
 
         {/* ── Ficha + detalhes ────────────────────────────────── areia ── */}
-        <Section surface="bone" padding="loose">
+        <Section surface="paper" padding="loose">
           <div className="shell">
             <div className="grid-12 gap-y-14">
               <div className="col-span-4 md:col-span-4">
@@ -347,7 +347,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
 
         {/* ── Frase de fechamento ──────────────────────────── madeira ── */}
         {produto.fechamento ? (
-          <Section surface="noir" padding="loose" texture>
+          <Section surface="smoke" padding="loose" texture>
             <div className="shell relative">
               <Reveal>
                 <div className="mx-auto flex max-w-[36rem] flex-col items-center text-center">
@@ -364,7 +364,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
 
       {/* ── Relacionados ────────────────────────────────────── creme ── */}
       {relacionados.length ? (
-        <Section surface="tan" padding="loose">
+        <Section surface="paper" padding="loose">
           <div className="shell">
             <SectionHead
               titulo="Talvez combine"

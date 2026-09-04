@@ -9,7 +9,7 @@ export default function Footer() {
   const ano = new Date().getFullYear();
 
   return (
-    <Section as="footer" surface="olive" padding="none" texture>
+    <Section as="footer" surface="ink" padding="none" texture>
       {/* assinatura */}
       <div className="shell relative pb-block-sm pt-block">
         <div className="flex flex-col items-center gap-6 text-center">

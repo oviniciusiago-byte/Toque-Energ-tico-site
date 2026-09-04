@@ -1,6 +1,10 @@
 import type { ReactNode } from 'react';
 
 export type Surface =
+  /* base neutra — a casa */
+  | 'paper'
+  | 'ink'
+  | 'smoke'
   /* luz */
   | 'bone' /* creme/Bone — fundo claro principal */
   | 'tan' /* neutro de transição */
@@ -48,6 +52,9 @@ export default function Section({
    * é invisível para o scanner — a cor sairia purgada do CSS final.
    */
   const cor: Record<Surface, string> = {
+    paper: 'surface-paper',
+    ink: 'surface-ink',
+    smoke: 'surface-smoke',
     bone: 'surface-bone',
     tan: 'surface-tan',
     sage: 'surface-sage',
@@ -65,7 +72,7 @@ export default function Section({
     loose: 'py-block-lg',
   }[padding];
 
-  const escura = ['olive', 'moss', 'noir', 'concrete', 'image'].includes(surface);
+  const escura = ['ink', 'smoke', 'olive', 'moss', 'noir', 'concrete', 'image'].includes(surface);
 
   return (
     <Tag

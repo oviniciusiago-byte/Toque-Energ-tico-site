@@ -13,6 +13,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        paper: 'rgb(var(--paper-rgb) / <alpha-value>)',
+        ink: 'rgb(var(--ink-rgb) / <alpha-value>)',
+        smoke: 'rgb(var(--smoke-rgb) / <alpha-value>)',
         bone: 'rgb(var(--bone-rgb) / <alpha-value>)',
         tan: 'rgb(var(--tan-rgb) / <alpha-value>)',
         'sage-pale': 'rgb(var(--sage-pale-rgb) / <alpha-value>)',

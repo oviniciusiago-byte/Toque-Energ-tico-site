@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function OndeEncontrarPage() {
   return (
     <>
-      <Section surface="olive" padding="none" texture>
+      <Section surface="ink" padding="none" texture>
         <div className="shell relative pb-block-sm pt-40 sm:pt-48">
           <SectionHead
             as="h1"
@@ -27,7 +27,7 @@ export default function OndeEncontrarPage() {
         </div>
       </Section>
 
-      <Section surface="bone" padding="loose">
+      <Section surface="paper" padding="loose">
         <div className="shell">
           {/* TODO [confirmar]: lista de pontos de venda fixos e feiras agendadas. */}
           <Reveal>
@@ -55,7 +55,7 @@ export default function OndeEncontrarPage() {
       </Section>
 
       <WhatsAppCTA
-        surface="tan"
+        surface="paper"
         titulo="Onde estaremos?"
         texto="Pergunte pelo WhatsApp — contamos das próximas feiras e pontos parceiros."
         cta="Falar no WhatsApp"

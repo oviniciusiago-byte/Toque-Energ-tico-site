@@ -4,7 +4,7 @@ import Section from '@/components/Section';
 
 export default function NotFound() {
   return (
-    <Section surface="olive" padding="none" texture>
+    <Section surface="ink" padding="none" texture>
       <div className="shell relative flex min-h-[86svh] flex-col items-center justify-center py-block text-center">
         <div className="flex flex-col items-center">
           <Star size={28} className="text-[color:var(--s-accent)]" />

@@ -28,7 +28,7 @@ export default function WhatsAppFab({ mensagem }: { mensagem: string }) {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={reduzido ? { opacity: 0 } : { opacity: 0, y: 14, scale: 0.95 }}
           transition={{ duration: reduzido ? 0.2 : 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed bottom-5 right-5 z-40 inline-flex items-center justify-center rounded-full border border-gold/40 bg-olive text-bone shadow-[0_14px_44px_-18px_rgb(20_26_16/0.7)] transition-colors duration-500 ease-calm hover:bg-noir sm:bottom-8 sm:right-8"
+          className="fixed bottom-5 right-5 z-40 inline-flex items-center justify-center rounded-full border border-gold/40 bg-ink text-paper shadow-[0_14px_44px_-18px_rgb(20_26_16/0.7)] transition-colors duration-500 ease-calm hover:bg-smoke sm:bottom-8 sm:right-8"
           style={{ height: 54, width: 54 }}
         >
           <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true" fill="currentColor">

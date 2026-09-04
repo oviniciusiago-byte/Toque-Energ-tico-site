@@ -20,6 +20,14 @@
   /* --- paleta (canais RGB para permitir opacidade no Tailwind) -----------
      Vinda da identidade: verde-sálvia dos rótulos + dourado envelhecido da
      estrela. O creme/Bone é o fundo principal e a área de respiro.        */
+  /* --- base neutra (a casa) ---------------------------------------------
+     Quase monocromática de propósito: a cor vem dos PRODUTOS. As superfícies
+     da cliente (cimento, sálvia, oliva) seguem definidas abaixo, prontas
+     para voltar quando ele quiser encaixá-las.                            */
+  --paper-rgb: 242 237 228; /* off-white de galeria */
+  --ink-rgb: 15 14 12; /* quase-preto quente */
+  --smoke-rgb: 26 24 21; /* escuro alternativo */
+
   --bone-rgb: 229 215 196; /* creme/Bone — fundo claro principal */
   --tan-rgb: 207 187 153; /* Tan — neutro de transição */
   --sage-pale-rgb: 210 215 188; /* sálvia pálido — luz com identidade */
@@ -32,10 +40,13 @@
   --tiffany-rgb: 143 198 192; /* verde Tiffany — acento de frescor (brumas) */
 
   /* dourado envelhecido, sem brilho amarelo excessivo */
-  --gold-rgb: 162 133 75; /* linhas, estrela, ícones */
+  --gold-rgb: 176 141 79; /* linhas, estrela, ícones */
   --gold-soft-rgb: 220 195 138; /* dourado claro sobre sombra */
   --gold-deep-rgb: 94 70 20; /* rótulos pequenos sobre claro (6.3:1) */
 
+  --paper: rgb(var(--paper-rgb));
+  --ink: rgb(var(--ink-rgb));
+  --smoke: rgb(var(--smoke-rgb));
   --bone: rgb(var(--bone-rgb));
   --tan: rgb(var(--tan-rgb));
   --sage-pale: rgb(var(--sage-pale-rgb));
@@ -68,6 +79,40 @@
   .surface {
     background-color: var(--s-bg);
     color: var(--s-fg);
+  }
+
+  /* --- base neutra ------------------------------------------------------ */
+  .surface-paper {
+    --s-bg: var(--paper);
+    --s-fg: var(--ink);
+    --s-muted: rgb(var(--ink-rgb) / 0.72);
+    --s-faint: rgb(var(--ink-rgb) / 0.6);
+    --s-line: rgb(var(--ink-rgb) / 0.14);
+    --s-line-strong: rgb(var(--ink-rgb) / 0.28);
+    --s-accent: var(--gold-deep);
+    --s-fill: rgb(var(--ink-rgb) / 0.05);
+  }
+
+  .surface-ink {
+    --s-bg: var(--ink);
+    --s-fg: var(--paper);
+    --s-muted: rgb(var(--paper-rgb) / 0.7);
+    --s-faint: rgb(var(--paper-rgb) / 0.52);
+    --s-line: rgb(var(--paper-rgb) / 0.16);
+    --s-line-strong: rgb(var(--paper-rgb) / 0.3);
+    --s-accent: var(--gold-soft);
+    --s-fill: rgb(var(--paper-rgb) / 0.06);
+  }
+
+  .surface-smoke {
+    --s-bg: var(--smoke);
+    --s-fg: var(--paper);
+    --s-muted: rgb(var(--paper-rgb) / 0.72);
+    --s-faint: rgb(var(--paper-rgb) / 0.54);
+    --s-line: rgb(var(--paper-rgb) / 0.18);
+    --s-line-strong: rgb(var(--paper-rgb) / 0.32);
+    --s-accent: var(--gold-soft);
+    --s-fill: rgb(var(--paper-rgb) / 0.07);
   }
 
   /* --- luz ------------------------------------------------------------- */

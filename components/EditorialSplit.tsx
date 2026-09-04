@@ -15,7 +15,7 @@ export default function EditorialSplit({
   texto,
   assinatura,
   acao,
-  surface = 'moss',
+  surface = 'ink',
   ladoImagem = 'left',
 }: {
   imagem: string;
