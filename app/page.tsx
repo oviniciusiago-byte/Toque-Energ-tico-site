@@ -105,7 +105,7 @@ export default function HomePage() {
         </div>
 
         <div className="mt-16 sm:mt-20">
-          <CenaHorizontal label="Produtos em destaque">
+          <CenaHorizontal label="Produtos em destaque" indice="03">
             {[
               ...destaques.map((p, i) => (
                 <ProductCard
@@ -142,7 +142,7 @@ export default function HomePage() {
         </div>
 
         <div className="mt-16">
-          <CenaHorizontal label="Categorias do catálogo">
+          <CenaHorizontal label="Categorias do catálogo" indice="04">
             {categoriasVisiveis.map((c) => (
               <CategoryCard
                 key={c.slug}

@@ -41,10 +41,13 @@ import { carregarMotor, larguraCena, lenis, movimentoReduzido } from '@/lib/moti
 export default function CenaHorizontal({
   children,
   label,
+  indice,
   className = '',
 }: {
   children: ReactNode[];
   label: string;
+  /** "04" — o mesmo índice do cabeçalho da seção, repetido dentro da cena. */
+  indice?: string;
   className?: string;
 }) {
   const envoltorioRef = useRef<HTMLDivElement>(null);
@@ -232,6 +235,14 @@ export default function CenaHorizontal({
           ancorado no fluxo logo depois da tela e só apareceria quando a cena
           já tivesse acabado. */}
       <div className="cena-h__palco">
+        {/* Faixa 1 de 3: a referência de onde a pessoa está. Quando a fileira
+            toma a tela inteira, o cabeçalho da seção já saiu de cena. */}
+        <div className="cena-h__rotulo shell" aria-hidden="true">
+          {indice ? <span className="label-quiet tnum">{indice}</span> : null}
+          {indice ? <span className="h-px w-6 shrink-0 bg-[color:var(--s-line)]" /> : null}
+          <span className="label">{label}</span>
+        </div>
+
         <div
           ref={telaRef}
           role="group"

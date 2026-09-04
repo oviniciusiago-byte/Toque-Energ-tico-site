@@ -499,7 +499,17 @@ html.lenis body {
     margin-top: 2rem;
   }
 
-  /* — a cena — */
+  /* — a cena —
+     O palco é uma coluna de três faixas: rótulo, fileira, medidor. A fileira
+     é a única que estica (`flex: 1`), então os cartões se dimensionam pela
+     ALTURA disponível — que é o que uma cena de tela cheia pede. Dimensionar
+     pela largura (34vw) fazia o cartão `aspect-[3/4]` ficar mais alto que a
+     tela: ele estourava por baixo e o fio do medidor cruzava por cima dele. */
+  .cena-h.is-fixada {
+    /* o que a coluna gasta fora da fileira: cabeçalho fixo, rótulo, medidor */
+    --reserva-cena: clamp(11rem, 22vh, 14.5rem);
+  }
+
   .cena-h.is-fixada .cena-h__palco {
     position: sticky;
     top: 0;
@@ -507,23 +517,73 @@ html.lenis body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: clamp(0.9rem, 2.4vh, 1.9rem);
+    padding-block: clamp(5.5rem, 12vh, 7.5rem) clamp(1.4rem, 4vh, 2.4rem);
     overflow: hidden;
   }
 
   .cena-h.is-fixada .cena-h__tela {
+    flex: 1 1 auto;
+    min-height: 0;
     overflow: hidden;
     scroll-snap-type: none;
   }
 
   .cena-h.is-fixada .cena-h__trilha {
+    height: 100%;
+    align-items: stretch;
     will-change: transform;
   }
 
+  /* O cartão passa a ser regido pela altura do palco. O `min()` mantém o
+     limite de largura de antes para telas baixas e largas. */
+  .cena-h.is-fixada [data-item-cena] {
+    width: min(34vw, calc((100svh - var(--reserva-cena)) * 0.68));
+    height: 100%;
+  }
+
+  /* Os dois cartões do site têm anatomias diferentes — o de categoria é só
+     mídia, o de produto é mídia + ficha. Uniformizar em coluna flexível faz a
+     mídia ceder altura para a ficha em vez de impor a própria proporção. */
+  .cena-h.is-fixada [data-item-cena] > div,
+  .cena-h.is-fixada [data-item-cena] a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .cena-h.is-fixada [data-item-cena] .card-media {
+    aspect-ratio: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  /* Quem absorve a sobra de altura é a imagem, não a ficha. O cartão de
+     produto usa `flex-1` no bloco de texto para empurrar a linha de volume
+     para o rodapé — dentro da cena isso abria um vazio entre a descrição e o
+     rodapé, e encolhia a foto até virar uma tarja. */
+  .cena-h.is-fixada [data-item-cena] .card-media + div {
+    flex: 0 0 auto;
+  }
+
   .cena-h.is-fixada .cena-h__medidor {
-    position: absolute;
-    inset-inline: 0;
-    bottom: clamp(1.75rem, 4vh, 3.25rem);
+    position: static;
     margin-top: 0;
+    flex: none;
+  }
+
+  /* O rótulo da seção só existe dentro da cena: quando a fileira toma a tela
+     inteira, o cabeçalho da seção já rolou para fora e a pessoa perde a
+     referência de onde está. */
+  .cena-h__rotulo {
+    display: none;
+  }
+
+  .cena-h.is-fixada .cena-h__rotulo {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 0.75rem;
   }
 
   /* ==========================================================================
