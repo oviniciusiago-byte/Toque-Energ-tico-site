@@ -26,3 +26,6 @@ Thumbs.db
 # arquivos de trabalho
 files.zip
 .env*
+
+# briefing e copy da cliente — dados pessoais, fora do versionamento
+docs/
