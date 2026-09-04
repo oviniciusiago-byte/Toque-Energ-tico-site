@@ -92,7 +92,14 @@ export default function BathsScene({ banhos }: { banhos: Produto[] }) {
           }
 
           dentroRef.current = f;
-          setPasso(i);
+
+          /*
+            O nome troca no MEIO da mistura de cor (f ≈ 0.83), não na borda do
+            passo. Antes, no último terço, o fundo já era o do próximo banho
+            enquanto o nome ainda era o anterior — os dois discordavam. Assim
+            nome, foto e cor cruzam juntos.
+          */
+          setPasso(f > 0.83 ? Math.min(total - 1, i + 1) : i);
         },
       });
 
