@@ -28,12 +28,25 @@ falhar() {
 
 printf '→ publicando em produção…\n'
 # tee: a saída aparece E fica no log. Sem grep, sem head.
-if ! npx vercel deploy --prod --yes 2>&1 | tee "$LOG"; then
-  falhar 'a CLI da Vercel retornou erro'
+npx vercel deploy --prod --yes 2>&1 | tee "$LOG"
+CLI_OK="${PIPESTATUS[0]}"
+
+# A CLI já saiu com erro DEPOIS de o deploy ter chegado ("Deploying outputs…"
+# seguido de `fetch failed`): a conexão caiu no último relatório, mas o build
+# subiu. Então o código de saída da ferramenta não é a verdade — a verdade é o
+# estado do deploy na Vercel e o site respondendo. Se a CLI falhar, seguimos e
+# deixamos a verificação decidir.
+if [ "$CLI_OK" -ne 0 ]; then
+  printf '\033[33m⚠ a CLI saiu com erro — vou conferir se o deploy chegou mesmo\033[0m\n'
 fi
 
 URL="$(grep -oE 'https://toque-energetico-[a-z0-9]+-[a-z0-9-]+\.vercel\.app' "$LOG" | head -1)"
-[ -n "$URL" ] || falhar 'não encontrei a URL do deploy na saída da CLI'
+if [ -z "$URL" ]; then
+  # sem URL no log, tenta o deploy mais recente do projeto
+  URL="$(npx vercel ls toque-energetico 2>&1 |
+    grep -oE 'https://toque-energetico-[a-z0-9]+-[a-z0-9-]+\.vercel\.app' | head -1)"
+fi
+[ -n "$URL" ] || falhar 'não encontrei nenhuma URL de deploy para conferir'
 printf '→ deploy: %s\n' "$URL"
 
 printf '→ esperando ficar Ready…\n'
@@ -78,3 +91,6 @@ fi
 
 printf '\n\033[32m✓ no ar: %s\033[0m\n' "$DOMINIO"
 printf '  %d rotas conferidas · deploy %s\n' "$(echo $ROTAS | wc -w | tr -d ' ')" "${URL##*/}"
+if [ "$CLI_OK" -ne 0 ]; then
+  printf '  \033[33m(a CLI havia saído com erro; o deploy chegou de todo modo)\033[0m\n'
+fi
