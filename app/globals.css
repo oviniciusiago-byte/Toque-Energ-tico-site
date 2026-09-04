@@ -599,19 +599,12 @@ html.lenis body {
     visibility: hidden;
   }
 
-  /* A máscara que o SplitText cria usa `overflow: clip`, que cortaria a perna
-     do "g" e do "p" da Fraunces. O respiro sai por padding e volta por margem
-     negativa: sobra espaço para o descendente sem mexer no ritmo vertical. */
-  .linha-mask {
-    padding-bottom: 0.18em;
-    margin-bottom: -0.18em;
-  }
-
-  /* Palavras e letras precisam ser blocos para aceitar transform em Y. */
-  .palavra,
-  .letra {
-    display: inline-block;
-    will-change: transform;
+  /* O SplitText já põe `display: inline-block` nos pedaços — sem isso eles não
+     aceitariam transform em Y. Aqui só garantimos que o halo do desfoque não
+     seja cortado: um `overflow: hidden` em qualquer ancestral corta o blur e
+     o efeito vira um borrão em forma de retângulo. */
+  .fatia {
+    overflow: visible;
   }
 }
 

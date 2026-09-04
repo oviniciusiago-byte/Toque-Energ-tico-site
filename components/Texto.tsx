@@ -5,107 +5,92 @@ import type { ScrollTrigger as TipoScrollTrigger } from 'gsap/ScrollTrigger';
 import { carregarMotor, cascata, dur, movimentoReduzido, respiro } from '@/lib/motion';
 
 /**
- * Revelação de texto por SplitText.
+ * Revelação de texto por SplitText — o texto entra desfocado e vem para o
+ * foco, subindo um fio (blur in up).
  *
  * O que muda em relação ao <Reveal>: o <Reveal> move o BLOCO inteiro — um
  * parágrafo de cinco linhas sobe como um tijolo só. Aqui o texto é fatiado e
- * cada linha (ou cada palavra, no título) sobe de dentro da própria caixa,
- * atrás de uma máscara. É a diferença entre "o elemento apareceu" e "o texto
- * foi escrito na tela".
+ * cada pedaço entra no seu tempo.
  *
- * TRÊS VARIANTES, e o motivo de cada uma
+ * POR QUE DESFOQUE E NÃO MÁSCARA
+ * A versão anterior revelava por máscara: o pedaço subia de dentro de uma
+ * caixa com `overflow: clip`. Máscara e desfoque não convivem — o `clip`
+ * corta justamente o halo do blur e o efeito vira um borrão cortado em
+ * retângulo. Ao trocar o gesto, a máscara saiu.
  *
- *  · `titulo` — palavras subindo dentro da máscara da linha. Numa serifada
- *    grande, a palavra é a unidade que o olho lê; revelar palavra a palavra dá
- *    o ritmo de leitura sem virar efeito.
+ * TRÊS VARIANTES, e a unidade de cada uma
  *
- *  · `texto`  — linha a linha. Em corpo de leitura, palavra a palavra viraria
- *    confete; a linha é a unidade certa.
+ *  · `titulo` — letra a letra. Numa serifada grande cada letra tem desenho
+ *    próprio, e o foco chegando letra a letra é o que dá a leitura de algo
+ *    sendo escrito.
  *
- *  · `rotulo` — letra a letra, curto e discreto. Só vale porque os rótulos são
- *    caixa-alta de 3 ou 4 palavras com entreletra larga: a letra ali já é um
- *    elemento gráfico.
+ *  · `texto`  — palavra a palavra. Em corpo de leitura a letra é pequena
+ *    demais para o desfoque se distinguir, e há um custo real: `filter:
+ *    blur()` promove CADA pedaço a uma camada de composição própria. Um
+ *    parágrafo de 250 caracteres viraria 250 camadas animando ao mesmo tempo.
+ *    Por palavra são ~40, com o mesmo resultado visível.
  *
- * Nenhuma delas gira, escala ou pisca. A cliente pediu "sofisticado sem ser
- * ostensivo" e vetou brilho e efeito mágico — a referência (era-residence) usa
- * `rotateX: 90` e `rotateY: 90` em caracteres, e isso aqui seria contra a
- * marca. O que se copia dela é a ESTRUTURA de três verbos, não o gesto.
+ *  · `rotulo` — letra a letra, curto e discreto.
  *
- * TRÊS VERBOS: `inicial` (esconde sem animar), `revelar`, `ocultar`. O terceiro
- * existe para a transição de página: quem sai, sai pelo lado oposto de onde
- * entrou.
+ * A unidade pode ser forçada por `unidade` em qualquer lugar.
  *
- * SEM JS o texto fica visível e legível — quem esconde é a classe `motor`, que
- * só entra no <html> se houver JS e o movimento não estiver reduzido.
+ * IDA E VOLTA: revela ao entrar, e ao rolar PARA CIMA de volta o texto
+ * desfoca e sai pelo lado oposto de onde entrou. O estado é guardado (
+ * `visivel`), então passar pelo mesmo texto de novo não reinicia a animação
+ * do nada.
+ *
+ * SEM JS o texto nasce visível e continua legível: quem autoriza esconder é a
+ * classe `motor`, que só entra no <html> se houver JS e o movimento não
+ * estiver reduzido.
  */
 
 export type VarianteTexto = 'titulo' | 'texto' | 'rotulo';
+export type UnidadeTexto = 'char' | 'palavra' | 'linha';
+
+/** Quanto de desfoque no estado escondido, por unidade. */
+const desfoque: Record<UnidadeTexto, number> = { char: 10, palavra: 9, linha: 8 };
 
 type Receita = {
-  divisao: { type: string; mask?: 'lines'; linesClass?: string; wordsClass?: string; charsClass?: string };
-  alvo: 'lines' | 'words' | 'chars';
-  inicial: gsap.TweenVars;
-  revelar: gsap.TweenVars;
-  ocultar: gsap.TweenVars;
+  unidade: UnidadeTexto;
+  distancia: number;
+  duracao: number;
+  passo: number;
 };
 
 const receitas: Record<VarianteTexto, Receita> = {
-  titulo: {
-    divisao: { type: 'lines,words', mask: 'lines', linesClass: 'linha', wordsClass: 'palavra' },
-    alvo: 'words',
-    inicial: { yPercent: 115 },
-    revelar: { yPercent: 0, duration: dur.longa, ease: 'saida', stagger: 0.05 },
-    ocultar: { yPercent: -115, duration: dur.curta, ease: 'entrada', stagger: 0.025 },
-  },
-  texto: {
-    divisao: { type: 'lines', mask: 'lines', linesClass: 'linha' },
-    alvo: 'lines',
-    inicial: { yPercent: 110 },
-    revelar: { yPercent: 0, duration: dur.media, ease: 'saida', stagger: cascata },
-    ocultar: { yPercent: -110, duration: dur.curta, ease: 'entrada', stagger: cascata / 2 },
-  },
-  rotulo: {
-    divisao: { type: 'chars', charsClass: 'letra' },
-    alvo: 'chars',
-    inicial: { opacity: 0, yPercent: 45 },
-    revelar: { opacity: 1, yPercent: 0, duration: dur.curta, ease: 'saida', stagger: 0.016 },
-    ocultar: { opacity: 0, yPercent: -45, duration: 0.28, ease: 'entrada', stagger: 0.008 },
-  },
+  titulo: { unidade: 'char', distancia: 22, duracao: dur.longa, passo: 0.022 },
+  texto: { unidade: 'palavra', distancia: 16, duracao: dur.media, passo: 0.018 },
+  rotulo: { unidade: 'char', distancia: 12, duracao: dur.curta, passo: 0.014 },
 };
 
-/* Registro dos textos já fatiados, para que a transição de página consiga
-   mandar "ocultar" sem que cada componente precise expor um handle. */
-type Inscrito = {
-  peças: () => Element[];
-  receita: Receita;
-  gsap: typeof import('gsap').gsap;
+const divisoes: Record<UnidadeTexto, { type: string; alvo: 'chars' | 'words' | 'lines' }> = {
+  char: { type: 'chars', alvo: 'chars' },
+  palavra: { type: 'words', alvo: 'words' },
+  linha: { type: 'lines', alvo: 'lines' },
 };
+
+/* Registro dos textos fatiados, para a transição de página conseguir mandar
+   "ocultar" sem que cada componente precise expor um handle. */
+type Inscrito = { ocultar: () => number };
 const inscritos = new Map<HTMLElement, Inscrito>();
 
-/** Toca a saída de todo texto já revelado que está na tela. */
+/** Toca a saída de todo texto revelado que está na tela. Devolve a duração. */
 export function ocultarTextosVisiveis(raiz: ParentNode = document): Promise<void> {
   const alturaTela = window.innerHeight;
   let maisLongo = 0;
-
   inscritos.forEach((inscrito, el) => {
     if (!raiz.contains(el)) return;
     const caixa = el.getBoundingClientRect();
     if (caixa.bottom < 0 || caixa.top > alturaTela) return;
-    const peças = inscrito.peças();
-    if (!peças.length) return;
-    inscrito.gsap.to(peças, { ...inscrito.receita.ocultar, overwrite: true });
-    const total =
-      Number(inscrito.receita.ocultar.duration ?? 0) +
-      Number(inscrito.receita.ocultar.stagger ?? 0) * peças.length;
-    maisLongo = Math.max(maisLongo, total);
+    maisLongo = Math.max(maisLongo, inscrito.ocultar());
   });
-
-  return new Promise((resolve) => setTimeout(resolve, Math.min(maisLongo, 0.7) * 1000));
+  return new Promise((r) => setTimeout(r, Math.min(maisLongo, 0.7) * 1000));
 }
 
 export default function Texto({
   children,
   variante = 'texto',
+  unidade,
   as: Tag = 'p',
   className = '',
   atraso = 0,
@@ -113,6 +98,8 @@ export default function Texto({
 }: {
   children: ReactNode;
   variante?: VarianteTexto;
+  /** Força a unidade de fatiamento, ignorando o padrão da variante. */
+  unidade?: UnidadeTexto;
   as?: ElementType;
   className?: string;
   /** Segundos a mais antes de começar — para escalonar irmãos. */
@@ -132,39 +119,80 @@ export default function Texto({
       if (cancelado || !el.textContent?.trim()) return;
 
       const receita = receitas[variante];
-      let gatilho: TipoScrollTrigger | undefined;
+      const uni = unidade ?? receita.unidade;
+      const { type, alvo } = divisoes[uni];
+      const blur = desfoque[uni];
 
-      /* `autoSplit` refaz a divisão quando a fonte termina de carregar e
-         quando a largura muda — que é exatamente onde a quebra de linha muda.
-         Sem isso, as linhas são calculadas em cima da fonte de fallback e
-         ficam erradas assim que a Fraunces entra. */
+      let gatilho: TipoScrollTrigger | undefined;
+      let visivel = false;
+
       const divisao = SplitText.create(el, {
-        ...receita.divisao,
+        type,
+        tag: 'span',
+        charsClass: 'fatia',
+        wordsClass: 'fatia',
+        linesClass: 'fatia',
         autoSplit: true,
         aria: 'auto',
         onSplit: (self) => {
-          const peças = self[receita.alvo] as Element[];
+          const peças = self[alvo] as Element[];
           if (!peças.length) return;
 
-          gsap.set(peças, receita.inicial);
+          const escondido = { opacity: 0, filter: `blur(${blur}px)`, y: receita.distancia };
+
+          gsap.set(peças, escondido);
           el.setAttribute('data-pronto', '');
+          visivel = false;
+
+          const revelar = () => {
+            if (visivel) return;
+            visivel = true;
+            gsap.to(peças, {
+              opacity: 1,
+              filter: 'blur(0px)',
+              y: 0,
+              duration: receita.duracao,
+              delay: respiro + atraso,
+              stagger: receita.passo,
+              ease: 'saida',
+              overwrite: true,
+              /* Tira o filtro no fim. Um `filter` ativo mantém cada pedaço
+                 numa camada de composição própria para sempre; num texto
+                 fatiado isso são dezenas de camadas paradas consumindo
+                 memória de GPU pelo resto da sessão. */
+              onComplete: () => gsap.set(peças, { filter: 'none', willChange: 'auto' }),
+            });
+          };
+
+          const ocultar = () => {
+            if (!visivel) return 0;
+            visivel = false;
+            gsap.to(peças, {
+              opacity: 0,
+              filter: `blur(${blur}px)`,
+              y: -receita.distancia,
+              duration: dur.curta,
+              stagger: receita.passo / 2,
+              ease: 'entrada',
+              overwrite: true,
+            });
+            return dur.curta + (receita.passo / 2) * peças.length;
+          };
 
           gatilho?.kill();
-          /* Uma vez só, na entrada. Um título que se re-esconde ao voltar o
-             scroll cansa numa página longa. */
           gatilho = ScrollTrigger.create({
             trigger: el,
             start: 'top 88%',
-            once: true,
-            onEnter: () =>
-              gsap.to(peças, { ...receita.revelar, delay: respiro + atraso, overwrite: true }),
+            onEnter: revelar,
+            /* Voltando de baixo para cima, o texto reaparece — mas só se
+               estiver escondido, senão a animação reiniciaria à toa. */
+            onEnterBack: revelar,
+            /* Rolando PARA CIMA além do começo: o texto desfoca e sai por
+               cima, o oposto de por onde entrou. */
+            onLeaveBack: ocultar,
           });
 
-          inscritos.set(el as HTMLElement, {
-            peças: () => self[receita.alvo] as Element[],
-            receita,
-            gsap,
-          });
+          inscritos.set(el as HTMLElement, { ocultar });
         },
       });
 
@@ -180,7 +208,7 @@ export default function Texto({
       cancelado = true;
       limpar();
     };
-  }, [variante, atraso]);
+  }, [variante, unidade, atraso]);
 
   const Comp = Tag as ElementType;
   return (

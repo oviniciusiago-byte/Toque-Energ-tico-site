@@ -112,6 +112,8 @@ type Lenis = {
       mude o tamanho da página por JS — sem isto o Lenis mantém o limite de
       rolagem antigo e o fim do site fica inalcançável. */
   resize: () => void;
+  /** Velocidade atual da rolagem. Perto de zero = o deslize terminou. */
+  velocity: number;
 };
 
 /** O Lenis publicado pelo SmoothScroll, quando existe. */

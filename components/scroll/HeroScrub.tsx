@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import Star from '@/components/Star';
+import Texto from '@/components/Texto';
 import { home, site } from '@/content/site';
 import { HERO } from '@/lib/media';
 import { wppLink, wppMsg } from '@/lib/whatsapp';
@@ -71,17 +72,24 @@ export default function HeroScrub() {
       // o fundo recua devagar — a sensação de afastamento
       tl.to(fundoRef.current, { scale: 1.16, yPercent: 6, ease: 'none' }, 0);
 
-      // cada linha do título sai num ritmo próprio: a de baixo primeiro
+      /*
+        Cada linha do título sai num ritmo próprio — a de baixo primeiro.
+        A saída era `yPercent: -110` atrás de uma máscara. A máscara caiu
+        junto com a entrada por máscara: `overflow: hidden` corta o halo do
+        desfoque e o blur vira um borrão em forma de retângulo. Sair
+        desfocando para cima é o mesmo gesto que o resto do site usa quando o
+        texto some — hero e corpo passam a falar a mesma língua.
+      */
       const linhas = linhasRef.current.filter(Boolean) as HTMLSpanElement[];
       linhas.forEach((linha, i) => {
         tl.to(
           linha,
-          { yPercent: -110, opacity: 0, ease: 'none' },
+          { y: -80, opacity: 0, filter: 'blur(14px)', ease: 'none' },
           0.06 * (linhas.length - 1 - i),
         );
       });
 
-      tl.to(apoioRef.current, { y: -60, opacity: 0, ease: 'none' }, 0.1);
+      tl.to(apoioRef.current, { y: -60, opacity: 0, filter: 'blur(10px)', ease: 'none' }, 0.1);
       tl.to(rodapeRef.current, { opacity: 0, ease: 'none' }, 0.5);
 
       ScrollTrigger.refresh();
@@ -149,26 +157,39 @@ export default function HeroScrub() {
         <div className="shell pb-14 pt-40 sm:pb-20">
           <div className="grid-12 items-end gap-y-10">
             <h1 className="col-span-4 md:col-span-8">
-              <span className="label mb-7 block">{home.hero.kicker}</span>
+              <Texto variante="rotulo" as="span" className="label mb-7 block">
+                {home.hero.kicker}
+              </Texto>
               {linhasDoTitulo.map((parte, i) => (
-                <span key={parte} className="mask-line block overflow-hidden">
+                /* Sem `overflow: hidden` aqui: ele cortaria o halo do
+                   desfoque, das letras entrando e da linha inteira saindo. */
+                <span key={parte} className="block">
                   <span
                     ref={(el) => {
                       linhasRef.current[i] = el;
                     }}
-                    className={`display block text-d1 leading-[0.94] ${
-                      i === linhasDoTitulo.length - 1 ? 'italic' : ''
-                    }`}
+                    className="block will-change-transform"
                   >
-                    {parte}
-                    {i < linhasDoTitulo.length - 1 ? ',' : '.'}
+                    <Texto
+                      variante="titulo"
+                      as="span"
+                      atraso={0.12 * i}
+                      className={`display block text-d1 leading-[0.94] ${
+                        i === linhasDoTitulo.length - 1 ? 'italic' : ''
+                      }`}
+                    >
+                      {parte}
+                      {i < linhasDoTitulo.length - 1 ? ',' : '.'}
+                    </Texto>
                   </span>
                 </span>
               ))}
             </h1>
 
             <div ref={apoioRef} className="col-span-4 md:col-span-4">
-              <p className="body max-w-prose-sm">{home.hero.subtitulo}</p>
+              <Texto variante="texto" as="p" atraso={0.3} className="body max-w-prose-sm">
+                {home.hero.subtitulo}
+              </Texto>
               <div className="mt-9 flex flex-wrap items-center gap-3">
                 <Link href={home.hero.ctaPrimario.href} className="btn btn-solid">
                   {home.hero.ctaPrimario.label}
