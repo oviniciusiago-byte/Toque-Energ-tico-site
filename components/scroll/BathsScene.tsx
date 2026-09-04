@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { misturar, parLegivel, tintaPara } from '@/lib/contraste';
+import { misturar, parLegivel, rampaLegivel, tintaPara } from '@/lib/contraste';
 import { carregarMotor, lenis, movimentoReduzido } from '@/lib/motion';
 import type { Produto } from '@/lib/types';
 
@@ -65,7 +65,13 @@ export default function BathsScene({ banhos }: { banhos: Produto[] }) {
   /* A cor do rótulo entra como fundo de tela cheia, então o par fundo/texto é
      CALCULADO para passar AA — ver lib/contraste.ts. Sete das oito cores
      passam como estão; a Limpeza Densa é escurecida um fio. */
-  const cenas = banhos.map((b) => ({ ...b, ...parLegivel(b.cor ?? '#0F0E0C') }));
+  const cenas = banhos.map((b) => ({
+    ...b,
+    ...parLegivel(b.cor ?? '#0F0E0C'),
+    /* Três tons de leitura calculados a partir da cor do rótulo — ver a nota
+       em lib/contraste.ts sobre por que opacidade não servia. */
+    ...rampaLegivel(b.cor ?? '#0F0E0C'),
+  }));
 
   const envoltorioRef = useRef<HTMLDivElement>(null);
   const palcoRef = useRef<HTMLDivElement>(null);
@@ -74,6 +80,8 @@ export default function BathsScene({ banhos }: { banhos: Produto[] }) {
   const fotosRef = useRef<(HTMLDivElement | null)[]>([]);
   const trilhoRef = useRef<HTMLSpanElement>(null);
   const contadorRef = useRef<HTMLSpanElement>(null);
+  const rodapeRef = useRef<HTMLSpanElement>(null);
+  const avisoRef = useRef<HTMLSpanElement>(null);
   const [reduzido, setReduzido] = useState(false);
 
   useEffect(() => {
@@ -173,6 +181,10 @@ export default function BathsScene({ banhos }: { banhos: Produto[] }) {
             trilhoRef.current.style.transform = `scaleX(${self.progress})`;
             trilhoRef.current.style.backgroundColor = tinta;
           }
+          /* Contador e aviso são informação, não decoração: cor cheia, sem
+             opacidade a comer o contraste. */
+          if (rodapeRef.current) rodapeRef.current.style.color = tinta;
+          if (avisoRef.current) avisoRef.current.style.color = tinta;
 
           /* O número troca junto com o cruzamento da cor, não na borda da
              faixa — senão o contador discorda do que está na tela. */
@@ -286,18 +298,29 @@ export default function BathsScene({ banhos }: { banhos: Produto[] }) {
           <section
             key={b.slug}
             className="flex min-h-[70svh] items-center py-block"
-            style={{ backgroundColor: b.fundo, color: b.texto }}
+            style={{ backgroundColor: b.campo, color: b.forte }}
           >
             <div className="shell grid-12 items-center gap-y-10">
               <div className="col-span-4 md:col-span-6">
-                <p className="font-sans text-[0.7rem] uppercase tracking-[0.24em] opacity-70">
+                <p
+                  className="font-sans text-[0.7rem] uppercase tracking-[0.24em]"
+                  style={{ color: b.suave }}
+                >
                   {b.subtitulo ?? 'Banho & escalda-pés'}
                 </p>
-                <h3 className="display mt-4 text-d1">{b.nome}</h3>
-                <p className="mt-6 font-sans text-[0.78rem] uppercase tracking-[0.2em] opacity-75">
+                <h3 className="display mt-4 text-d1" style={{ color: b.forte }}>
+                  {b.nome}
+                </h3>
+                <p
+                  className="mt-6 font-sans text-[0.78rem] uppercase tracking-[0.2em]"
+                  style={{ color: b.suave }}
+                >
                   {b.conceito.join(' · ')}
                 </p>
-                <p className="mt-6 max-w-prose-sm font-sans text-[0.95rem] opacity-85">
+                <p
+                  className="mt-6 max-w-prose-sm font-sans text-[0.95rem]"
+                  style={{ color: b.medio }}
+                >
                   {b.descricaoCurta}
                 </p>
                 <Link
@@ -374,40 +397,56 @@ export default function BathsScene({ banhos }: { banhos: Produto[] }) {
               />
             </div>
 
-            {/* Véu na cor do próprio banho, só do lado do texto. Como o campo
-                esquerdo da foto já é essa cor, o véu é quase invisível — ele
-                existe para garantir a legibilidade quando o corte do
-                `object-cover` puxa a composição para a esquerda em telas
-                estreitas. */}
+            {/* Véu na cor do próprio banho, só do lado do texto. Faz duas
+                coisas: garante a legibilidade quando o corte do `object-cover`
+                puxa a composição para a esquerda em telas estreitas, e
+                aprofunda o campo o mínimo necessário para os três tons de
+                leitura caberem (4% a 25%, conforme o banho). Como é gradiente,
+                lê como queda de luz. */}
             <span
               aria-hidden="true"
               className="absolute inset-0"
               style={{
-                background: `linear-gradient(to right, ${b.fundo} 0%, ${b.fundo} 22%, transparent 64%)`,
+                background: `linear-gradient(to right, ${b.campo} 0%, ${b.campo} 24%, transparent 66%)`,
               }}
             />
 
             <div className="relative flex h-full items-center">
               <div className="shell w-full">
                 <div className="max-w-[34rem]">
-                  <p className="font-sans text-[0.7rem] uppercase tracking-[0.24em] opacity-70">
+                  <p
+                    className="font-sans text-[0.7rem] uppercase tracking-[0.24em]"
+                    style={{ color: b.suave }}
+                  >
                     {b.subtitulo ?? 'Banho & escalda-pés'}
                   </p>
-                  <h3 className="display mt-4 text-d1 leading-[0.95]">{b.nome}</h3>
-                  <p className="mt-6 font-sans text-[0.76rem] uppercase tracking-[0.2em] opacity-75">
+                  <h3 className="display mt-4 text-d1 leading-[0.95]" style={{ color: b.forte }}>
+                    {b.nome}
+                  </h3>
+                  <p
+                    className="mt-6 font-sans text-[0.76rem] uppercase tracking-[0.2em]"
+                    style={{ color: b.suave }}
+                  >
                     {b.conceito.join(' · ')}
                   </p>
-                  <p className="mt-7 font-sans text-[0.95rem] leading-relaxed opacity-85">
+                  <p
+                    className="mt-7 font-sans text-[0.95rem] leading-relaxed"
+                    style={{ color: b.medio }}
+                  >
                     {b.descricaoCurta}
                   </p>
                   {b.aroma ? (
-                    <p className="mt-4 font-sans text-[0.74rem] uppercase tracking-[0.16em] opacity-60">
+                    <p
+                      className="mt-4 font-sans text-[0.74rem] uppercase tracking-[0.16em]"
+                      style={{ color: b.suave }}
+                    >
                       {b.aroma}
                     </p>
                   ) : null}
                   <Link
                     href={`/produto/${b.slug}`}
-                    className="mt-9 inline-flex border-b border-current pb-1 font-sans text-[0.72rem] uppercase tracking-[0.18em] transition-opacity duration-500 hover:opacity-60"
+                    className="mt-9 inline-flex border-b border-current pb-1 font-sans text-[0.72rem] uppercase tracking-[0.18em] transition-opacity duration-500 hover:opacity-70"
+                    style={{ color: b.forte }}
                   >
                     Ver o banho
                   </Link>
@@ -429,11 +468,20 @@ export default function BathsScene({ banhos }: { banhos: Produto[] }) {
                 style={{ transform: 'scaleX(0)' }}
               />
             </div>
-            <div className="mt-4 flex items-center justify-between opacity-60">
-              <span className="font-sans text-[0.62rem] tabular-nums tracking-[0.2em]">
+            {/* O trilho é decorativo e pode viver em opacidade. O contador e o
+                aviso são informação: recebem cor de verdade, escrita quadro a
+                quadro pelo onUpdate junto com a tinta da cena. */}
+            <div className="mt-4 flex items-center justify-between">
+              <span
+                ref={rodapeRef}
+                className="font-sans text-[0.62rem] tabular-nums tracking-[0.2em]"
+              >
                 <span ref={contadorRef}>01</span> / {String(cenas.length).padStart(2, '0')}
               </span>
-              <span className="font-sans text-[0.6rem] uppercase tracking-[0.24em]">
+              <span
+                ref={avisoRef}
+                className="font-sans text-[0.6rem] uppercase tracking-[0.24em]"
+              >
                 Role para trocar a lâmina
               </span>
             </div>

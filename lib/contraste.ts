@@ -86,3 +86,90 @@ export function misturar(a: string, b: string, t: number) {
 export function tintaPara(fundo: string) {
   return contraste(TINTA, fundo) >= contraste(PAPEL, fundo) ? TINTA : PAPEL;
 }
+
+/* ==========================================================================
+   Rampa de leitura da cena dos banhos
+   ==========================================================================
+
+   Existe porque a hierarquia do texto era feita com `opacity-60/70/75/85`, e
+   opacidade MISTURA o texto com o fundo — ou seja, desfaz exatamente o
+   contraste que `parLegivel` acabou de garantir. Medido antes da correção:
+   23 das 48 camadas de texto da cena reprovavam 4.5:1. Na Calmaria o aroma
+   ficava em 2.84:1 e o próprio nome do banho em 4.98:1.
+
+   A correção troca opacidade por DEGRAUS DE COR de verdade: três tons que
+   nascem da mesma tinta e param cada um no seu alvo de contraste. Hierarquia
+   visível e contraste garantido deixam de ser coisas que brigam.
+
+   Duas decisões de desenho embutidas:
+
+   · A tinta não é preto nem branco puro — é o próprio matiz do rótulo levado
+     ao extremo (`#7B76D8` da Calmaria vira um violeta quase preto). Texto que
+     carrega um traço da cor ao redor lê como escolhido; preto puro sobre
+     violeta lê como padrão de navegador.
+
+   · Fundo de meio-tom não tem espaço tonal para três degraus: em Calmaria,
+     Limpeza Densa, Primavere-se e Eixo Rosa o forte e o médio colapsavam na
+     mesma cor. Então o CAMPO DO TEXTO é aprofundado o mínimo necessário —
+     4% a 25%, conforme o banho — preservando o matiz. Como isso vive no véu
+     em gradiente do lado do texto, lê como queda de luz, não como remendo.
+   ========================================================================== */
+
+const ALVO_FORTE = 6.2; /* nome do banho, link */
+const ALVO_MEDIO = 5.2; /* descrição */
+const ALVO_SUAVE = 4.7; /* subtítulo, verbos, aroma */
+
+/** A tinta levada ao extremo, mantendo o matiz do fundo. */
+function tintaExtrema(fundo: string, escura: boolean) {
+  return escura ? misturar(fundo, '#050403', 0.88) : misturar(fundo, '#FFFCF7', 0.92);
+}
+
+/** Aproxima a tinta do fundo até raspar o alvo — um degrau, não uma opacidade. */
+function degrau(fundo: string, extremo: string, alvo: number) {
+  let melhor = extremo;
+  for (let i = 0; i <= 100; i += 1) {
+    const c = misturar(extremo, fundo, i / 100);
+    if (contraste(c, fundo) < alvo) break;
+    melhor = c;
+  }
+  return melhor;
+}
+
+export type Rampa = {
+  /** Cor do campo atrás do texto — o rótulo, aprofundado o mínimo necessário. */
+  campo: string;
+  /** Nome do banho e link. */
+  forte: string;
+  /** Descrição. */
+  medio: string;
+  /** Subtítulo, verbos, aroma. */
+  suave: string;
+};
+
+/**
+ * Três tons legíveis para o texto sobre a cor de um rótulo, com o campo já
+ * ajustado para caberem. Todos passam AA por construção.
+ */
+export function rampaLegivel(cor: string): Rampa {
+  for (let i = 0; i <= 60; i += 1) {
+    const t = i / 100;
+    for (const [rumo, escura] of [
+      ['#000000', false],
+      ['#FFFFFF', true],
+    ] as const) {
+      const campo = misturar(cor, rumo, t);
+      const extremo = tintaExtrema(campo, escura);
+      if (contraste(extremo, campo) >= ALVO_FORTE + 0.2) {
+        return {
+          campo,
+          forte: degrau(campo, extremo, ALVO_FORTE),
+          medio: degrau(campo, extremo, ALVO_MEDIO),
+          suave: degrau(campo, extremo, ALVO_SUAVE),
+        };
+      }
+    }
+  }
+  /* Não deve acontecer com cor de rótulo real, mas nunca devolve algo ilegível. */
+  const { fundo, texto } = parLegivel(cor);
+  return { campo: fundo, forte: texto, medio: texto, suave: texto };
+}
