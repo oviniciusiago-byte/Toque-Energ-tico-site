@@ -53,7 +53,28 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${display.variable} ${sans.variable}`}>
+    <html
+      lang="pt-BR"
+      className={`${display.variable} ${sans.variable}`}
+      /* o script abaixo acrescenta `motor` antes da hidratação — o React
+         precisa saber que essa diferença é intencional */
+      suppressHydrationWarning
+    >
+      <head>
+        {/*
+          Marca o documento como "tem motor de movimento" ANTES da primeira
+          pintura. É essa classe que autoriza o CSS a esconder o texto que vai
+          ser fatiado pelo SplitText — sem ela o texto nasce visível e continua
+          visível, que é o comportamento certo sem JS e sob movimento reduzido.
+          Se ficasse no React, o texto piscaria visível antes de ser escondido.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('motor')}}catch(e){}",
+          }}
+        />
+      </head>
       {/*
         `surface-paper` no body garante que os tokens de superfície existam
         mesmo fora de uma <Section> (header, drawer, elementos fixos).

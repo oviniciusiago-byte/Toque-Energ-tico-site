@@ -473,6 +473,86 @@ html.lenis body {
     background-size: 300px 300px;
     mix-blend-mode: overlay;
   }
+
+  /* ==========================================================================
+     Cena horizontal — components/scroll/CenaHorizontal.tsx
+     O padrão é a fileira de rolagem nativa. A cena fixada é o acréscimo, e
+     quem a liga é o JS (classe `is-fixada`): sem JS, sem cena, e a fileira
+     continua rolando com teclado e toque.
+     ========================================================================== */
+  .cena-h {
+    position: relative;
+  }
+
+  .cena-h__tela {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .cena-h__trilha {
+    display: flex;
+    width: max-content;
+    align-items: stretch;
+  }
+
+  .cena-h__medidor {
+    margin-top: 2rem;
+  }
+
+  /* — a cena — */
+  .cena-h.is-fixada .cena-h__palco {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .cena-h.is-fixada .cena-h__tela {
+    overflow: hidden;
+    scroll-snap-type: none;
+  }
+
+  .cena-h.is-fixada .cena-h__trilha {
+    will-change: transform;
+  }
+
+  .cena-h.is-fixada .cena-h__medidor {
+    position: absolute;
+    inset-inline: 0;
+    bottom: clamp(1.75rem, 4vh, 3.25rem);
+    margin-top: 0;
+  }
+
+  /* ==========================================================================
+     Texto fatiado — components/Texto.tsx
+     ========================================================================== */
+
+  /* Enquanto o SplitText não fatiou e escondeu, o texto fica invisível — mas
+     só quando há motor. Sem JS (ou com movimento reduzido) a classe `motor`
+     não existe no <html> e nada aqui se aplica: o texto nasce e fica legível.
+     `visibility` e não `opacity`: o elemento continua ocupando o espaço, então
+     a página não pula quando ele aparece. */
+  .motor [data-texto]:not([data-pronto]) {
+    visibility: hidden;
+  }
+
+  /* A máscara que o SplitText cria usa `overflow: clip`, que cortaria a perna
+     do "g" e do "p" da Fraunces. O respiro sai por padding e volta por margem
+     negativa: sobra espaço para o descendente sem mexer no ritmo vertical. */
+  .linha-mask {
+    padding-bottom: 0.18em;
+    margin-bottom: -0.18em;
+  }
+
+  /* Palavras e letras precisam ser blocos para aceitar transform em Y. */
+  .palavra,
+  .letra {
+    display: inline-block;
+    will-change: transform;
+  }
 }
 
 @layer utilities {

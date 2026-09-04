@@ -10,7 +10,7 @@ import Star from '@/components/Star';
 import WhatsAppCTA from '@/components/WhatsAppCTA';
 import BathsScene from '@/components/scroll/BathsScene';
 import HeroScrub from '@/components/scroll/HeroScrub';
-import HorizontalRail from '@/components/scroll/HorizontalRail';
+import CenaHorizontal from '@/components/scroll/CenaHorizontal';
 
 import { categoriasVisiveis, getCategoria } from '@/content/categorias';
 import { contagemPorCategoria, produtosPorCategoria, produtosDestaque } from '@/content/produtos';
@@ -105,7 +105,7 @@ export default function HomePage() {
         </div>
 
         <div className="mt-16 sm:mt-20">
-          <HorizontalRail label="Produtos em destaque">
+          <CenaHorizontal label="Produtos em destaque">
             {[
               ...destaques.map((p, i) => (
                 <ProductCard
@@ -122,7 +122,7 @@ export default function HomePage() {
                 />
               </div>,
             ]}
-          </HorizontalRail>
+          </CenaHorizontal>
         </div>
       </Section>
 
@@ -142,7 +142,7 @@ export default function HomePage() {
         </div>
 
         <div className="mt-16">
-          <HorizontalRail label="Categorias do catálogo">
+          <CenaHorizontal label="Categorias do catálogo">
             {categoriasVisiveis.map((c) => (
               <CategoryCard
                 key={c.slug}
@@ -150,7 +150,7 @@ export default function HomePage() {
                 quantidade={contagemPorCategoria(c.slug)}
               />
             ))}
-          </HorizontalRail>
+          </CenaHorizontal>
         </div>
       </Section>
 

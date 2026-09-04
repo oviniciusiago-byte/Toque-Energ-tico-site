@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Reveal } from '@/components/Reveal';
+import Texto from '@/components/Texto';
 
 /**
  * Cabeçalho de seção: índice + rótulo + título + intro, com uma ação opcional
@@ -41,18 +42,22 @@ export default function SectionHead({
     <div
       className={`${centro ? 'flex flex-col items-center text-center' : 'flex flex-col gap-8 md:flex-row md:items-end md:justify-between'} ${className}`}
     >
-      <div className={centro ? 'max-w-[46rem]' : 'max-w-[46rem]'}>
+      <div className="max-w-[46rem]">
         {capitulo ? (
-          <Reveal>
-            <p
-              className={`label-quiet mb-5 ${centro ? 'text-center' : ''}`}
-              style={{ letterSpacing: '0.3em' }}
-            >
-              {capitulo}
-            </p>
-          </Reveal>
+          <Texto
+            variante="rotulo"
+            as="p"
+            className={`label-quiet mb-5 ${centro ? 'text-center' : ''}`}
+            style={{ letterSpacing: '0.3em' }}
+          >
+            {capitulo}
+          </Texto>
         ) : null}
 
+        {/* Índice + fio + rótulo continuam no <Reveal>: a linha entre eles é
+            decorativa e não é texto, então fatiar aqui só criaria um caso
+            especial. O bloco sobe inteiro, que é o certo para uma marca de
+            três elementos. */}
         {(indice || label) && (
           <Reveal>
             <div
@@ -72,27 +77,31 @@ export default function SectionHead({
           </Reveal>
         )}
 
-        <Reveal delay={0.07}>
-          <Tag className={`display ${escala} mt-6 text-balance`}>{titulo}</Tag>
-        </Reveal>
+        <Texto variante="titulo" as={Tag} className={`display ${escala} mt-6 text-balance`}>
+          {titulo}
+        </Texto>
 
         {intro ? (
-          <Reveal delay={0.14}>
-            <p className={`lede mt-6 max-w-prose text-pretty ${centro ? 'mx-auto' : ''}`}>
-              {intro}
-            </p>
-          </Reveal>
+          <Texto
+            variante="texto"
+            as="p"
+            atraso={0.08}
+            className={`lede mt-6 max-w-prose text-pretty ${centro ? 'mx-auto' : ''}`}
+          >
+            {intro}
+          </Texto>
         ) : null}
 
         {meta ? (
-          <Reveal delay={0.2}>
-            <p
-              className={`label-quiet mt-7 border-t pt-5 ${centro ? 'mx-auto inline-block' : ''}`}
-              style={{ borderColor: 'var(--s-line)' }}
-            >
-              {meta}
-            </p>
-          </Reveal>
+          <Texto
+            variante="texto"
+            as="p"
+            atraso={0.14}
+            className={`label-quiet mt-7 border-t pt-5 ${centro ? 'mx-auto inline-block' : ''}`}
+            style={{ borderColor: 'var(--s-line)' }}
+          >
+            {meta}
+          </Texto>
         ) : null}
       </div>
 
