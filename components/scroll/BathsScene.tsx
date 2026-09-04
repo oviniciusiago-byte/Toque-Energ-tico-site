@@ -345,54 +345,72 @@ export default function BathsScene({ banhos }: { banhos: Produto[] }) {
             ref={(el) => {
               laminasRef.current[i] = el;
             }}
-            className="absolute inset-0 flex items-center will-change-[opacity,filter,transform]"
+            className="absolute inset-0 will-change-[opacity,filter,transform]"
             inert={i !== 0}
             style={{
               opacity: i === 0 ? 1 : 0,
               visibility: i === 0 ? 'visible' : 'hidden',
             }}
           >
-            <div className="shell grid-12 w-full items-center gap-y-10">
-              <div className="col-span-4 md:col-span-6">
-                <p className="font-sans text-[0.7rem] uppercase tracking-[0.24em] opacity-70">
-                  {b.subtitulo ?? 'Banho & escalda-pés'}
-                </p>
-                <h3 className="display mt-4 text-d1 leading-[0.95]">{b.nome}</h3>
-                <p className="mt-6 font-sans text-[0.76rem] uppercase tracking-[0.2em] opacity-75">
-                  {b.conceito.join(' · ')}
-                </p>
-                <p className="mt-7 max-w-prose-sm font-sans text-[0.95rem] leading-relaxed opacity-85">
-                  {b.descricaoCurta}
-                </p>
-                {b.aroma ? (
-                  <p className="mt-4 font-sans text-[0.74rem] uppercase tracking-[0.16em] opacity-60">
-                    {b.aroma}
-                  </p>
-                ) : null}
-                <Link
-                  href={`/produto/${b.slug}`}
-                  className="mt-9 inline-flex border-b border-current pb-1 font-sans text-[0.72rem] uppercase tracking-[0.18em] transition-opacity duration-500 hover:opacity-60"
-                >
-                  Ver o banho
-                </Link>
-              </div>
+            {/* A FOTO É A LÂMINA. Antes havia uma cor de fundo MAIS uma foto
+                emoldurada na coluna direita — duas coisas disputando. Aqui a
+                foto sangra de borda a borda e o texto deita por cima.
+                Só funciona porque a foto foi composta para isso: o fundo dela
+                é o hex exato do rótulo (o mesmo que a cena usa), e o terço
+                esquerdo é campo de cor vazio, reservado para a tipografia. */}
+            <div
+              ref={(el) => {
+                fotosRef.current[i] = el;
+              }}
+              className="absolute inset-0 will-change-transform"
+            >
+              <Image
+                src={`/images/banhos/${b.slug}.jpg`}
+                alt={`${b.nome} — ${b.subtitulo ?? 'banho e escalda-pés'}`}
+                fill
+                sizes="100vw"
+                priority={i === 0}
+                className="object-cover"
+              />
+            </div>
 
-              <div className="col-span-4 md:col-span-5 md:col-start-8">
-                <div className="relative aspect-[4/5] w-full overflow-hidden">
-                  <div
-                    ref={(el) => {
-                      fotosRef.current[i] = el;
-                    }}
-                    className="absolute inset-0 will-change-transform"
+            {/* Véu na cor do próprio banho, só do lado do texto. Como o campo
+                esquerdo da foto já é essa cor, o véu é quase invisível — ele
+                existe para garantir a legibilidade quando o corte do
+                `object-cover` puxa a composição para a esquerda em telas
+                estreitas. */}
+            <span
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{
+                background: `linear-gradient(to right, ${b.fundo} 0%, ${b.fundo} 22%, transparent 64%)`,
+              }}
+            />
+
+            <div className="relative flex h-full items-center">
+              <div className="shell w-full">
+                <div className="max-w-[34rem]">
+                  <p className="font-sans text-[0.7rem] uppercase tracking-[0.24em] opacity-70">
+                    {b.subtitulo ?? 'Banho & escalda-pés'}
+                  </p>
+                  <h3 className="display mt-4 text-d1 leading-[0.95]">{b.nome}</h3>
+                  <p className="mt-6 font-sans text-[0.76rem] uppercase tracking-[0.2em] opacity-75">
+                    {b.conceito.join(' · ')}
+                  </p>
+                  <p className="mt-7 font-sans text-[0.95rem] leading-relaxed opacity-85">
+                    {b.descricaoCurta}
+                  </p>
+                  {b.aroma ? (
+                    <p className="mt-4 font-sans text-[0.74rem] uppercase tracking-[0.16em] opacity-60">
+                      {b.aroma}
+                    </p>
+                  ) : null}
+                  <Link
+                    href={`/produto/${b.slug}`}
+                    className="mt-9 inline-flex border-b border-current pb-1 font-sans text-[0.72rem] uppercase tracking-[0.18em] transition-opacity duration-500 hover:opacity-60"
                   >
-                    <Image
-                      src={b.imagens[0]}
-                      alt={`${b.nome} — ${b.subtitulo ?? 'banho e escalda-pés'}`}
-                      fill
-                      sizes="(max-width: 768px) 88vw, 40vw"
-                      className="object-cover"
-                    />
-                  </div>
+                    Ver o banho
+                  </Link>
                 </div>
               </div>
             </div>
