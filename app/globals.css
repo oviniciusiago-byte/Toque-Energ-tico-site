@@ -572,6 +572,35 @@ html.lenis body {
     flex: none;
   }
 
+  /* Recorte por ORIENTAÇÃO da tela, não por largura.
+     O que quebra no celular não é a largura em si — é o viewport ficar mais
+     alto que largo: aí o `object-cover` de uma foto 16:9 descarta as laterais
+     e fica só com o miolo, que na composição destas fotos é justamente o
+     campo de cor vazio reservado para o texto. Tablet em retrato tem 768px de
+     largura e sofre igual, então largura não serviria de critério. */
+  /* A classe só liga/desliga por orientação. O recorte de posição vive no
+     componente, em utilitário do Tailwind: `utilities` ganha de `components`
+     na cascata, então um `top` escrito aqui perderia para o `inset-0` do
+     próprio elemento — e ainda valeria para o véu, que precisa ser de tela
+     cheia. */
+  .cena-retrato {
+    display: block;
+  }
+
+  .cena-paisagem {
+    display: none;
+  }
+
+  @media (min-aspect-ratio: 1 / 1) {
+    .cena-retrato {
+      display: none;
+    }
+
+    .cena-paisagem {
+      display: block;
+    }
+  }
+
   /* O rótulo da seção só existe dentro da cena: quando a fileira toma a tela
      inteira, o cabeçalho da seção já rolou para fora e a pessoa perde a
      referência de onde está. */

@@ -387,14 +387,37 @@ export default function BathsScene({ banhos }: { banhos: Produto[] }) {
               }}
               className="absolute inset-0 will-change-transform"
             >
-              <Image
-                src={`/images/banhos/${b.slug}.jpg`}
-                alt={`${b.nome} — ${b.subtitulo ?? 'banho e escalda-pés'}`}
-                fill
-                sizes="100vw"
-                priority={i === 0}
-                className="object-cover"
-              />
+              {/* DOIS RECORTES, um por orientação.
+                  A 16:9 foi composta com o terço esquerdo vazio para a
+                  tipografia — e num viewport retrato o `object-cover` corta
+                  justamente esse pedaço: o produto sumia por completo e a
+                  lâmina virava um retângulo de cor lisa no celular.
+                  Em retrato entra a 4:5 do catálogo, que já existe, ancorada
+                  embaixo para o produto ficar abaixo do texto. */}
+              <div className="cena-paisagem absolute inset-0">
+                <Image
+                  src={`/images/banhos/${b.slug}.jpg`}
+                  alt={`${b.nome} — ${b.subtitulo ?? 'banho e escalda-pés'}`}
+                  fill
+                  sizes="100vw"
+                  priority={i === 0}
+                  className="object-cover"
+                />
+              </div>
+              {/* Em retrato a foto ocupa a faixa de baixo, abaixo do texto —
+                  empilhado é o que funciona numa tela alta, e evita a escolha
+                  impossível entre véu que esconde a foto e texto ilegível. */}
+              <div className="cena-retrato absolute inset-x-0 bottom-0 top-[44%]">
+                <Image
+                  src={b.imagens[0]}
+                  alt=""
+                  aria-hidden="true"
+                  fill
+                  sizes="100vw"
+                  priority={i === 0}
+                  className="object-cover object-top"
+                />
+              </div>
             </div>
 
             {/* Véu na cor do próprio banho, só do lado do texto. Faz duas
@@ -405,23 +428,37 @@ export default function BathsScene({ banhos }: { banhos: Produto[] }) {
                 lê como queda de luz. */}
             <span
               aria-hidden="true"
-              className="absolute inset-0"
+              className="cena-paisagem absolute inset-0"
               style={{
-                background: `linear-gradient(to right, ${b.campo} 0%, ${b.campo} 24%, transparent 66%)`,
+                background: `linear-gradient(to right, ${b.campo} 0%, ${b.campo} 24%, ${b.campo}00 66%)`,
+              }}
+            />
+            <span
+              aria-hidden="true"
+              className="cena-retrato absolute inset-0"
+              style={{
+                background: `linear-gradient(to bottom, ${b.campo} 0%, ${b.campo} 30%, ${b.campo}00 46%)`,
               }}
             />
 
-            <div className="relative flex h-full items-center">
+            <div className="relative flex h-full items-start pt-[8.5rem] landscape:items-center landscape:pt-0">
               <div className="shell w-full">
-                <div className="max-w-[34rem]">
+                <div className="max-w-[34rem] xl:max-w-[42rem]">
                   <p
                     className="font-sans text-[0.7rem] uppercase tracking-[0.24em]"
                     style={{ color: b.suave }}
                   >
                     {b.subtitulo ?? 'Banho & escalda-pés'}
                   </p>
-                  <h3 className="display mt-4 text-d1 leading-[0.95]" style={{ color: b.forte }}>
-                    {b.nome}
+                  {/* Hífen que não quebra (U+2011): "Primavere-se" partia em
+                      "Primavere-" / "se", e nenhuma propriedade de CSS impede
+                      quebra num hífen existente — só o caractere resolve.
+                      Nomes com espaço continuam quebrando normalmente. */}
+                  <h3
+                    className="display mt-4 text-balance text-d1 leading-[0.95]"
+                    style={{ color: b.forte }}
+                  >
+                    {b.nome.replace(/-/g, '\u2011')}
                   </h3>
                   <p
                     className="mt-6 font-sans text-[0.76rem] uppercase tracking-[0.2em]"
